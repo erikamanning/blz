@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Bills {% endblock %}
+
+
+
+{% block content %}
+
+    <div id="bill-container">
+
+        <form method="POST">
+
+        {{ form.hidden_tag() }}
+
+        {% for field in form %}
+
+            {% if field.widget.input_type != 'hidden' %}
+
+                <p>
+                    {{ field.label }}
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                        
+                            {{ error }}
+
+                        {% endfor %}
+                    {%endif%}
+                </p>
+
+            {% endif %}
+
+        {% endfor %}
+
+
+        <button>Submit!</button>
+
+        </form>
+
+
+        {% if bills%}
+
+            {%for bill in bills%}
+
+                        <div>
+                            <a href="/bills/{{bill.id}}" class="bill">{{bill.title}}</a>
+                        </div>
+
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- <div id="get-data-container">
+        <a id="get-data" href="">Show data!</a>
+    </div> -->
+
+{% endblock %}
+

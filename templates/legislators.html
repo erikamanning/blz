@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Legislators {% endblock %}
+
+
+
+{% block content %}
+
+    <div id="home-container">
+        
+        <h1>Legislators </h1>
+
+        <ul>
+            {% for member in members%}
+                <li>{{member.last_name}}, {{member.first_name}}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <!-- <div id="get-data-container">
+        <a id="get-data" href="">Show data!</a>
+    </div> -->
+
+{% endblock %}

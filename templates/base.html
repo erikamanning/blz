@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/app.css">
+    <script src="https://unpkg.com/jquery"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a id="recent-bills" href="/bills">Bills</a>
+        <a id="recent-bills" href="/legislators">Legislators</a>
+
+
+        <!--  if 'username' in session  -->
+          <!-- <form action="/logout" method="POST">
+            <div id="logout-container">
+              <button id="logout">Logout</button>
+            </div>
+          </form> -->
+          <!-- <a class="right-nav-buttons" href="/users/{{session['username']}}">Profile</a> -->
+
+         <!-- else  -->
+<!-- 
+          <a class="right-nav-buttons" href="/register">Sign Up</a>
+          <a class="right-nav-buttons" href="/login">Login</a> -->
+
+         <!-- endif  -->
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+    
+</body>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="/static/app.js"></script>
+</html>

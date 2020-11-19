@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Single Legislator {% endblock %}
+
+
+
+
+{% block content %}    
+
+    <h1>{{legislator.first_name}} {{legislator.last_name}}</h1>
+    <a href="/voting-record/{{legislator.id}}">Voting Record</a>
+
+    {% for vote in votes %}
+
+        <ul>
+            <li><a href="/bills/{{vote.bill_id}}"></a>{{vote.bill_title}}</li>
+            <li class="position">{{vote.response}}</li>
+        </ul>
+
+    {% endfor %}
+
+{% endblock %}
