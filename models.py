@@ -60,84 +60,12 @@ class Bill(db.Model):
 #     vote_position = db.Column(db.String, nullable=False)
 
 
-    
+class Subject(db.Model):
 
-    # chamber": "House",
-    # date": "2017-09-05",
-    # time": "19:07:00",
-    # roll_call": "440",
-    # question": "On Motion to Suspend the Rules and Pass, as Amended",
-    # result": "Passed",
-    # total_yes": 403,
-    # total_no": 3,
-    # total_not_voting": 28,
-    # api_url": "https://api.propublica.org/congress/v1/115/house/sessions/1/votes/440.json"
+    __tablename__ = "subjects"
 
-
-#       "bill_id": "hr2864-115",
-#       "bill_slug": "hr2864",
-#       "congress": "115",
-#       "bill": "H.R.2864",
-#       "bill_type": "hr",
-#       "number": "H.R.2864",
-#       "bill_uri": "https://api.propublica.org/congress/v1/115/bills/hr2864.json",
-#       "title": "To direct the Securities and Exchange Commission to allow certain issuers to be exempt from registration requirements, and for other purposes.",
-#       "short_title": "Improving Access to Capital Act",
-#       "sponsor_title": "Rep.",
-#       "sponsor": "Kyrsten Sinema",
-#       "sponsor_id": "S001191",
-#       "sponsor_uri": "https://api.propublica.org/congress/v1/members/S001191.json",
-#       "sponsor_party": "D",
-#       "sponsor_state": "AZ",
-#       "gpo_pdf_uri": null,
-#       "congressdotgov_url": "https://www.congress.gov/bill/115th-congress/house-bill/2864",
-#       "govtrack_url": "https://www.govtrack.us/congress/bills/115/hr2864",
-#       "introduced_date": "2017-06-08",
-#       "active": true,
-#       "last_vote": "2017-09-05",
-#       "house_passage": "2017-09-05",
-#       "senate_passage": null,
-#       "enacted": null,
-#       "vetoed": null,
-#       "cosponsors": 5,
-#       "withdrawn_cosponsors": 0,
-#       "primary_subject": "Finance and Financial Sector",
-#       "committees": "Senate Banking, Housing, and Urban Affairs Committee",
-#       "committee_codes": [
-#         "SSBK",
-#         "HSBA"
-#       ],
-#       "latest_major_action_date": "2017-09-06",
-#       "latest_major_action": "Received in the Senate and Read twice and referred to the Committee on Banking, Housing, and Urban Affairs.",
-#       "house_passage_vote": "2017-09-05",
-#       "senate_passage_vote": null,
-#       "summary": "(Sec. 1) This bill exempts, under Regulation A+, certain fully reporting issuers of securities from specified disclosure requirements. Under current law, Regulation A+ exempts certain smaller offerings from securities registration requirements but applies only to non-reporting issuers. ",
-#       "summary_short": "(Sec. 1) This bill exempts, under Regulation A+, certain fully reporting issuers of securities from specified disclosure requirements. Under current law, Regulation A+ exempts certain smaller offerings from securities registration requirements but applies only to non-reporting issuers. ",
-#       "cbo_estimate_url": "https://www.cbo.gov/publication/53069",
-
-#       "votes": [
-#         {
-#           "chamber": "House",
-#           "date": "2017-09-05",
-#           "time": "19:07:00",
-#           "roll_call": "440",
-#           "question": "On Motion to Suspend the Rules and Pass, as Amended",
-#           "result": "Passed",
-#           "total_yes": 403,
-#           "total_no": 3,
-#           "total_not_voting": 28,
-#           "api_url": "https://api.propublica.org/congress/v1/115/house/sessions/1/votes/440.json"
-#         }
-#       ]
-
-
-
-# class Subject(db.Model):
-
-#     __tablename__ = "subjects"
-
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     name = db.Column(db.String, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
 
 # class PolicyArea(db.Model):
 

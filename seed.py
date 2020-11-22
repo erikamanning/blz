@@ -3,9 +3,6 @@ from models import Subject, PolicyArea, State, Chamber, Position
 from fileread import FileRead
 from utility import parse_state_data, get_members_json
 
-db.drop_all()
-db.create_all()
-
 subjects = FileRead("subjects.txt")
 policy_areas = FileRead("policy_areas.txt")
 states = FileRead("states.txt")

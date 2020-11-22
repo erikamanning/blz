@@ -37,11 +37,12 @@ def show_home_page():
 @app.route('/bills')
 def view_bills():
 
+    form = BillForm()
 
-    return render_template('bills.html')
+    return render_template('bills.html', form=form)
 
 @app.route('/legislators')
-def view_bills():
+def view_legislators():
 
 
     return render_template('legislators.html')
