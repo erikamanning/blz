@@ -1,0 +1,4 @@
+1. Grab all the slugs from bills in 116 congress
+2. then do api calls for each bill to get data because link to bill is not included in calls that are not directly for bill such as recent bills calls
+3. store data
+4. for updating down the road, use the api call recent bills and update the bills stored in DB 
