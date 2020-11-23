@@ -5,9 +5,9 @@ from wtforms.validators import InputRequired, Email, Optional, URL, NumberRange
 
 class BillForm(FlaskForm):
 
-    subject = SelectField('Bill Subject', validate_choice=False)
+    subject = SelectField('Choose a Bill Subject', validate_choice=False)
 
 
-class BLegislatorForm(FlaskForm):
+class LegislatorForm(FlaskForm):
 
     chamber = SelectField('Chamber', choices=[(1,"Senate"),(2,"House of Representatives")])

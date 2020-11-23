@@ -38,18 +38,23 @@
         </form>
 
 
-        <!-- {% if bills%}
+        {% if bills%}
 
+        <ol>
             {%for bill in bills%}
 
-                        <div>
-                            <a href="/bills/{{bill.id}}" class="bill">{{bill.title}}</a>
-                        </div>
-
-
+                    <li>
+                        {% if bill.short_title %}
+                        <a href="/bills/{{bill.bill_slug}}" class="bill">{{bill.short_title}}</a>
+                        {% else %}
+                            <a href="/bills/{{bill.bill_slug}}" class="bill">{{bill.title}}</a>
+                        {% endif %}
+                    </li>
             {% endfor %}
+        </ol>
 
-        {% endif %} -->
+
+        {% endif %}
 
     </div>
 

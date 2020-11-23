@@ -58,10 +58,3 @@ def extract_member_data(members):
 
     return chamber_members
 
-
-
-# id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-# first_name = db.Column(db.String, nullable=False)
-# last_name = db.Column(db.String, nullable=False)
-# state = db.Column(db.String, nullable=False)
-# party_id = db.Column(db.String(1), nullable=False)

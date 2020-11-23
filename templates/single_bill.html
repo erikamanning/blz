@@ -7,7 +7,10 @@
 
 {% block content %}    
 
-<h1>{{bill.title}}</h1>
-<a href="/legislators/{{sponsor.id}}">Sponsor: {{sponsor.last_name}}, {{sponsor.first_name}} </a>
+    <h1>{{bill.title}}</h1>
+    <h2>Introduced: <b>{{bill.introduced_date}}</b></h2>
+    <p>Summary: {{bill.summary}}</p>
+
+    <a href="/legislators/">Sponsor: {{bill.sponsor}} </a>
 
 {% endblock %}

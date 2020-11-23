@@ -50,6 +50,11 @@ class Bill(db.Model):
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
+
+    def __repr__(self):
+
+        return 'Bill: {self.title}'
+
 # class Vote(db.Model):
 
 #     __tablename__ = "votes"
@@ -67,12 +72,12 @@ class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
 
-# class PolicyArea(db.Model):
+class PolicyArea(db.Model):
 
-#     __tablename__ = "policy_areas"
+    __tablename__ = "policy_areas"
 
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     name = db.Column(db.String, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
 
 # class State(db.Model):
 
