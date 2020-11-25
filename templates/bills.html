@@ -6,53 +6,70 @@
 
 {% block content %}
 
-    <div id="bill-container">
+    <h2 class="text-center mt-5">Bills </h2>
 
-        <form method="POST">
+    <p class="text-center">A place to view and follow bills. </p>
 
-        {{ form.hidden_tag() }}
+    <div class='container'>
+        <div class='m-3 p-3 card'>
 
-        {% for field in form %}
+            <form method="POST">
 
-            {% if field.widget.input_type != 'hidden' %}
+            {{ form.hidden_tag() }}
 
-                <p>
-                    {{ field.label }}
-                    {{ field }}
-                    {% if field.errors %}
-                        {% for error in field.errors %}
-                        
-                            {{ error }}
+            {% for field in form %}
 
-                        {% endfor %}
-                    {%endif%}
-                </p>
+                {% if field.widget.input_type != 'hidden' %}
 
-            {% endif %}
+                    <p>
+                        {{ field.label }}
+                        {{ field }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                            
+                                {{ error }}
 
-        {% endfor %}
+                            {% endfor %}
+                        {%endif%}
+                    </p>
 
+                {% endif %}
 
-        <button>Submit!</button>
+            {% endfor %}
 
-        </form>
+            <button class="btn btn-primary">Submit!</button>
 
+            </form>
+        </div>
+    </div>
+
+    <div class='container'>
 
         {% if bills%}
 
-        <ol>
             {%for bill in bills%}
+            <div class="card m-3">
+                <div class="card-header font-weight-bold">
+                    {{bill.bill}}
+                </div>
+                <div class="card-body">
+                    {% if bill.short_title %}
+                    <h5 class="card-title font-weight-bold">{{bill.short_title}}</h5>
+                    {% else %}
+                    <h5 class="card-title font-weight-bold">{{bill.title}}</h5>
+                    {% endif %}
 
-                    <li>
-                        {% if bill.short_title %}
-                        <a href="/bills/{{bill.bill_slug}}" class="bill">{{bill.short_title}}</a>
-                        {% else %}
-                            <a href="/bills/{{bill.bill_slug}}" class="bill">{{bill.title}}</a>
-                        {% endif %}
-                    </li>
+                    <div class="summary-container">
+                        <h5>Summary</h5>
+                        <p>{{prune_summary(bill.summary)}}</p>
+                    </div>
+                    <div class="buttons">
+                        <button class="summary-button btn btn-success">View Summary</button>
+                        <a href="/bills/{{bill.id}}" class="btn btn-primary">View Bill</a>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </ol>
-
 
         {% endif %}
 

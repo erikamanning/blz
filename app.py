@@ -62,17 +62,51 @@ def view_bills():
 
         return render_template('bills.html', form=form)
 
-@app.route('/bills/<bill_slug>')
-def view_bill(bill_slug):
+@app.route('/bills/<bill_id>')
+def view_bill(bill_id):
 
-    bill = Bill.query.filter(Bill.bill_slug==bill_slug).one_or_none()
+    bill = Bill.query.get_or_404(bill_id)
+
+    # bill = Bill.query.filter(Bill.bill_slug==bill_slug).one_or_none()
 
     if bill:
 
-        return render_template("single_bill.html", bill=bill)
+        summary = prune_summary(bill.summary)
+    
+        return render_template("single_bill.html", bill=bill, summary=summary)
 
 @app.route('/legislators')
 def view_legislators():
 
 
     return render_template('legislators.html')
+
+
+# a page to give information on the chambers/ scronyms etc, mostly will be done in js dropping and revealing information
+@app.route('/learn')
+def view_learn_page():
+
+
+    return render_template('learn.html')
+
+#temporary fix for api keeping title awkwardly in summary, will update full database eventually
+def prune_summary(summary):
+
+    if 'This bill' in summary:
+
+        find_index = summary.find('This bill')
+        
+        lst = summary[find_index::]
+
+        print('Pruned summary: ', lst)
+
+        new_summary = str(lst)
+
+        return new_summary
+    
+    else:
+
+        return summary
+
+
+app.jinja_env.globals.update(prune_summary=prune_summary)

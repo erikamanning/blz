@@ -50,6 +50,9 @@ class Bill(db.Model):
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
+    # sponsor = db.relationship('Member', backref="members")
+
+
 
     def __repr__(self):
 
@@ -87,16 +90,17 @@ class PolicyArea(db.Model):
 #     name = db.Column(db.String, nullable=False)
 
 
-# class Member(db.Model):
+class Member(db.Model):
 
-#     __tablename__ = "members"
+    __tablename__ = "members"
 
-#     id = db.Column(db.String, primary_key=True, nullable=False)
-#     first_name = db.Column(db.String, nullable=False)
-#     last_name = db.Column(db.String, nullable=False)
-#     state_id = db.Column(db.String, nullable=False)
-#     party_id = db.Column(db.String(2), nullable=False)
-#     position_code = db.Column(db.String(3), nullable=False)
+    id = db.Column(db.String, primary_key=True, nullable=False)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    state_id = db.Column(db.String, nullable=False)
+    party_id = db.Column(db.String(2), nullable=False)
+    position_code = db.Column(db.String(3), nullable=False)
+    in_office = db.Column(db.Boolean, nullable=False)
 
 # class Chamber(db.Model):
 
