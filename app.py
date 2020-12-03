@@ -6,8 +6,8 @@ from secrets import API_SECRET_KEY
 from fileread import FileRead
 import requests
 import pprint
-from models import db, connect_db, Bill, PolicyArea
-from forms import BillForm
+from models import db, connect_db, Bill, PolicyArea, User
+from forms import BillForm, SignupForm
 from secrets import API_SECRET_KEY
 
 
@@ -89,6 +89,33 @@ def view_learn_page():
 
     return render_template('learn.html')
 
+
+@app.route('/signup', methods=['GET','POST'])
+def signup():
+
+    form = SignupForm()
+
+    if form.validate_on_submit():
+
+        return redirect('/')
+
+    else:
+        return render_template('signup.html', form=form)
+
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+
+    return 0
+
+
+
+
+
+
+
+
+
 #temporary fix for api keeping title awkwardly in summary, will update full database eventually
 def prune_summary(summary):
 
@@ -110,3 +137,5 @@ def prune_summary(summary):
 
 
 app.jinja_env.globals.update(prune_summary=prune_summary)
+
+

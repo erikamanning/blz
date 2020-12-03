@@ -18,11 +18,6 @@ class Bill(db.Model):
 
     __tablename__ = "bills"
 
-    # id = db.Column(db.String, primary_key=True)
-    # title = db.Column(db.String, nullable=False)
-    # sponsor_id = db.Column(db.String, db.ForeignKey('members.id'),
-    #     nullable=False)
-
     id = db.Column(db.String, primary_key=True, nullable = False)
     bill_slug = db.Column(db.String, nullable = False)
     congress = db.Column(db.String, nullable = False)
@@ -52,20 +47,9 @@ class Bill(db.Model):
 
     # sponsor = db.relationship('Member', backref="members")
 
-
-
     def __repr__(self):
 
         return 'Bill: {self.title}'
-
-# class Vote(db.Model):
-
-#     __tablename__ = "votes"
-
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     member_id = db.Column(db.String, db.ForeignKey('members.id'), nullable=False)
-#     bill_id = db.Column(db.String, db.ForeignKey('bills.id'), nullable=False)
-#     vote_position = db.Column(db.String, nullable=False)
 
 
 class Subject(db.Model):
@@ -82,14 +66,6 @@ class PolicyArea(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
 
-# class State(db.Model):
-
-#     __tablename__ = "states"
-
-#     acronym = db.Column(db.String(2), primary_key=True)
-#     name = db.Column(db.String, nullable=False)
-
-
 class Member(db.Model):
 
     __tablename__ = "members"
@@ -101,6 +77,65 @@ class Member(db.Model):
     party_id = db.Column(db.String(2), nullable=False)
     position_code = db.Column(db.String(3), nullable=False)
     in_office = db.Column(db.Boolean, nullable=False)
+
+class State(db.Model):
+
+    __tablename__ = "states"
+
+    acronym = db.Column(db.String(2), primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+
+        return f'State: {name}, {acronym}'
+
+class User(db.Model):
+
+    __tablename__ = "users"
+
+    @classmethod
+    def register(cls, username, password, email):
+        """ Register user w/hashed password & return user. """
+
+        hashed = bcrypt.generate_password_hash(password)
+
+        hashed_utf8 = hashed.decode("utf8")
+
+        return cls(username=username, password=password, email=email)
+        
+    @classmethod
+    def authenticate(cls, username, password):
+
+        """ 
+            Validate that user exists & password is correct. 
+        
+            Return the user if valid; else return False
+
+        """
+        u = User.query.filter_by(username=username).first()
+
+        # check if user exists and if password is the correct password
+        if u and bcrypt.check_password_hash(u.pwd,pwd):
+            #return user instance
+            return u
+        
+        else:
+            return False
+
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    state_id = db.Column(db.String(2), nullable=True)
+
+    def __repr__(self):
+
+        return f'User: {self.username}'
+
+
+
+# classes to add later
 
 # class Chamber(db.Model):
 
@@ -115,3 +150,11 @@ class Member(db.Model):
 
 #     position_code = db.Column(db.String(5), primary_key=True)
 #     name = db.Column(db.String, nullable=False)
+
+# class Vote(db.Model):
+#     __tablename__ = "votes"
+
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     member_id = db.Column(db.String, db.ForeignKey('members.id'), nullable=False)
+#     bill_id = db.Column(db.String, db.ForeignKey('bills.id'), nullable=False)
+#     vote_position = db.Column(db.String, nullable=False)

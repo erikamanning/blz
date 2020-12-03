@@ -15,30 +15,18 @@
 
             <form method="POST">
 
-            {{ form.hidden_tag() }}
+                <div class="form-row">
+                    <div class="col">
+                        {{ form.hidden_tag() }}
 
-            {% for field in form %}
-
-                {% if field.widget.input_type != 'hidden' %}
-
-                    <p>
-                        {{ field.label }}
-                        {{ field }}
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                            
-                                {{ error }}
-
-                            {% endfor %}
-                        {%endif%}
-                    </p>
-
-                {% endif %}
-
-            {% endfor %}
-
-            <button class="btn btn-primary">Submit!</button>
-
+                        {{ form.subject(class='custom-select') }}
+                    </div>
+                </div>
+                <div class="form-row text-right">
+                    <div class="col">
+                        <button class="btn btn-primary mt-3">Submit!</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -49,7 +37,7 @@
 
             {%for bill in bills%}
             <div class="card m-3">
-                <div class="card-header font-weight-bold">
+                <div class="card-header">
                     {{bill.bill}}
                 </div>
                 <div class="card-body">
@@ -59,7 +47,7 @@
                     <h5 class="card-title font-weight-bold">{{bill.title}}</h5>
                     {% endif %}
 
-                    <div class="summary-container">
+                    <div class="summary-container d-none">
                         <h5>Summary</h5>
                         <p>{{prune_summary(bill.summary)}}</p>
                     </div>

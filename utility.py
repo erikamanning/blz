@@ -1,5 +1,5 @@
 import requests
-from models import Member, Vote
+from models import Member
 
 from secrets import API_SECRET_KEY
 
