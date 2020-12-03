@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+    
+
+{% block content %}
+
+    <h1 class="text-center mt-3">Welcome back, <span class="font-weight-bold"><u>{{session['username']}}</u></span>!</h1>
+
+
+    <div class="container card m-3 p-3">
+        <h4>User Info: </h4>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 font-weight-bold">
+                        Username:
+                    </div>
+                    <div class="col-6">
+                        {{user.username}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 font-weight-bold">
+                        Email:
+                    </div>
+                    <div class="col-6">
+                        {{user.email}}
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+
+{% endblock %}

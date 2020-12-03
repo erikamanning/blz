@@ -28,6 +28,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav align-items-end">
+      {% if 'username' not in session %}
 
         <li class="nav-item active">
           <a class="nav-link" href="/login">Login</a>
@@ -35,6 +36,14 @@
         <li class="nav-button nav-item active">
           <a class="nav-link" href="/signup">Sign Up</a>
         </li>
+        {% else %}
+        <li class="nav-button nav-item active">
+          <a class="nav-link" href="/profile">Hello, <u><span class="font-weight-bold">{{session['username']}}</span></u></a>
+        </li>
+        <li class="nav-button nav-item active">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        {% endif%}
   
     </ul>
     </div>

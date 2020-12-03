@@ -7,7 +7,7 @@ from fileread import FileRead
 import requests
 import pprint
 from models import db, connect_db, Bill, PolicyArea, User
-from forms import BillForm, SignupForm
+from forms import BillForm, SignupForm, LoginForm
 from secrets import API_SECRET_KEY
 
 
@@ -90,6 +90,33 @@ def view_learn_page():
     return render_template('learn.html')
 
 
+@app.route('/home')
+def show_homepage():
+
+    if session.get('username', False):
+
+        return render_template('home.html')
+
+    else:
+        flash('No user logged in')
+        return redirect('/')
+
+@app.route('/profile')
+def show_profile():
+
+    if session.get('username', False):
+
+
+        user = User.query.filter(User.username==session['username']).first()
+
+        return render_template('profile.html', user=user)
+
+    else:
+        flash('No user logged in')
+        return redirect('/')
+
+
+
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 
@@ -97,7 +124,16 @@ def signup():
 
     if form.validate_on_submit():
 
-        return redirect('/')
+        new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        session['username'] = new_user.username
+
+        flash(f'New user: {new_user.username} added!')
+
+        return redirect('/home')
 
     else:
         return render_template('signup.html', form=form)
@@ -106,15 +142,33 @@ def signup():
 @app.route('/login', methods=['GET','POST'])
 def login():
 
-    return 0
+    form = LoginForm()
+
+    if form.validate_on_submit():
+
+        user = User.authenticate(username = form.username.data, password = form.password.data)
+
+        session['username'] = user.username
+        flash(f'User: {user.username} authenticated!')
 
 
+        return redirect('/home')
 
+    else:
+        return render_template('login.html', form=form)
 
+@app.route('/logout')
+def logout():
 
+    if session.get('username', False):
+        session.pop('username')
 
-
-
+        flash('Successfully logged out!')
+        return redirect('/')
+    
+    else:
+        flash('No user logged in')
+        return redirect('/')
 
 #temporary fix for api keeping title awkwardly in summary, will update full database eventually
 def prune_summary(summary):

@@ -101,7 +101,7 @@ class User(db.Model):
 
         hashed_utf8 = hashed.decode("utf8")
 
-        return cls(username=username, password=password, email=email)
+        return cls(username=username, password=hashed_utf8, email=email)
         
     @classmethod
     def authenticate(cls, username, password):
@@ -115,7 +115,7 @@ class User(db.Model):
         u = User.query.filter_by(username=username).first()
 
         # check if user exists and if password is the correct password
-        if u and bcrypt.check_password_hash(u.pwd,pwd):
+        if u and bcrypt.check_password_hash(u.password,password):
             #return user instance
             return u
         
