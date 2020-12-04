@@ -9,7 +9,7 @@
 
     <div class="container mt-5">
 
-        <div class="card">
+        <div id={{bill.id}} class="card">
             <div class="card-header font-weight-bold">
                 <div class="row">
                     <div class="col-9">
@@ -27,7 +27,7 @@
                         <p class="py-1 px-2 text-light bg-info rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
                     </div>
                     <div class="col-1">
-                        <a href="/follow/{{bill.id}}" class="btn btn-success text-right">Follow</a>
+                        <p class="btn btn-success text-right follow-button">Follow</p>
                     </div>
                 </div>
 

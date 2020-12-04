@@ -13,9 +13,43 @@ $(document).ready(function(){
     });
 
 
+    $('.follow-button').on('click', async function(evt){
+
+        console.log(`Bill ID: ${$(evt.target).parent().parent().parent().parent().attr('id')}`)
+
+        let billId = $(evt.target).parent().parent().parent().parent().attr('id')
+
+        let req = await axios.post(`/bill/${billId}/follow`)
+
+        console.log('Request data: ', req.data)
+
+        UIFollowAction(req.data.resp_code, evt.target)
+
+    })
 
 
+    function UIFollowAction(status, button){
 
+        if(status == 'foll_success'){
+
+            $(button).removeClass('btn-success');
+            $(button).addClass('btn-outline-danger');
+            $(button).text('Unfollow')
+
+
+        }
+        else if(status == 'unfoll_success'){
+
+            $(button).removeClass('btn-outline-danger');
+            $(button).addClass('btn-success');
+            $(button).text('Follow')
+        }
+        else{
+
+            $('body').append($("<p>You can't do that at this time</p>"))
+        }
+
+    }
 });
 
 

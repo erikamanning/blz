@@ -6,7 +6,7 @@ from secrets import API_SECRET_KEY
 from fileread import FileRead
 import requests
 import pprint
-from models import db, connect_db, Bill, PolicyArea, User
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows
 from forms import BillForm, SignupForm, LoginForm
 from secrets import API_SECRET_KEY
 
@@ -32,7 +32,29 @@ debug = DebugToolbarExtension(app)
 @app.route('/')
 def show_home_page():
 
-    return render_template('index.html')
+    if session.get('username', False):
+
+        bill_ids = db.session.query(BillFollows.bill_id).filter(BillFollows.username == session['username']).all()
+
+        print("***********************************")
+        print("Bill Ids:", bill_ids)
+        print(len(bill_ids))
+        print("***********************************")
+
+        bills = get_bills(bill_ids)
+
+        if bills:
+
+
+            return render_template('index.html', bills=bills)
+        
+        else:
+
+            return render_template('index.html')
+
+    else:
+
+        return render_template('index.html')
 
 
 @app.route('/bills', methods=["GET", "POST"])
@@ -74,6 +96,30 @@ def view_bill(bill_id):
         summary = prune_summary(bill.summary)
     
         return render_template("single_bill.html", bill=bill, summary=summary)
+
+@app.route('/bill/<bill_id>/follow', methods=['POST'])
+def follow_bill(bill_id):
+
+    if session.get('username', False):
+
+        bill = BillFollows.query.filter(BillFollows.bill_id == bill_id and BillFollows.username == session['username']).one_or_none()
+
+        if bill:
+
+            db.session.delete(bill)
+            db.session.commit()
+            return jsonify({'resp_code': 'unfoll_success'})
+
+        
+        else:
+            new_bill_follow = BillFollows(bill_id = bill_id, username=session['username'])
+            db.session.add(new_bill_follow)
+            db.session.commit()
+            return jsonify({'resp_code': 'foll_success'})
+
+    else:
+        # flash('You must be logged in to do that!')
+        return jsonify({'resp_code': 'not_logged_in'})
 
 @app.route('/legislators')
 def view_legislators():
@@ -148,11 +194,16 @@ def login():
 
         user = User.authenticate(username = form.username.data, password = form.password.data)
 
-        session['username'] = user.username
-        flash(f'User: {user.username} authenticated!')
+        if user:
 
+            session['username'] = user.username
+            flash(f'User: {user.username} authenticated!')
 
-        return redirect('/home')
+            return redirect('/home')
+        
+        else:
+            flash('User not authenticated!')
+            return redirect('/login')
 
     else:
         return render_template('login.html', form=form)
@@ -193,3 +244,15 @@ def prune_summary(summary):
 app.jinja_env.globals.update(prune_summary=prune_summary)
 
 
+def get_bills(bill_ids):
+
+    bills = []
+
+    for bill_id in bill_ids:
+
+        bill = Bill.query.filter(Bill.id == bill_id[0]).one_or_none()
+
+        bills.append(bill)
+
+    
+    return bills

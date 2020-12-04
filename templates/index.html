@@ -17,4 +17,15 @@
         <a id="get-data" href="">Show data!</a>
     </div> -->
 
+    {% if bills %}
+        {%for bill in bills%}
+            {% if bill.short_title %}
+                <h5>{{bill.short_title}}</h5>
+            {%else%}
+                <h5>{{bill.title}}</h5>
+            {%endif%}
+
+        {%endfor%}
+    {%endif%}
+
 {% endblock %}

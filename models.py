@@ -89,6 +89,8 @@ class State(db.Model):
 
         return f'State: {name}, {acronym}'
 
+
+
 class User(db.Model):
 
     __tablename__ = "users"
@@ -124,16 +126,26 @@ class User(db.Model):
 
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False,unique=True)
     state_id = db.Column(db.String(2), nullable=True)
 
     def __repr__(self):
 
         return f'User: {self.username}'
 
+class BillFollows(db.Model):
 
+    __tablename__ = 'bill_follows'
+
+    # may want to change username to user id to save processing time later
+    bill_id = db.Column(db.String, primary_key=True)
+    username = db.Column(db.String, db.ForeignKey('users.username'), primary_key=True)
+
+    def __repr__(self):
+
+        return f'BillFollow: username: {self.username}, bill_id: {self.bill_id}'
 
 # classes to add later
 
