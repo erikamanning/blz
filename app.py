@@ -34,23 +34,7 @@ def show_home_page():
 
     if session.get('username', False):
 
-        bill_ids = db.session.query(BillFollows.bill_id).filter(BillFollows.username == session['username']).all()
-
-        print("***********************************")
-        print("Bill Ids:", bill_ids)
-        print(len(bill_ids))
-        print("***********************************")
-
-        bills = get_bills(bill_ids)
-
-        if bills:
-
-
-            return render_template('index.html', bills=bills)
-        
-        else:
-
-            return render_template('index.html')
+        return redirect('/dashboard')
 
     else:
 
@@ -136,12 +120,13 @@ def view_learn_page():
     return render_template('learn.html')
 
 
-@app.route('/home')
+@app.route('/dashboard')
 def show_homepage():
 
     if session.get('username', False):
 
-        return render_template('home.html')
+        user = User.query.filter(User.username==session['username']).one_or_none()
+        return render_template('dashboard.html', user=user, bills=user.followed_bills)
 
     else:
         flash('No user logged in')
@@ -179,7 +164,7 @@ def signup():
 
         flash(f'New user: {new_user.username} added!')
 
-        return redirect('/home')
+        return redirect('/dashboard')
 
     else:
         return render_template('signup.html', form=form)
@@ -199,7 +184,7 @@ def login():
             session['username'] = user.username
             flash(f'User: {user.username} authenticated!')
 
-            return redirect('/home')
+            return redirect('/dashboard')
         
         else:
             flash('User not authenticated!')

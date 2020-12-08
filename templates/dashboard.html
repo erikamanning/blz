@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+{% block content %}
+
+    <h1 class="text-center mt-5"><span class="font-weight-bold">{{session['username']}}'s Dashboard</u></span></h1>
+
+    <h5>Followed Bills: </h5>
+
+    {% include 'bill_block.html' %}
+
+    <h3>To Do:</h3>
+    <p class="small text-danger font-italic">(Add view bills by subject/date/congresspeople?)</p>
+
+{% endblock %}
