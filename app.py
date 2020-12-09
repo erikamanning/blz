@@ -6,7 +6,7 @@ from secrets import API_SECRET_KEY
 from fileread import FileRead
 import requests
 import pprint
-from models import db, connect_db, Bill, PolicyArea, User, BillFollows
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member
 from forms import BillForm, SignupForm, LoginForm
 from secrets import API_SECRET_KEY
 
@@ -109,7 +109,9 @@ def follow_bill(bill_id):
 def view_legislators():
 
 
-    return render_template('legislators.html')
+    legislators = Member.query.all()
+
+    return render_template('legislators.html', members = legislators)
 
 
 # a page to give information on the chambers/ scronyms etc, mostly will be done in js dropping and revealing information

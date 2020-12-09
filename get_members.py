@@ -5,7 +5,7 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 
-Member.__table__.drop(db.get_engine())
+# Member.__table__.drop(db.get_engine())
 Member.__table__.create(db.get_engine())
 
 def get_members_json(congress, chamber):
@@ -38,12 +38,12 @@ def save_members(members):
 
     for member in members:
 
-        new_member = Member(id=member['id'],first_name=member['first_name'], last_name=member['last_name'], state_id=member['state_id'], party_id=member['party_id'], position_code=member['position_code'], in_office=member['in_office'])
+        new_member = Member(id=member['id'],first_name=member['first_name'], last_name=member['last_name'], state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
 
         saved_members.append(new_member)
 
 
-    db.session.add_all(save_members)
+    db.session.add_all(saved_members)
     db.session.commit()
 
 def get_all_members(congress,chamber, member_status):

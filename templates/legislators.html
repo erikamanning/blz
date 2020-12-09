@@ -10,18 +10,16 @@
         
         <h2 class="text-center mt-5">Legislators </h2>
 
-        <p class="text-center mt-3">A place to view legislator info and voting records. </p>
+        {% if 'username' not in session%}
 
-        <ul>
+        <p class="text-center mt-3">A place to view legislator info and voting records. </p>
+        {% else %}
+
             {% for member in members%}
-                <li>{{member.last_name}}, {{member.first_name}}</li>
+                {% include 'member_block.html' %}
             {% endfor %}
-        </ul>
+        {% endif %}
 
     </div>
-
-    <!-- <div id="get-data-container">
-        <a id="get-data" href="">Show data!</a>
-    </div> -->
 
 {% endblock %}

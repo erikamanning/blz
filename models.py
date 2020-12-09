@@ -85,9 +85,9 @@ class Member(db.Model):
     id = db.Column(db.String, primary_key=True, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    state_id = db.Column(db.String, nullable=False)
-    party_id = db.Column(db.String(2), nullable=False)
-    position_code = db.Column(db.String(3), nullable=False)
+    state_id = db.Column(db.String(2), db.ForeignKey('states.acronym'), nullable=False)
+    party_id = db.Column(db.String,db.ForeignKey('parties.code'),nullable=False)
+    position_code = db.Column(db.String, db.ForeignKey('positions.code'), nullable=False)
     in_office = db.Column(db.Boolean, nullable=False)
 
 class State(db.Model):
@@ -153,6 +153,20 @@ class User(db.Model):
         return f'User: {self.username}'
 
 
+class Position(db.Model):
+
+    __tablename__ = "positions"
+
+    code = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+class Party(db.Model):
+
+    __tablename__ = "parties"
+
+    code = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
 # classes to add later
 
 # class Chamber(db.Model):
@@ -160,13 +174,6 @@ class User(db.Model):
 #     __tablename__ = "chambers"
 
 #     chamber_code = db.Column(db.String(3), primary_key=True)
-#     name = db.Column(db.String, nullable=False)
-
-# class Position(db.Model):
-
-#     __tablename__ = "positions"
-
-#     position_code = db.Column(db.String(5), primary_key=True)
 #     name = db.Column(db.String, nullable=False)
 
 # class Vote(db.Model):

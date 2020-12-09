@@ -1,0 +1,28 @@
+<div class='container'>
+
+    {%for member in members%}
+    <div class="card m-3">
+        <div class="card-header">
+            {{member.last_name}}, {{member.first_name}}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title font-weight-bold">{{member.short_title}}</h5>
+            <div>
+                <p>{{member.state_id}}</p>
+                <p>{{member.party_id}}</p>
+            </div>
+            <div class="buttons">
+                <a href="/member/{{member.id}}" class="btn btn-primary">View Member</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h3>To Do:</h3>
+    <p class="small text-danger font-italic">Image of member</p>
+    <p class="small text-danger font-italic">Bills Sponsored</p>
+    <p class="small text-danger font-italic">Recent Votes</p>
+    <p class="small text-danger font-italic">Voting Record</p>
+
+
+</div>
