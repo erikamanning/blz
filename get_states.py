@@ -4,8 +4,8 @@ from fileread import FileRead
 from utility import parse_state_data, get_members_json
 
 
-State.__table__.drop(db.get_engine())
-State.__table__.create(db.get_engine())
+# State.__table__.drop(db.get_engine())
+# State.__table__.create(db.get_engine())
 
 states = FileRead("states.txt")
 

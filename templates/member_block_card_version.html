@@ -8,8 +8,9 @@
         <div class="card-body">
             <h5 class="card-title font-weight-bold">{{member.short_title}}</h5>
             <div>
-                <p>{{member.state_id}}</p>
-                <p>{{member.party_id}}</p>
+                <p>{{member.position.name}}</p>
+                <p>{{member.state.acronym}}</p>
+                <p>{{member.party.name}}</p>
             </div>
             <div class="buttons">
                 <a href="/member/{{member.id}}" class="btn btn-primary">View Member</a>
@@ -17,12 +18,5 @@
         </div>
     </div>
     {% endfor %}
-
-    <h3>To Do:</h3>
-    <p class="small text-danger font-italic">Image of member</p>
-    <p class="small text-danger font-italic">Bills Sponsored</p>
-    <p class="small text-danger font-italic">Recent Votes</p>
-    <p class="small text-danger font-italic">Voting Record</p>
-
 
 </div>

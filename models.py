@@ -90,6 +90,10 @@ class Member(db.Model):
     position_code = db.Column(db.String, db.ForeignKey('positions.code'), nullable=False)
     in_office = db.Column(db.Boolean, nullable=False)
 
+    state = db.relationship('State', backref='members')
+    party = db.relationship('Party', backref='members')
+    position = db.relationship('Position', backref='members')
+
 class State(db.Model):
 
     __tablename__ = "states"
@@ -99,8 +103,7 @@ class State(db.Model):
 
     def __repr__(self):
 
-        return f'State: {name}, {acronym}'
-
+        return f'State: {self.name}, {self.acronym}'
 
 class User(db.Model):
 

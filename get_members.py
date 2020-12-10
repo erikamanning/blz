@@ -5,8 +5,10 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 
+# add cascade
+
 # Member.__table__.drop(db.get_engine())
-Member.__table__.create(db.get_engine())
+# Member.__table__.create(db.get_engine())
 
 def get_members_json(congress, chamber):
 
@@ -24,7 +26,7 @@ def extract_members(members_json, member_status):
 
     for member in members_json:
 
-        if member['in_office'] == member_status:
+        if member_status:
 
             members.append(member)
 
@@ -48,8 +50,8 @@ def save_members(members):
 
 def get_all_members(congress,chamber, member_status):
 
-    members_json = get_members_json(congress,chamber,member_status)
-    members = extract_members
+    members_json = get_members_json(congress,chamber)
+    members = extract_members(members_json, member_status)
     save_members(members)
 
 

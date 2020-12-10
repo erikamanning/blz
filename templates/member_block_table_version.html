@@ -1,0 +1,11 @@
+
+    <tr>
+        <th scope="row">{{member.id}}</th>
+        <td>{{member.first_name}}</td>
+        <td>{{member.last_name}}</td>
+        <td>{{member.position.name}}</td>
+        <td>{{member.state.acronym}}</td>
+        <td>{{member.party.name}}</td>
+        <td><a href="/member/{{member.id}}" class="btn btn-info">View Member</a></td>
+        <td><a href="/legislators" class="btn btn-success">Follow</a></td>
+    </tr>

@@ -5,8 +5,8 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 
-Position.__table__.drop(db.get_engine())
-Position.__table__.create(db.get_engine())
+# Position.__table__.drop(db.get_engine())
+# Position.__table__.create(db.get_engine())
 
 senator = Position(code='Sen.', name='Senator')
 representative = Position(code='Rep.', name='Representative')
