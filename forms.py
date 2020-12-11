@@ -6,7 +6,9 @@ from wtforms.fields.html5 import EmailField
 
 class BillForm(FlaskForm):
 
-    subject = SelectField('Choose a Bill Subject', validate_choice=False)
+    policy_area = SelectField('Choose a Bill Subject', validate_choice=False,render_kw={'class':'form-control'})
+    session = SelectField('Choose a Session of Congress', validate_choice=False, default = '116',render_kw={'class':'form-control'})
+
 
 
 class LegislatorForm(FlaskForm):

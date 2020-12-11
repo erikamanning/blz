@@ -170,13 +170,20 @@ class Party(db.Model):
     code = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
+
+class Session(db.Model):
+
+    __tablename__ = "sessions"
+    id = db.Column(db.Integer, primary_key=True)
+
+
 # classes to add later
 
 # class Chamber(db.Model):
 
 #     __tablename__ = "chambers"
 
-#     chamber_code = db.Column(db.String(3), primary_key=True)
+#     code = db.Column(db.String(3), primary_key=True)
 #     name = db.Column(db.String, nullable=False)
 
 # class Vote(db.Model):

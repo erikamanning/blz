@@ -6,7 +6,8 @@ from secrets import API_SECRET_KEY
 from fileread import FileRead
 import requests
 import pprint
-from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member
+from classes import BillSearch
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session
 from forms import BillForm, SignupForm, LoginForm
 from secrets import API_SECRET_KEY
 
@@ -16,6 +17,8 @@ headers = {'X-API-Key': API_SECRET_KEY}
 
 pp = pprint.PrettyPrinter(indent=4)
 
+
+ROWS_PER_PAGE = 10
 
 
 app = Flask(__name__)
@@ -40,33 +43,57 @@ def show_home_page():
 
         return render_template('index.html')
 
+@app.route('/get-policy-areas')
+def get_policy_areas():
 
-@app.route('/bills', methods=["GET", "POST"])
+    policy_areas = PolicyArea.query.all()
+
+    policy_areas = [{'id': policy_area.id,'name':policy_area.name} for policy_area in policy_areas]
+
+    return jsonify(policy_areas)
+
+@app.route('/bills', methods=['GET'])
 def view_bills():
 
-    policy_areas = db.session.query(PolicyArea.id, PolicyArea.name).all()
+    policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).all()
+    sessions = db.session.query(Session.id).all()
 
-    form = BillForm()
-    form.subject.choices = policy_areas
+    # unpack tuple into list
+    s = [session[0] for session in sessions]
 
-    if form.validate_on_submit():
+    form = BillForm(request.args)
+    form.policy_area.choices = policy_areas
+    form.session.choices = s
 
-        policy_area_id = form.subject.data
-        policy_area = PolicyArea.query.get(policy_area_id)
+    policy_area_id = request.args.get('policy_area',1)
+    policy_area = PolicyArea.query.get_or_404(policy_area_id)
+    session_id = request.args.get('session','116')
+    page = request.args.get('page', 1, type=int)
 
-        bills = Bill.query.filter(Bill.primary_subject==policy_area.name).order_by(Bill.introduced_date.asc()).limit(20).all()
+    bills = Bill.query.filter(Bill.congress==session_id, Bill.primary_subject == policy_area.name).paginate(page=page, per_page=10)
 
-        print("***********************************")
-        print("Num Bills:")
-        print(len(bills))
-        print("***********************************")
+    return render_template('bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
 
 
-        return render_template('bills.html', form=form, bills=bills)
-    
-    else:
+    # if request.args.get('policy_area',False):
 
-        return render_template('bills.html', form=form)
+    #     page = request.args.get('page', 1, type=int)
+
+    #     policy_area_id = request.args.get('policy_area')
+    #     policy_area = PolicyArea.query.get(policy_area_id)
+
+    #     bills = Bill.query.filter(Bill.congress==request.args.get('session'), Bill.primary_subject == policy_area.name).paginate(page=page, per_page=10)
+    #     flash('Form submitted!')
+
+    #     return render_template('bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
+
+    # else:
+
+    #     flash('Form not submitted!')
+    #     page = request.args.get('page', 1, type=int)
+
+    #     bills = Bill.query.filter(Bill.congress=='116', Bill.primary_subject == 'Agriculture and Food').paginate(page=page, per_page=10)
+    #     return render_template('bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
 
 @app.route('/bills/<bill_id>')
 def view_bill(bill_id):
@@ -217,7 +244,7 @@ def prune_summary(summary):
         
         lst = summary[find_index::]
 
-        print('Pruned summary: ', lst)
+        # print('Pruned summary: ', lst)
 
         new_summary = str(lst)
 

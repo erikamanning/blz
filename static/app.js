@@ -1,5 +1,86 @@
+
+// async function getPolicyAreas(){
+
+//     let req = await axios.get('/get-policy-areas')
+
+//     let policy_areas = []
+
+//     for(let policy_area of req.data){
+
+//         let new_pa = new PolicyArea(policy_area['id'], policy_area['name'])
+//         policy_areas.push(new_pa)
+//         console.log(new_pa)
+//         console.log(policy_areas)
+//     }
+
+//     return policy_areas
+// }
+
+// async function start(){
+
+//     let policy_areas = await getPolicyAreas();
+
+//     const $ul = $('<ul>')
+    
+//     for(let pa of policy_areas){
+    
+//         console.log('pa: ', pa['name'])
+//         const new_li = $(`<li>${pa['name']}</li>`);
+//         $ul.append(new_li);
+//     }
+    
+//     $('body').append($ul)
+// }
+
+// start();
+
+// async function start(){
+
+//     let policy_areas = await getPolicyAreas();
+
+//     const $ul = $('<ul>')
+    
+//     for(let pa of policy_areas){
+    
+//         console.log('pa: ', pa['name'])
+//         const new_li = $(`<li>${pa['name']}</li>`);
+//         $ul.append(new_li);
+//     }
+    
+//     $('body').append($ul)
+// }
+
+// start();
+
+
 $(document).ready(function(){
 
+    $billSearchForm = $('#bill-search-form');
+
+
+    // change to updated javascript
+    $billSearchForm.change(function(evt){
+
+        $billSearchForm.submit()
+        console.log( "form change" );
+
+    })
+
+
+    $paginationLinks = $('#pagination-links');
+
+
+    // change to updated javascript
+    $paginationLinks.change(function(evt){
+
+        
+
+        $paginationLinks.submit()
+        console.log( "pagination clicked" );
+
+    })
+
+    
     $(".summary-button").click(function(evt){
 
         // if($('.summary-container').is(":visible")){

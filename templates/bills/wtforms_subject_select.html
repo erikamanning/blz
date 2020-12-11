@@ -1,0 +1,31 @@
+
+<form id='bill-search-form' action="/bills" method="GET">
+
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+    {% for field in form %}
+
+        {% if field.widget.input_type != 'hidden' %}
+
+
+            <div class="form-group row justify-content-center">
+                <div class="col-6">
+                    <p>
+                        {{ field.label }}
+                        {{ field }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                            
+                                {{ error }}
+    
+                            {% endfor %}
+                        {%endif%}
+                    </p>
+                </div>
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</form>
