@@ -82,7 +82,8 @@ class Member(db.Model):
 
     __tablename__ = "members"
 
-    id = db.Column(db.String, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    congress_id = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     state_id = db.Column(db.String(2), db.ForeignKey('states.acronym'), nullable=False)
@@ -98,7 +99,7 @@ class State(db.Model):
 
     __tablename__ = "states"
 
-    acronym = db.Column(db.String(2), primary_key=True)
+    acronym = db.Column(db.String(4), primary_key=True)
     name = db.Column(db.String, nullable=False)
 
     def __repr__(self):

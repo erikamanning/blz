@@ -40,42 +40,43 @@
             </div>
             {% endfor %}
 
-    <!-- Pagination Links-->
-    <div id='pagination-links' class="text-right">
-        <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data,page=bills.prev_num) }}"
-        class="btn btn-outline-dark 
-        {% if bills.page == 1 %}disabled{% endif %}">
-            &laquo;
-        </a>
-    <!-- Loop through the number of pages to display a link for each-->
-        {% for page_num in bills.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-    {% if page_num %}
-    <!-- Check for the active page and set the link to "Active"-->
-                {% if bills.page == page_num %}
-                <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=page_num) }}"
-                class="btn btn-dark">
-                    {{ page_num }}
-                </a>
+    <div class="container">
+        <!-- Pagination Links-->
+        <div id='pagination-links' class="text-right">
+            <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data,page=bills.prev_num) }}"
+            class="btn btn-outline-dark 
+            {% if bills.page == 1 %}disabled{% endif %}">
+                &laquo;
+            </a>
+        <!-- Loop through the number of pages to display a link for each-->
+            {% for page_num in bills.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        <!-- Check for the active page and set the link to "Active"-->
+                    {% if bills.page == page_num %}
+                    <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=page_num) }}"
+                    class="btn btn-dark">
+                        {{ page_num }}
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=page_num) }}"
+                    class="btn btn-outline-dark">
+                        {{ page_num }}
+                    </a>
+                    {% endif %}
                 {% else %}
-                <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=page_num) }}"
-                class="btn btn-outline-dark">
-                    {{ page_num }}
-                </a>
+                    ...
                 {% endif %}
-            {% else %}
-                ...
-            {% endif %}
-        {% endfor %}
-        <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=bills.next_num) }}"
-        class="btn btn-outline-dark 
-        {% if bills.page == bills.pages %}disabled{% endif %}">
-            &raquo;
-        </a>
+            {% endfor %}
+            <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=bills.next_num) }}"
+            class="btn btn-outline-dark 
+            {% if bills.page == bills.pages %}disabled{% endif %}">
+                &raquo;
+            </a>
+        </div>
+        <p class="text-right mt-3">
+        Showing page {{ bills.page }} of {{ bills.pages }}
+        </p>
     </div>
-    <p class="text-right mt-3">
-    Showing page {{ bills.page }} of {{ bills.pages }}
-    </p>
-
         {% endif %}
 
         <h3>To Do:</h3>

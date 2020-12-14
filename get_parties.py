@@ -10,10 +10,11 @@ pp = pprint.PrettyPrinter(indent=4)
 
 republican = Party(code='R', name='Republican')
 democrat = Party(code='D', name='Democrat')
-independent = Party(code='ID', name='Independent')
+independent_democrat = Party(code='ID', name='Independent Democrat')
+independent = Party(code='I', name='Independent')
 libertarian = Party(code='LP', name='Libertarian')
 green_party = Party(code='GP', name="Green Party")
 
 
-db.session.add_all([republican,democrat,independent,libertarian,green_party])
+db.session.add_all([republican,democrat,independent, independent_democrat,libertarian,green_party])
 db.session.commit()

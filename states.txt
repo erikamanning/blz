@@ -48,3 +48,10 @@ Washington, WA
 West Virginia, WV
 Wisconsin, WI
 Wyoming, WY
+Puerto Rico, PR
+Washington D.C., D.C.
+Washington D.C., DC
+US Virgin Islands, VI
+American Samoa, AS
+Northern Mariana Islands, MP
+Guam, GU

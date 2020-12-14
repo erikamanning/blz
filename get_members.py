@@ -30,7 +30,6 @@ def extract_members(members_json, member_status):
 
             members.append(member)
 
-            print('member: ', member)
 
     return members
 
@@ -40,7 +39,7 @@ def save_members(members):
 
     for member in members:
 
-        new_member = Member(id=member['id'],first_name=member['first_name'], last_name=member['last_name'], state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
+        new_member = Member(congress_id=member['id'],first_name=member['first_name'], last_name=member['last_name'], state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
 
         saved_members.append(new_member)
 
@@ -55,19 +54,16 @@ def get_all_members(congress,chamber, member_status):
     save_members(members)
 
 
-members_json = get_members_json(116,'senate')
-print("***********************************")
-print("Members Json: ")
-pp.pprint(members_json)
-print("***********************************")
-
-members = extract_members(members_json,True)
-print("***********************************")
-print("Members Json: ")
-pp.pprint(members)
-print("***********************************")
+# get senate members
+senate_members_json = get_members_json(116,'senate')
+senate_members = extract_members(senate_members_json,True)
+save_members(senate_members)
 
 
-save_members(members)
+# get house members
+house_members_json = get_members_json(116,'house')
+house_members = extract_members(house_members_json,True)
+save_members(house_members)
 
-# get_all_members(116,'senate', 'in_office')
+
+# seed command python3 seed.py; python3 get_states.py; python3 get_positions.py; python3 get_parties.py; python3 get_members.py
