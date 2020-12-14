@@ -57,6 +57,7 @@ def view_bills():
 
     policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).all()
     sessions = db.session.query(Session.id).all()
+    policy_areas.append((0,'Any Subject') )
 
     # unpack tuple into list
     s = [session[0] for session in sessions]
@@ -65,35 +66,21 @@ def view_bills():
     form.policy_area.choices = policy_areas
     form.session.choices = s
 
-    policy_area_id = request.args.get('policy_area',1)
-    policy_area = PolicyArea.query.get_or_404(policy_area_id)
+    policy_area_id = request.args.get('policy_area','0')
     session_id = request.args.get('session','116')
     page = request.args.get('page', 1, type=int)
 
-    bills = Bill.query.filter(Bill.congress==session_id, Bill.primary_subject == policy_area.name).paginate(page=page, per_page=10)
+    if policy_area_id == '0':
 
-    return render_template('bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
+        bills = Bill.query.filter(Bill.congress==session_id).paginate(page=page, per_page=10)
+        return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
+    
+    else:
 
+        policy_area = PolicyArea.query.get_or_404(policy_area_id)
+        bills = Bill.query.filter(Bill.congress==session_id, Bill.primary_subject == policy_area.name).paginate(page=page, per_page=10)
 
-    # if request.args.get('policy_area',False):
-
-    #     page = request.args.get('page', 1, type=int)
-
-    #     policy_area_id = request.args.get('policy_area')
-    #     policy_area = PolicyArea.query.get(policy_area_id)
-
-    #     bills = Bill.query.filter(Bill.congress==request.args.get('session'), Bill.primary_subject == policy_area.name).paginate(page=page, per_page=10)
-    #     flash('Form submitted!')
-
-    #     return render_template('bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
-
-    # else:
-
-    #     flash('Form not submitted!')
-    #     page = request.args.get('page', 1, type=int)
-
-    #     bills = Bill.query.filter(Bill.congress=='116', Bill.primary_subject == 'Agriculture and Food').paginate(page=page, per_page=10)
-    #     return render_template('bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
+        return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
 
 @app.route('/bills/<bill_id>')
 def view_bill(bill_id):
@@ -106,7 +93,7 @@ def view_bill(bill_id):
 
         summary = prune_summary(bill.summary)
     
-        return render_template("single_bill.html", bill=bill, summary=summary)
+        return render_template("bills/single_bill.html", bill=bill, summary=summary)
 
 @app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
@@ -138,7 +125,7 @@ def view_legislators():
 
     legislators = Member.query.filter(Member.in_office==True).all()
 
-    return render_template('legislators.html', members = legislators)
+    return render_template('legislators/legislators.html', members = legislators)
 
 @app.route('/legislator/<int:legislator_id>')
 def view_legislator(legislator_id):
@@ -146,7 +133,7 @@ def view_legislator(legislator_id):
 
     legislator = Member.query.get_or_404(legislator_id)
 
-    return render_template('single_legislator.html', legislator = legislator)
+    return render_template('legislators/single_legislator.html', legislator = legislator)
 
 
 # a page to give information on the chambers/ scronyms etc, mostly will be done in js dropping and revealing information
@@ -163,7 +150,7 @@ def show_homepage():
     if session.get('username', False):
 
         user = User.query.filter(User.username==session['username']).one_or_none()
-        return render_template('dashboard.html', user=user, bills=user.followed_bills)
+        return render_template('user/dashboard.html', user=user, bills=user.followed_bills)
 
     else:
         flash('No user logged in')
@@ -177,7 +164,7 @@ def show_profile():
 
         user = User.query.filter(User.username==session['username']).first()
 
-        return render_template('profile.html', user=user)
+        return render_template('user/profile.html', user=user)
 
     else:
         flash('No user logged in')
@@ -228,7 +215,7 @@ def login():
             return redirect('/login')
 
     else:
-        return render_template('login.html', form=form)
+        return render_template('user/login.html', form=form)
 
 @app.route('/logout')
 def logout():

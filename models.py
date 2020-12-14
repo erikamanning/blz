@@ -57,7 +57,7 @@ class Bill(db.Model):
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
-    # sponsor = db.relationship('Member', backref="members")
+    # sponsor = db.relationship('Member', backref="bills")
 
     def __repr__(self):
 

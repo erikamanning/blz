@@ -24,10 +24,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-11">
-                        <p class="py-1 px-2 text-light bg-info rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
+                        <p class="py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
                     </div>
                     <div class="col-1">
-                        <p class="btn btn-success text-right follow-button">Follow</p>
+                        <p class="btn btn-dark text-right follow-button"><i class="fas fa-bookmark"></i></p>
                     </div>
                 </div>
 
@@ -37,10 +37,9 @@
                 <h4 class="card-title font-weight-bold text-capitalize my-4">{{bill.title}}</h4>
                 {% endif %}
 
-
                 <h5 class="card-title">Summary</h5>
                 <p class="card-text mb-4">{{summary}}</p>
-                <a href="{{bill.congressdotgov_url}}}/text" class="btn btn-info">View Full Bill at  <span class="font-weight-bold">Congress.gov</span></a>
+                <a href="{{bill.congressdotgov_url}}}/text" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View Full Bill at  <span class="font-italic">Congress.gov</span></a>
                 <h5 class="card-title mt-5">Actions</h5>
             </div>
         </div>

@@ -1,31 +1,53 @@
 
-<form id='bill-search-form' action="/bills" method="GET">
 
-    {{ form.hidden_tag() }}
-    {{ form.csrf_token }}
-    {% for field in form %}
+    <form id='bill-search-form' action="/bills" method="GET">
 
-        {% if field.widget.input_type != 'hidden' %}
-
-
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        
+        <div class="container">
             <div class="form-group row justify-content-center">
-                <div class="col-6">
-                    <p>
-                        {{ field.label }}
-                        {{ field }}
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                            
-                                {{ error }}
-    
-                            {% endfor %}
-                        {%endif%}
-                    </p>
+                {% for field in form %}
+
+                    {% if field.widget.input_type != 'hidden' %}
+
+
+
+                            <div class="col-4">
+                                <p>
+                                    {{ field.label }}
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        {% for error in field.errors %}
+                                        
+                                            {{ error }}
+                
+                                        {% endfor %}
+                                    {%endif%}
+                                </p>
+                            </div>
+                        
+
+                    {% endif %}
+                
+                {% endfor %}
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="start">Start</label>
+                            <input type="date" class="form-control" id="start" name="trip-start"
+                            min="1993-01-01" max="2020-12-31">
+                        </div>
+                        <div class="col-6">
+                            <label for="end">End</label>
+                            <input type="date" class="form-control" id="end" name="trip-start"
+                            min="1993-01-01" max="2020-12-31">
+                        </div>
+                    </div>
+
                 </div>
             </div>
+        </div>
 
-        {% endif %}
-
-    {% endfor %}
-
-</form>
+    </form>

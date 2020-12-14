@@ -81,16 +81,10 @@ $(document).ready(function(){
     })
 
     
-    $(".summary-button").click(function(evt){
+    $("#show-details").click(function(evt){
 
-        // if($('.summary-container').is(":visible")){
-
-            // $('.summary-container').hide();
-        //   }
-        //   else if($('.summary-container').is(":hidden")){
-            $('.summary-container').toggleClass('d-none');
-        //   }
-        console.log('Clicked')
+        $('.summary-container').toggleClass('d-none');
+        $('.last-major-action').toggleClass('d-none');
     });
 
 
