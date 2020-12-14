@@ -39,7 +39,8 @@ def save_members(members):
 
     for member in members:
 
-        new_member = Member(congress_id=member['id'],first_name=member['first_name'], last_name=member['last_name'], state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
+        mem_id = member['id']
+        new_member = Member(congress_id=member['id'],first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
 
         saved_members.append(new_member)
 

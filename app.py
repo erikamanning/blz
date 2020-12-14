@@ -136,9 +136,17 @@ def follow_bill(bill_id):
 def view_legislators():
 
 
-    legislators = Member.query.all()
+    legislators = Member.query.filter(Member.in_office==True).all()
 
     return render_template('legislators.html', members = legislators)
+
+@app.route('/legislator/<int:legislator_id>')
+def view_legislator(legislator_id):
+
+
+    legislator = Member.query.get_or_404(legislator_id)
+
+    return render_template('single_legislator.html', legislator = legislator)
 
 
 # a page to give information on the chambers/ scronyms etc, mostly will be done in js dropping and revealing information

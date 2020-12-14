@@ -86,6 +86,7 @@ class Member(db.Model):
     congress_id = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
+    image = db.Column(db.String,nullable=True)
     state_id = db.Column(db.String(2), db.ForeignKey('states.acronym'), nullable=False)
     party_id = db.Column(db.String,db.ForeignKey('parties.code'),nullable=False)
     position_code = db.Column(db.String, db.ForeignKey('positions.code'), nullable=False)

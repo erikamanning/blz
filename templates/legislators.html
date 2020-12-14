@@ -10,17 +10,8 @@
         
         <h2 class="text-center mt-5">Legislators </h2>
 
-        {% if 'username' not in session%}
 
         <p class="text-center mt-3">A place to view legislator info and voting records. </p>
-        {% else %}
-
-        <div class="mt-5">
-            <span class="badge badge-pill badge-light">Senate</span>
-            <span class="badge badge-pill badge-light">House</span>
-            <span class="badge badge-pill badge-light">Session</span>
-        </div>
-        
 
         <table class="table table-striped mt-1">
             <thead>
@@ -42,7 +33,6 @@
                 {% endfor %}
             </tbody>
           </table>
-        {% endif %}
 
         <h3>To Do:</h3>
         <p class="small text-danger font-italic">Now just Senators - ADD REPRESENTATIVES</p>
