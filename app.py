@@ -10,6 +10,7 @@ from classes import BillSearch
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session
 from forms import BillForm, SignupForm, LoginForm
 from secrets import API_SECRET_KEY
+from sqlalchemy import and_
 
 
 
@@ -54,10 +55,11 @@ def get_policy_areas():
 
 @app.route('/bills', methods=['GET'])
 def view_bills():
-
     policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).all()
     sessions = db.session.query(Session.id).all()
-    policy_areas.append((0,'Any Subject') )
+    policy_areas.append(('','Any Subject') )
+
+    filter_args = []
 
     # unpack tuple into list
     s = [session[0] for session in sessions]
@@ -66,21 +68,42 @@ def view_bills():
     form.policy_area.choices = policy_areas
     form.session.choices = s
 
-    policy_area_id = request.args.get('policy_area','0')
-    session_id = request.args.get('session','116')
     page = request.args.get('page', 1, type=int)
 
-    if policy_area_id == '0':
+    bill_query = Bill.query
 
-        bills = Bill.query.filter(Bill.congress==session_id).paginate(page=page, per_page=10)
-        return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
+    # subject
+    if request.args.get('policy_area',False):
+        policy_area_id = request.args['policy_area']
+        policy_area = PolicyArea.query.get_or_404(policy_area_id)
+        filter_args.append(Bill.primary_subject == policy_area.name )
+
+    # session
+    if request.args.get('session',False):
+        session_id=request.args['session']
+        filter_args.append(Bill.congress == session_id)
+    else:
+        session_id='116'
+        filter_args.append(Bill.congress == session_id)
+
+    #start date/ end date
+    if request.args.get('start-date',False):
+        print('******************* BEFORE ********************')
+        start_date = request.args['start-date']
+        filter_args.append(Bill.introduced_date >= start_date)
+        print('******************* filter args ********************', filter_args)
+    else:
+        start_date=''
+
+    if request.args.get('end-date',False):
+        end_date = request.args['end-date']
+        filter_args.append(Bill.introduced_date <= end_date)
     
     else:
+        end_date=''
 
-        policy_area = PolicyArea.query.get_or_404(policy_area_id)
-        bills = Bill.query.filter(Bill.congress==session_id, Bill.primary_subject == policy_area.name).paginate(page=page, per_page=10)
-
-        return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills)
+    bills = Bill.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
+    return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills, start_date=start_date, end_date=end_date)
 
 @app.route('/bills/<bill_id>')
 def view_bill(bill_id):
