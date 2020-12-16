@@ -2,7 +2,7 @@ from app import db, headers
 from models import Session
 import requests
 
-Session.__table__.drop(db.get_engine())
+# Session.__table__.drop(db.get_engine())
 Session.__table__.create(db.get_engine())
 
 CURRENT_SESSION = 116

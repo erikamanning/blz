@@ -2,7 +2,7 @@ from app import db, headers
 from models import PolicyArea, Bill
 import requests
 
-PolicyArea.__table__.drop(db.get_engine())
+# PolicyArea.__table__.drop(db.get_engine())
 PolicyArea.__table__.create(db.get_engine())
 
 

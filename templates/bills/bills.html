@@ -30,31 +30,51 @@
                         <div class="card mb-3">
                             <div class="card-header">
                                 <div class="row justify-content-between">
-                                    <div class="col-2">
+                                    <div class="col-2 align-items-end text-right">
                                         <i class="fas fa-scroll"></i> {{bill.bill}}
                                     </div>
-                                    <div class="col-3 text-right">
-                                        <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Introduced: </span>
-                                        {{bill.introduced_date}}
+                                    <div class="col-1">
+                                        <i class="btn btn-dark fas fa-bookmark"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body mt-1">
                                 <div class="row last-major-action d-none mb-3">
-                                    <div class="col-11">
+                                    <div class="col-12">
                                         <p class="card py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
                                     </div>
                                 </div>
                                 <div class="row justify-content-end">
-                                    <div class="col">
+                                    <div class="col-9">
                                         {% if bill.short_title %}
                                         <h5 class="text-justify card-title font-weight-bold">{{bill.short_title}}</h5>
                                         {% else %}
                                         <h5 class="text-justify card-title font-weight-bold">{{bill.title}}</h5>
                                         {% endif %}
                                     </div>
-                                    <div class="col-1">
-                                        <p class="btn btn-dark text-right follow-button"><i class="fas fa-bookmark"></i></p>
+                                    <div class="col-3">
+                                        <div class="row">
+                                            <div class="col text-right">
+                                                <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Introduced: </span>
+                                                {{bill.introduced_date}}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                        <span class="font-weight-bold"><i class="fas fa-user-edit"></i> Primary Sponsor:</span>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col">
+                                                            <a href="legislator/{{bill.sponsor.id}}"> <img class="rounded-circle" style="width: 40px;" src="{{bill.sponsor.image}}" alt=""></a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="summary-container d-none mt-3">

@@ -8,7 +8,7 @@
 {% block content %}    
 
     <div class="card mt-5 p-3">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-4">
                 <img src="{{legislator.image}}" style="width: 18rem;" class="img-thumbnail img-fluid rounded-circle" alt="...">
             </div>
@@ -18,38 +18,39 @@
                         {{legislator.first_name}} {{legislator.last_name}}
                     </h3>
                     <h4><small class="text-muted">{{legislator.position.name}} from {{legislator.state.name}}</small></h4>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">View Voting Record</a>
-                    <a href="#" class="btn btn-primary">View Sponsored Bills</a>
+                    <p class="card-text">Find out more about {{legislator.position.name}} {{legislator.last_name}} here!</p>
+
+
+                    <dl class="row mt-3">
+                      <dt class="col-sm-3">Position:</dt>
+                      <dd class="col-sm-9">{{legislator.position.name}}</dd>
+                    
+                      <dt class="col-sm-3">State:</dt>
+                      <dd class="col-sm-9">{{legislator.state.name}}</dd>
+
+                      <dt class="col-sm-3">Party:</dt>
+                      <dd class="col-sm-9">{{legislator.party.name}}</dd>
+                    
+                      <dt class="col-sm-3 text-truncate">Most Common Bill Tags:</dt>
+                      <dd class="col-sm-9">
+                        <p class="btn btn-dark">Constitution</p>
+                        <p class="btn btn-dark">Criminal Justice</p>
+                        <p class="btn btn-dark">Foreign Policy</p>
+                        <p class="btn btn-dark">Economy</p>
+                      </dd>
+                      <dt class="col-sm-3">Websites:</dt>
+                      <dd class="col-sm-3"><a class="btn btn-outline-dark" href='#'><i class="fas fa-external-link-alt"></i> Congress</a></dd>
+                      <dd class="col-sm-3"><a class="btn btn-outline-dark" href="#"><i class="fas fa-external-link-alt"></i> State</a></dd>
+                      <dd class="col-sm-3"><a class="btn btn-outline-dark" href="#"><i class="fas fa-external-link-alt"></i> Personal</a></dd>
+
+                    </dl>
+                    <div>
+                      <a href="#" class="btn btn-dark"><i class="fas fa-search"></i> View Sponsored Bills</a>
+                    </div>
                   </div>
-                  <dl class="row">
-                    <dt class="col-sm-3">Description lists</dt>
-                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
-                  
-                    <dt class="col-sm-3">Euismod</dt>
-                    <dd class="col-sm-9">
-                      <p>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</p>
-                      <p>Donec id elit non mi porta gravida at eget metus.</p>
-                    </dd>
-                  
-                    <dt class="col-sm-3">Malesuada porta</dt>
-                    <dd class="col-sm-9">Etiam porta sem malesuada magna mollis euismod.</dd>
-                  
-                    <dt class="col-sm-3 text-truncate">Truncated term is truncated</dt>
-                    <dd class="col-sm-9">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
-                  
-                    <dt class="col-sm-3">Nesting</dt>
-                    <dd class="col-sm-9">
-                      <dl class="row">
-                        <dt class="col-sm-4">Nested definition list</dt>
-                        <dd class="col-sm-8">Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.</dd>
-                      </dl>
-                    </dd>
-                  </dl>
             </div>
         </div>
     </div>
-
 
     {% for vote in votes %}
 

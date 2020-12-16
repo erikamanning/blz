@@ -150,7 +150,7 @@ def view_legislators():
 
     return render_template('legislators/legislators.html', members = legislators)
 
-@app.route('/legislator/<int:legislator_id>')
+@app.route('/legislator/<legislator_id>')
 def view_legislator(legislator_id):
 
 
@@ -214,7 +214,7 @@ def signup():
         return redirect('/dashboard')
 
     else:
-        return render_template('signup.html', form=form)
+        return render_template('user/signup.html', form=form)
 
 
 @app.route('/login', methods=['GET','POST'])

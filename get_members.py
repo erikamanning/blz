@@ -33,6 +33,8 @@ def extract_members(members_json, member_status):
 
     return members
 
+
+# fix: Doesn't account for members who have changed their party- i.e. Justin Amash who would show as a duplicate
 def save_members(members):
 
     saved_members = []
@@ -40,13 +42,16 @@ def save_members(members):
     for member in members:
 
         mem_id = member['id']
-        new_member = Member(congress_id=member['id'],first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
 
-        saved_members.append(new_member)
+        if not Member.query.filter(Member.id==mem_id).one_or_none():
+            new_member = Member(id=mem_id,first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
+            # saved_members.append(new_member)
+            db.session.add(new_member)
+            db.session.commit()
 
 
-    db.session.add_all(saved_members)
-    db.session.commit()
+    # db.session.add_all(saved_members)
+    # db.session.commit()
 
 def get_all_members(congress,chamber, member_status):
 
@@ -67,4 +72,5 @@ house_members = extract_members(house_members_json,True)
 save_members(house_members)
 
 
-# seed command python3 seed.py; python3 get_states.py; python3 get_positions.py; python3 get_parties.py; python3 get_members.py
+# seed command 
+# python3 seed.py; python3 get_states.py; python3 get_positions.py; python3 get_parties.py; python3 get_members.py

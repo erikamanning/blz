@@ -25,6 +25,17 @@ class BillFollows(db.Model):
 
         return f'BillFollow: username: {self.username}, bill_id: {self.bill_id}'
 
+class SponsoredBills(db.Model):
+
+    __tablename__ = 'sponsored_bills'
+
+    bill_id = db.Column(db.String, db.ForeignKey('bills.id'), primary_key=True)
+    sponsor_id = db.Column(db.String, db.ForeignKey('members.username'), primary_key=True)
+
+    def __repr__(self):
+
+        return f'BillFollow: username: {self.username}, bill_id: {self.bill_id}'
+
 
 class Bill(db.Model):
 
@@ -38,7 +49,7 @@ class Bill(db.Model):
     number = db.Column(db.String, nullable = False)
     title = db.Column(db.String, nullable = False)
     short_title = db.Column(db.String, nullable = True)
-    sponsor_id = db.Column(db.String, nullable = False)
+    sponsor_id = db.Column(db.String, db.ForeignKey('members.id'), nullable = False)
     congressdotgov_url = db.Column(db.String, nullable = False)
     introduced_date = db.Column(db.String, nullable = False)
     active = db.Column(db.Boolean, nullable = False)
@@ -57,7 +68,7 @@ class Bill(db.Model):
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
-    # sponsor = db.relationship('Member', backref="bills")
+    sponsor = db.relationship('Member', backref="bills")
 
     def __repr__(self):
 
@@ -82,8 +93,7 @@ class Member(db.Model):
 
     __tablename__ = "members"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    congress_id = db.Column(db.String, nullable=False)
+    id = db.Column(db.String, primary_key=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     image = db.Column(db.String,nullable=True)
