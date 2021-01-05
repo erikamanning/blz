@@ -7,8 +7,8 @@ from fileread import FileRead
 import requests
 import pprint
 from classes import BillSearch
-from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session
-from forms import BillForm, SignupForm, LoginForm
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session, Party, State
+from forms import BillForm, SignupForm, LoginForm, LegislatorForm
 from secrets import API_SECRET_KEY
 from sqlalchemy import and_
 
@@ -70,8 +70,6 @@ def view_bills():
 
     page = request.args.get('page', 1, type=int)
 
-    bill_query = Bill.query
-
     # subject
     if request.args.get('policy_area',False):
         policy_area_id = request.args['policy_area']
@@ -88,10 +86,8 @@ def view_bills():
 
     #start date/ end date
     if request.args.get('start-date',False):
-        print('******************* BEFORE ********************')
         start_date = request.args['start-date']
         filter_args.append(Bill.introduced_date >= start_date)
-        print('******************* filter args ********************', filter_args)
     else:
         start_date=''
 
@@ -145,16 +141,50 @@ def follow_bill(bill_id):
 @app.route('/legislators')
 def view_legislators():
 
+    form = LegislatorForm(request.args)
+    filter_args = []
 
-    legislators = Member.query.filter(Member.in_office==True).all()
+    parties = db.session.query(Party.code,Party.name).all()
+    states = db.session.query(State.acronym,State.name).all()
 
-    return render_template('legislators/legislators.html', members = legislators)
+    # make a function
+    for party in parties:
+
+        form.party.choices.append(party)
+
+    for state in states:
+
+        form.state.choices.append(state)  
+
+
+    page = request.args.get('page', 1, type=int)
+
+    if request.args.get('state',False) and request.args.get('state') != '0':
+
+        state_code = request.args['state']
+        filter_args.append(Member.state_id == state_code)
+
+    if request.args.get('party',False) and request.args.get('party') != '0':
+
+        party_code = request.args['party']
+        filter_args.append(Member.party_id == party_code)
+
+    if request.args.get('chamber',False) and request.args.get('chamber') != '0':
+
+        position_code = request.args['chamber']
+        filter_args.append(Member.position_code == position_code)
+
+    # filter out member in office or add select option
+    filter_args.append(Member.in_office==True)
+    legislators = Member.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
+
+    return render_template('legislators/legislators.html', members = legislators, form=form)
 
 @app.route('/legislator/<legislator_id>')
 def view_legislator(legislator_id):
 
 
-    legislator = Member.query.get_or_404(legislator_id)
+    legislator = Member.query.filter(Member.id==legislator_id,Member.in_office==True).first()
 
     return render_template('legislators/single_legislator.html', legislator = legislator)
 

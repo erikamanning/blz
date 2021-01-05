@@ -11,7 +11,10 @@ class BillForm(FlaskForm):
 
 class LegislatorForm(FlaskForm):
 
-    chamber = SelectField('Chamber', choices=[(1,"Senate"),(2,"House of Representatives")])
+    chamber = SelectField('Chamber', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any Chamber'),('Sen.',"Senate"),('Rep.', 'House')])
+    state = SelectField('State', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any State')])
+    party = SelectField('Party', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any Party')])
+    # session = SelectField('Session', validate_choice=False, default = '116',render_kw={'class':'form-control'})
 
 class SignupForm(FlaskForm):
 

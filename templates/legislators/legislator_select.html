@@ -1,0 +1,33 @@
+
+
+    <form id='bill-search-form' action="/legislators" method="GET">
+
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        
+        <div class="container">
+            <div class="form-group row justify-content-center">
+                {% for field in form %}
+
+                    {% if field.widget.input_type != 'hidden' %}
+
+                            <div class="col-4">
+                                <p>
+                                    {{ field.label }}
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        {% for error in field.errors %}
+                                        
+                                            {{ error }}
+                
+                                        {% endfor %}
+                                    {%endif%}
+                                </p>
+                            </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </form>

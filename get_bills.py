@@ -9,7 +9,7 @@ pp = pprint.PrettyPrinter(indent=4)
 # db.create_all()
 
 # Bill.__table__.drop(db.get_engine())
-Bill.__table__.create(db.get_engine())
+# Bill.__table__.create(db.get_engine())
 
 
 bill_data = requests.get('https://api.propublica.org/congress/v1/116/senate/bills/introduced.json?offset=40', headers = headers)
@@ -147,7 +147,7 @@ def get_some_slugs(congress, chamber, max_offset):
     
     return all_slugs
 
-all_senate_slugs = get_some_slugs(116, "senate",20)
+all_senate_slugs = get_some_slugs(116, "senate",10)
 get_bill_data(all_senate_slugs, 116)
 
 

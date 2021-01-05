@@ -43,11 +43,11 @@ def save_members(members):
 
         mem_id = member['id']
 
-        if not Member.query.filter(Member.id==mem_id).one_or_none():
-            new_member = Member(id=mem_id,first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
+        # if not Member.query.filter(Member.id==mem_id).one_or_none():
+        new_member = Member(id=mem_id,first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
             # saved_members.append(new_member)
-            db.session.add(new_member)
-            db.session.commit()
+        db.session.add(new_member)
+        db.session.commit()
 
 
     # db.session.add_all(saved_members)

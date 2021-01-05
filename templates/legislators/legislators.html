@@ -6,48 +6,69 @@
 
 {% block content %}
 
-    <div id="home-container">
-        
-        <h2 class="text-center mt-5">Legislators </h2>
+    <h2 class="text-center mt-5">Legislators </h2>
+
+    <p class="text-center">A place to view and follow Legislators. </p>
+
+    <div class='container'>
 
 
-        <p class="text-center mt-3">A place to view legislator info and voting records. </p>
 
-        <table class="table table-striped mt-1">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">In Office</th>
-                <th scope="col">Position</th>
-                <th scope="col">State</th>
-                <th scope="col">Party</th>
-                <th scope="col">View</th>
-                <th scope="col">Follow</th>
-              </tr>
-            </thead>
-            <tbody>
-                {% for member in members%}
-                {% include 'legislators/member_block_table_version.html' %}
-                {% endfor %}
-            </tbody>
-          </table>
+        {% if members%}
 
-        <h3>To Do:</h3>
-        <p class="small text-danger font-italic">Now just Senators - ADD REPRESENTATIVES</p>
-        <p class="small text-danger font-italic">ADD PAGINATION</p>
-        <p class="small text-danger font-italic">Change In Office from true/false to text status in db</p>
-        <p class="small text-danger font-italic">ADD functionality to select members by session # </p>
-        <p class="small text-danger font-italic">Image of member</p>
-        <p class="small text-danger font-italic">Bills Sponsored</p>
-        <p class="small text-danger font-italic">Recent Votes</p>
-        <p class="small text-danger font-italic">Voting Record</p>
-        <p class="small text-danger font-italic">Add filters for viewing members by state and party and maybe more</p>
-        <p class="small text-danger font-italic">Down the Road Goal: Show stats on how many bills sponsored, what subjects, how many passed, how much money</p>
+          {% include 'legislators/legislator_select.html'%}
 
-
+            {% include 'legislators/member_block_card_version.html'%}
+        {% endif %}
 
     </div>
 
+  </div>
+
+  <div class="container">
+    <!-- Pagination Links-->
+    <div id='pagination-links' class="text-right">
+      <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=members.prev_num) }}"
+      class="btn btn-outline-dark 
+        {% if members.page == 1 %}disabled{% endif %}">
+            &laquo;
+        </a>
+    <!-- Loop through the number of pages to display a link for each-->
+        {% for page_num in members.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+    <!-- Check for the active page and set the link to "Active"-->
+                {% if members.page == page_num %}
+                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                class="btn btn-dark">
+                    {{ page_num }}
+                </a>
+                {% else %}
+                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                class="btn btn-outline-dark">
+                    {{ page_num }}
+                </a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+        <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=members.next_num) }}"
+        class="btn btn-outline-dark 
+        {% if members.page == members.pages %}disabled{% endif %}">
+            &raquo;
+        </a>
+    </div>
+    <p class="text-right mt-3">
+    Showing page {{ members.page }} of {{ members.pages }}
+    </p>
+    </div>
+  </div>
+  
+
+
+  <h3>To Do:</h3>
+    <p class="small text-danger font-italic">add session later when api figured out</p>  
+  </div>
+
 {% endblock %}
+

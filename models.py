@@ -18,8 +18,8 @@ class BillFollows(db.Model):
     __tablename__ = 'bill_follows'
 
     # may want to change username to user id to save processing time later
-    bill_id = db.Column(db.String, db.ForeignKey('bills.id'), primary_key=True)
-    username = db.Column(db.String, db.ForeignKey('users.username'), primary_key=True)
+    bill_id = db.Column(db.String, db.ForeignKey('bills.id', ondelete="CASCADE"), primary_key=True)
+    username = db.Column(db.String, db.ForeignKey('users.username', ondelete="CASCADE"), primary_key=True)
 
     def __repr__(self):
 
@@ -29,8 +29,8 @@ class SponsoredBills(db.Model):
 
     __tablename__ = 'sponsored_bills'
 
-    bill_id = db.Column(db.String, db.ForeignKey('bills.id'), primary_key=True)
-    sponsor_id = db.Column(db.String, db.ForeignKey('members.username'), primary_key=True)
+    bill_id = db.Column(db.String, db.ForeignKey('bills.id', ondelete="CASCADE"), primary_key=True)
+    sponsor_id = db.Column(db.String, db.ForeignKey('members.id', ondelete="CASCADE"), primary_key=True)
 
     def __repr__(self):
 
@@ -49,7 +49,7 @@ class Bill(db.Model):
     number = db.Column(db.String, nullable = False)
     title = db.Column(db.String, nullable = False)
     short_title = db.Column(db.String, nullable = True)
-    sponsor_id = db.Column(db.String, db.ForeignKey('members.id'), nullable = False)
+    sponsor_id = db.Column(db.String, db.ForeignKey('members.id', ondelete="CASCADE"), nullable = False)
     congressdotgov_url = db.Column(db.String, nullable = False)
     introduced_date = db.Column(db.String, nullable = False)
     active = db.Column(db.Boolean, nullable = False)
@@ -68,7 +68,7 @@ class Bill(db.Model):
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
-    sponsor = db.relationship('Member', backref="bills")
+    sponsor = db.relationship('Member', backref="bills", cascade="all, delete")
 
     def __repr__(self):
 
@@ -97,14 +97,22 @@ class Member(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     image = db.Column(db.String,nullable=True)
-    state_id = db.Column(db.String(2), db.ForeignKey('states.acronym'), nullable=False)
-    party_id = db.Column(db.String,db.ForeignKey('parties.code'),nullable=False)
-    position_code = db.Column(db.String, db.ForeignKey('positions.code'), nullable=False)
-    in_office = db.Column(db.Boolean, nullable=False)
+    state_id = db.Column(db.String(2), db.ForeignKey('states.acronym', ondelete="CASCADE"), nullable=False)
+    party_id = db.Column(db.String,db.ForeignKey('parties.code', ondelete="CASCADE"),nullable=False)
+    position_code = db.Column(db.String, db.ForeignKey('positions.code', ondelete="CASCADE"), nullable=False)
 
-    state = db.relationship('State', backref='members')
-    party = db.relationship('Party', backref='members')
-    position = db.relationship('Position', backref='members')
+    # website = db.Column(db.String,nullable=False)
+    in_office = db.Column(db.Boolean, primary_key= True, nullable=False)
+    # twitter_handle = db.Column(db.String, nullable=True)
+    # facebook_account = db.Column(db.String, nullable=True)
+    # youtube_account = db.Column(db.String, nullable=True)
+    # office_address = db.Column(db.String,nullable=False)
+    # phone = db.Column(db.String,nullable=False)
+     
+
+    state = db.relationship('State', backref='members', cascade="all, delete")
+    party = db.relationship('Party', backref='members', cascade="all, delete")
+    position = db.relationship('Position', backref='members', cascade="all, delete")
 
 class State(db.Model):
 
@@ -160,7 +168,8 @@ class User(db.Model):
     followed_bills=db.relationship(
         'Bill', 
         secondary='bill_follows',
-        primaryjoin=(BillFollows.username == username)
+        primaryjoin=(BillFollows.username == username),
+        cascade="all, delete"
     )
 
     def __repr__(self):
