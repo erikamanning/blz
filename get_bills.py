@@ -1,5 +1,5 @@
 from app import db, headers
-from models import Bill
+from models import Bill, SponsoredBill
 from fileread import FileRead
 import requests
 import pprint
@@ -60,6 +60,13 @@ def create_bill(bill_data):
             summary_short = bill_data["summary_short"]
     )
     db.session.add(new_bill)
+    db.session.commit()
+
+    # make its own function
+    # find out if this is the best time to do this
+    # it may not be optimized
+    new_sponsored_bill = SponsoredBill(bill_id=new_bill.id,sponsor_id=new_bill.sponsor_id)
+    db.session.add(new_sponsored_bill)
     db.session.commit()
 
 
@@ -147,7 +154,7 @@ def get_some_slugs(congress, chamber, max_offset):
     
     return all_slugs
 
-all_senate_slugs = get_some_slugs(116, "senate",10)
+all_senate_slugs = get_some_slugs(116, "senate",4)
 get_bill_data(all_senate_slugs, 116)
 
 

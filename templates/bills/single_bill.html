@@ -41,10 +41,10 @@
                 <p class="card-text mb-4">{{summary}}</p>
                 <a href="{{bill.congressdotgov_url}}}/text" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View Full Bill at  <span class="font-italic">Congress.gov</span></a>
                 <h5>Sponsor: </h5>
-                <p>{{bill.sponsor.position.name}} {{bill.sponsor.first_name}} {{bill.sponsor.last_name}}</p>
-                <a href="/legislator/{{bill.sponsor.id}}"><img class="rounded-circle" src="{{bill.sponsor.image}}" style="width:200px" alt=""></a>
+                <p>{{bill.sponsor[0].members.position.name}} {{bill.sponsor[0].members.first_name}} {{bill.sponsor[0].members.last_name}}</p>
+                <a href="/legislator/{{bill.sponsor[0].members.id}}"><img class="rounded-circle" src="{{bill.sponsor[0].members.image}}" style="width:200px" alt=""></a>
                 <div>
-                    <a href="/legislator/{{bill.sponsor.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor.position_code}} {{bill.sponsor.last_name}}'s Page</a>
+                    <a href="/legislator/{{bill.sponsor[0].members.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor[0].members.position_code}} {{bill.sponsor[0].members.last_name}}'s Page</a>
                 </div>
             </div>
         </div>

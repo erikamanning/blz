@@ -57,7 +57,12 @@ def get_policy_areas():
 def view_bills():
     policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).all()
     sessions = db.session.query(Session.id).all()
-    policy_areas.append(('','Any Subject') )
+    
+    pas = [('','Any Subject') ]
+
+    for policy_area in policy_areas:
+
+        pas.append(policy_area)
 
     filter_args = []
 
@@ -65,7 +70,7 @@ def view_bills():
     s = [session[0] for session in sessions]
 
     form = BillForm(request.args)
-    form.policy_area.choices = policy_areas
+    form.policy_area.choices = pas
     form.session.choices = s
 
     page = request.args.get('page', 1, type=int)
@@ -175,7 +180,7 @@ def view_legislators():
         filter_args.append(Member.position_code == position_code)
 
     # filter out member in office or add select option
-    filter_args.append(Member.in_office==True)
+    # filter_args.append(Member.in_office==True)
     legislators = Member.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
 
     return render_template('legislators/legislators.html', members = legislators, form=form)
@@ -184,9 +189,11 @@ def view_legislators():
 def view_legislator(legislator_id):
 
 
-    legislator = Member.query.filter(Member.id==legislator_id,Member.in_office==True).first()
+    legislator = Member.query.filter(Member.id==legislator_id).first()
 
-    return render_template('legislators/single_legislator.html', legislator = legislator)
+    sponsored_bills = legislator.sponsored_bills
+
+    return render_template('legislators/single_legislator.html', legislator = legislator, sponsored_bills=sponsored_bills)
 
 
 # a page to give information on the chambers/ scronyms etc, mostly will be done in js dropping and revealing information

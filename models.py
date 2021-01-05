@@ -25,7 +25,7 @@ class BillFollows(db.Model):
 
         return f'BillFollow: username: {self.username}, bill_id: {self.bill_id}'
 
-class SponsoredBills(db.Model):
+class SponsoredBill(db.Model):
 
     __tablename__ = 'sponsored_bills'
 
@@ -34,14 +34,14 @@ class SponsoredBills(db.Model):
 
     def __repr__(self):
 
-        return f'BillFollow: username: {self.username}, bill_id: {self.bill_id}'
+        return f'Sponsored Bill: sponsor_id: {self.sponsor_id}, bill_id: {self.bill_id}'
 
 
 class Bill(db.Model):
 
     __tablename__ = "bills"
 
-    id = db.Column(db.String, primary_key=True, nullable = False)
+    id = db.Column(db.String, primary_key=True, nullable = False, unique=True)
     bill_slug = db.Column(db.String, nullable = False)
     congress = db.Column(db.String, nullable = False)
     bill = db.Column(db.String, nullable = False)
@@ -68,7 +68,7 @@ class Bill(db.Model):
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
-    sponsor = db.relationship('Member', backref="bills", cascade="all, delete")
+    sponsor = db.relationship('SponsoredBill', backref="bills", cascade="all, delete")
 
     def __repr__(self):
 
@@ -93,7 +93,7 @@ class Member(db.Model):
 
     __tablename__ = "members"
 
-    id = db.Column(db.String, primary_key=True)
+    id = db.Column(db.String, primary_key=True, unique=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     image = db.Column(db.String,nullable=True)
@@ -113,6 +113,8 @@ class Member(db.Model):
     state = db.relationship('State', backref='members', cascade="all, delete")
     party = db.relationship('Party', backref='members', cascade="all, delete")
     position = db.relationship('Position', backref='members', cascade="all, delete")
+
+    sponsored_bills = db.relationship('SponsoredBill', backref='members', cascade="all, delete")
 
 class State(db.Model):
 
