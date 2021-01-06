@@ -103,7 +103,7 @@ def view_bills():
     else:
         end_date=''
 
-    bills = Bill.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
+    bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
     return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills, start_date=start_date, end_date=end_date)
 
 @app.route('/bills/<bill_id>')
