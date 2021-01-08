@@ -27,14 +27,14 @@
             {%for bill in bills.items%}
                 <div class="row justify-content-center">
                     <div class="col">
-                        <div class="card mb-3">
+                        <div class="card mb-3" id='{{bill.id}}'>
                             <div class="card-header">
                                 <div class="row justify-content-between">
                                     <div class="col-2 align-items-end text-right">
                                         <i class="fas fa-scroll"></i> {{bill.bill}}
                                     </div>
                                     <div class="col-1">
-                                        <i class="btn btn-dark fas fa-bookmark"></i>
+                                        <i class="btn btn-dark fas fa-bookmark follow-button"></i>
                                     </div>
                                 </div>
                             </div>

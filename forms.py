@@ -21,9 +21,16 @@ class SignupForm(FlaskForm):
     username = StringField("Username", validators=[InputRequired(message="Username cannot be blank")], render_kw={'class':'form-control'})
     password = PasswordField("Password", validators=[InputRequired(message="Password cannot be blank")], render_kw={'class':'form-control'})
     email = EmailField("Email", validators=[InputRequired(message="Email cannot be blank"),Email()], render_kw={'class':'form-control'})
-
+    state = SelectField('State', render_kw={'class':'form-control'})
 
 class LoginForm(FlaskForm):
 
     username = StringField("Username", validators=[InputRequired(message="Username cannot be blank")], render_kw={'class':'form-control'})
     password = PasswordField("Password", validators=[InputRequired(message="Password cannot be blank")], render_kw={'class':'form-control'})
+
+class EditProfile(FlaskForm):
+
+    username = StringField("Username", validators=[InputRequired(message="Username cannot be blank")], render_kw={'class':'form-control'})
+    password = PasswordField("Password", render_kw={'class':'form-control'})
+    email = EmailField("Email", validators=[InputRequired(message="Email cannot be blank"),Email()], render_kw={'class':'form-control'})
+    state = SelectField('State', render_kw={'class':'form-control'})

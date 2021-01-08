@@ -19,7 +19,7 @@ class BillFollows(db.Model):
 
     # may want to change username to user id to save processing time later
     bill_id = db.Column(db.String, db.ForeignKey('bills.id', ondelete="CASCADE"), primary_key=True)
-    username = db.Column(db.String, db.ForeignKey('users.username', ondelete="CASCADE"), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), primary_key=True)
 
     def __repr__(self):
 
@@ -120,7 +120,7 @@ class State(db.Model):
 
     __tablename__ = "states"
 
-    acronym = db.Column(db.String(4), primary_key=True)
+    acronym = db.Column(db.String(5), primary_key=True)
     name = db.Column(db.String, nullable=False)
 
     def __repr__(self):
@@ -132,7 +132,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     @classmethod
-    def register(cls, username, password, email):
+    def register(cls, username, password, email, state_id=''):
         """ Register user w/hashed password & return user. """
 
         hashed = bcrypt.generate_password_hash(password)
@@ -165,12 +165,12 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False,unique=True)
-    state_id = db.Column(db.String(2), nullable=True)
+    state_id = db.Column(db.String(5), db.ForeignKey('states.acronym', ondelete="CASCADE"), nullable=True)
 
     followed_bills=db.relationship(
         'Bill', 
         secondary='bill_follows',
-        primaryjoin=(BillFollows.username == username),
+        primaryjoin=(BillFollows.user_id == id),
         cascade="all, delete"
     )
 

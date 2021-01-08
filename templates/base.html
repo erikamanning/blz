@@ -29,7 +29,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav align-items-end">
-      {% if 'username' not in session %}
+      {% if 'user_id' not in session %}
 
         <li class="nav-item active">
           <a class="nav-link" href="/login">Login</a>
@@ -39,7 +39,8 @@
         </li>
         {% else %}
         <li class="nav-button nav-item active">
-          <a class="nav-link" href="/profile">Hello, <u><span class="font-weight-bold">{{session['username']}}</span></u></a>
+          <!-- need to do g.user thing here, or else won't show username top right -->
+          <a class="nav-link" href="/profile">Hello, <u><span class="font-weight-bold">{{g.user.username}}</span></u></a>
         </li>
         <li class="nav-button nav-item active">
           <a class="nav-link" href="/dashboard">Dashboard</a>

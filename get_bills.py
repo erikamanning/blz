@@ -55,9 +55,9 @@ def get_some_slugs(congress, chamber, status, max_offset):
     all_slugs = []
 
     total = 20
-    i = 1
+    i = 0
 
-    count=1
+    count=0
 
     length = 20
     # print("Count: ", i)

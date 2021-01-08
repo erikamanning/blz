@@ -72,18 +72,7 @@ def get_new_bills(current_session, chamber, status):
     new_bill_slugs = get_new_bill_slugs(current_session, chamber, status)
     get_bill_data(new_bill_slugs, current_session)
 
-# get updates for bills/ stop while last updated stamp is not same as bill we are currently on
 
-    # get most recent last updated timestamp/ query all bills in order of last updated limit 1
-
-    # loop and get updated bill data until there are no bills newer than the last updated timestamp
-
-    # commit sponsored bills
-
-    # check that both of these are the same
-
-        #   "latest_major_action_date": "2020-12-31",
-        #   "latest_major_action": "Presented to President."
 
 
 

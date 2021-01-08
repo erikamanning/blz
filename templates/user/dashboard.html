@@ -5,7 +5,40 @@
 
 {% block content %}
 
-    <h1 class="text-center mt-5"><span class="font-weight-bold">{{session['username']}}'s Dashboard</u></span></h1>
+    <h1 class="text-center mt-5"><span class="font-weight-bold">{{user.username}}'s Dashboard</u></span></h1>
+
+    <h2>My State: {{user.state_id}}</h2>
+
+
+    <h2>My Legislators</h2>
+
+    {% if senators:%}
+
+        <div class="row">
+            <div class="col">
+                <h3>Senators</h3>
+                <ul>
+                {% for senator in senators: %}
+        
+                    <li>{{senator.title}} {{senator.first_name}} {{senator.last_name}} </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="col">
+                <h3>Representatives</h3>
+                <ul>
+                    {% for rep in representatives: %}
+            
+                        <li>{{rep.title}} {{rep.first_name}} {{rep.last_name}} </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    {% else %}
+
+        <p><i>You must enter your state in your profile to see your legislators</i></p>
+    {% endif %}
 
     <h5>Followed Bills: </h5>
 

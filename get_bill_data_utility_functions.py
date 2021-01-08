@@ -40,7 +40,7 @@ def create_bill(bill_data):
     db.session.commit()
 
     # add sponsored bill
-    add_sponsored_bill(new_sponsored_bill)
+    add_sponsored_bill(new_bill)
 
 def get_slugs(bill_data):
 
@@ -63,6 +63,6 @@ def get_bill_data(bill_slugs, congress):
 def add_sponsored_bill(new_bill):
 
     new_sponsored_bill = SponsoredBill(bill_id=new_bill.id,sponsor_id=new_bill.sponsor_id)
-    
+
     db.session.add(new_sponsored_bill)
     db.session.commit()

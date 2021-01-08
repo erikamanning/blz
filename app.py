@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, session, flash, jsonify
+from flask import Flask, request, render_template, redirect, session, flash, jsonify, g
 import json
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bcrypt import Bcrypt
@@ -8,10 +8,14 @@ import requests
 import pprint
 from classes import BillSearch
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session, Party, State
-from forms import BillForm, SignupForm, LoginForm, LegislatorForm
+from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile
 from secrets import API_SECRET_KEY
 from sqlalchemy import and_
 
+
+# current session of US Congress
+CURRENT_SESSION = '116'
+CURRENT_USER = 'user_id'
 
 
 headers = {'X-API-Key': API_SECRET_KEY}
@@ -32,11 +36,22 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 connect_db(app)
 debug = DebugToolbarExtension(app)
 
+@app.before_request
+def add_user_to_g():
+
+    """If we're logged in, add curr user to Flask global."""
+
+    if CURRENT_USER in session:
+        g.user = User.query.get(session[CURRENT_USER])
+
+    else:
+        g.user = None
+
 
 @app.route('/')
 def show_home_page():
 
-    if session.get('username', False):
+    if session.get('user_id', False):
 
         return redirect('/dashboard')
 
@@ -122,9 +137,9 @@ def view_bill(bill_id):
 @app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
 
-    if session.get('username', False):
+    if session.get('user_id', False):
 
-        bill = BillFollows.query.filter(BillFollows.bill_id == bill_id and BillFollows.username == session['username']).one_or_none()
+        bill = BillFollows.query.filter(BillFollows.bill_id == bill_id and BillFollows.user_id == session['user_id']).one_or_none()
 
         if bill:
 
@@ -134,7 +149,7 @@ def follow_bill(bill_id):
 
         
         else:
-            new_bill_follow = BillFollows(bill_id = bill_id, username=session['username'])
+            new_bill_follow = BillFollows(bill_id = bill_id, user_id=session['user_id'])
             db.session.add(new_bill_follow)
             db.session.commit()
             return jsonify({'resp_code': 'foll_success'})
@@ -207,9 +222,17 @@ def view_learn_page():
 @app.route('/dashboard')
 def show_homepage():
 
-    if session.get('username', False):
+    if session.get('user_id', False):
 
-        user = User.query.filter(User.username==session['username']).one_or_none()
+        user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
+
+        if user.state_id:
+
+            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.').all()
+            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.').all()
+            return render_template('user/dashboard.html', user=user, bills=user.followed_bills, senators=senators, representatives=representatives)
+
+
         return render_template('user/dashboard.html', user=user, bills=user.followed_bills)
 
     else:
@@ -219,10 +242,10 @@ def show_homepage():
 @app.route('/profile')
 def show_profile():
 
-    if session.get('username', False):
+    if session.get('user_id', False):
 
 
-        user = User.query.filter(User.username==session['username']).first()
+        user = User.query.filter(User.id==int(session['user_id'])).first()
 
         return render_template('user/profile.html', user=user)
 
@@ -230,21 +253,81 @@ def show_profile():
         flash('No user logged in')
         return redirect('/')
 
+@app.route('/profile/edit', methods=['GET', 'POST'])
+def edit_profile():
+
+    if session.get('user_id',False):
+
+        user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
+
+        form = EditProfile(obj=user)
+
+        states = db.session.query(State.acronym, State.name).all()
+    
+        form.state.choices = states
+
+        if form.validate_on_submit():
+
+            user.username = form.username.data
+            user.email =  form.email.data
+            user.state_id = form.state.data
+
+            db.session.add(user)
+            db.session.commit()
+
+            # seems I may need to make a new user with the details 
+            # and then copy the data over then delete the data
+
+            # if form.username.data != user.username:
+
+            #     # update bill follows table / this needs to be a function later
+            #     for bf in BillFollows.query.filter(BillFollows.username == user.username).all():
+
+            #         bf.username = form.username.data
+            #         db.session.add(bf)
+            #         db.session.commit()
+
+            # session['username'] = user.username
+            flash('made it to here')
+
+        else:
+
+            flash('idk lol')
+
+        return render_template('user/edit_profile.html', user=user, form=form)
+
+    else:
+
+        flash('You must be logged in to do that!')
+        return redirect('/')
 
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 
     form = SignupForm()
+    states = db.session.query(State.acronym, State.name).all()    
+    form.state.choices = states
+    
 
     if form.validate_on_submit():
 
-        new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data)
+        if request.args.get('state', False):
+            new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = request.args.get('state'))
+
+        else:
+            
+            new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data )
 
         db.session.add(new_user)
         db.session.commit()
 
-        session['username'] = new_user.username
+        
+        session['user_id'] = str(new_user.id)
+
+        print('********************************')
+        print('User Id: ', session['user_id'])
+        print('********************************')
 
         flash(f'New user: {new_user.username} added!')
 
@@ -265,7 +348,7 @@ def login():
 
         if user:
 
-            session['username'] = user.username
+            session['user_id'] = str(user.id)
             flash(f'User: {user.username} authenticated!')
 
             return redirect('/dashboard')
@@ -280,8 +363,8 @@ def login():
 @app.route('/logout')
 def logout():
 
-    if session.get('username', False):
-        session.pop('username')
+    if session.get('user_id', False):
+        session.pop('user_id')
 
         flash('Successfully logged out!')
         return redirect('/')
