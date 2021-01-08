@@ -3,14 +3,14 @@
 
 {% block content %}
 
-    <div class="card">
+    <div class="card shadow-sm">
         <div class="card-body">
 
             <div class="row">
-                <div class="col">
-                    <a href="/legislator/{{leg.id}}"><img class="rounded" style="max-width:50px"  src="{{leg.image}}" alt=""></a>
+                <div class="col-6">
+                    <a href="/legislator/{{leg.id}}"><img class="rounded" style="max-width:50px"  src="{{leg.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                 </div>
-                <div class="col">
+                <div class="col-6">
                     <small>{{leg.position.name}}</small> 
                     <h5>{{leg.first_name}} {{leg.last_name}}</h5>
                 </div>

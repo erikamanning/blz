@@ -52,8 +52,31 @@
 
 // start();
 
+// src="{{legislators['r'][j].image}}"
+
+function handleImageError(image){
+
+    console.log('THISSSSSSSSS: ', this)
+
+}
 
 $(document).ready(function(){
+
+
+
+    // images = document.getElementsByTagName('img')
+
+    // setTimeout(function(){
+
+    //     for( img of images){
+
+    //         if(!img.complete){
+    //             console.log('HELLOOOo!')
+    //             img.src='https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F4%2F4b%2FSeal_of_the_United_States_Congress.svg%2F1200px-Seal_of_the_United_States_Congress.svg.png&sp=1610138024T619f5c322555cb24e633f46780b99fe389b1000dbb6ac1c9e5181bf85415ac79'
+    //         }
+    //     }
+
+    // },500)
 
     $billSearchForm = $('#bill-search-form');
 

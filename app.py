@@ -14,9 +14,9 @@ from sqlalchemy import and_
 
 
 # current session of US Congress
-CURRENT_SESSION = '116'
+CURRENT_SESSION = '117'
 CURRENT_USER = 'user_id'
-
+MEMBER_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
 headers = {'X-API-Key': API_SECRET_KEY}
 
@@ -40,6 +40,8 @@ debug = DebugToolbarExtension(app)
 def add_user_to_g():
 
     """If we're logged in, add curr user to Flask global."""
+
+    g.member_default_image_path = MEMBER_DEFAULT_IMAGE_PATH
 
     if CURRENT_USER in session:
         g.user = User.query.get(session[CURRENT_USER])
@@ -101,7 +103,7 @@ def view_bills():
         session_id=request.args['session']
         filter_args.append(Bill.congress == session_id)
     else:
-        session_id='116'
+        session_id=CURRENT_SESSION
         filter_args.append(Bill.congress == session_id)
 
     #start date/ end date
@@ -228,8 +230,8 @@ def show_homepage():
 
         if user.state_id:
 
-            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.').order_by(Member.last_name).all()
-            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.').order_by(Member.last_name).all()
+            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.', Member.in_office==True).order_by(Member.last_name).all()
+            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.', Member.in_office==True).order_by(Member.last_name).all()
             legislators = {'s':senators, 'r':representatives}
 
             return render_template('user/dashboard.html', user=user, bills=user.followed_bills, legislators=legislators)

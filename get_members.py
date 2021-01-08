@@ -1,4 +1,4 @@
-from app import db, headers
+from app import db, headers, CURRENT_SESSION
 from models import Member
 import requests
 import pprint
@@ -20,18 +20,17 @@ def get_members_json(congress, chamber):
 
     return members_json
 
-def extract_members(members_json, member_status):
+# def extract_members(members_json, member_status):
 
-    members = []
+#     members = []
 
-    for member in members_json:
+#     for member in members_json:
 
-        if member_status:
+#         if member_status:
 
-            members.append(member)
+#             members.append(member)
 
-
-    return members
+#     return members
 
 
 # fix: Doesn't account for members who have changed their party- i.e. Justin Amash who would show as a duplicate
@@ -46,12 +45,16 @@ def save_members(members):
 
         if not Member.query.filter(Member.id==mem_id).one_or_none():
             new_member = Member(id=mem_id,first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
-            # saved_members.append(new_member)
+
+            print('****************************')
+            print('Member In Office: ', member['in_office'])
+            print('****************************')
             db.session.add(new_member)
             db.session.commit()
 
         else:
 
+            # doesn't account for if state is changed
             existing_member = Member.query.filter(Member.id==mem_id).one_or_none()
             req = requests.get(member['api_uri'],headers=headers)
             json = req.json()
@@ -59,10 +62,8 @@ def save_members(members):
             existing_member_id = existing_member.id
             existing_member.first_name=entry['first_name'] 
             existing_member.last_name=entry['last_name'] 
-            # existing_member.state_id=entry['state'] / will need to fix these commented out for future iterations
             existing_member.party_id=entry['current_party'] 
-            # existing_member.position_code=entry['short_title']
-            # existing_member.in_office=entry['in_office']
+
 
             db.session.add(existing_member)
             db.session.commit()
@@ -75,15 +76,15 @@ def get_all_members(congress,chamber, member_status):
 
 
 # get senate members
-senate_members_json = get_members_json(116,'senate')
-senate_members = extract_members(senate_members_json,True)
-save_members(senate_members)
+senate_members_json = get_members_json(CURRENT_SESSION,'senate')
+# senate_members = extract_members(senate_members_json,True)
+save_members(senate_members_json)
 
 
 # get house members
-house_members_json = get_members_json(116,'house')
-house_members = extract_members(house_members_json,True)
-save_members(house_members)
+house_members_json = get_members_json(CURRENT_SESSION,'house')
+# house_members = extract_members(house_members_json,True)
+save_members(house_members_json)
 
 
 # seed command 

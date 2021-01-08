@@ -2,16 +2,13 @@
 
     {%for member in members.items%}
     <div class="card m-5">
-        <div class="card-header">
-            <i class="fas fa-landmark"></i>
-        </div>
         <div class="card-body">
-            <h5 class="card-title font-weight-bold">{{member.position.code}} {{member.first_name}} {{member.last_name}}
+            <h5 class="card-title font-weight-bold"><i class="fas fa-landmark"></i> {{member.position.code}} {{member.first_name}} {{member.last_name}}
             </h5>
             <div class="row align-items-end">
                 <div class="col">
-                    <a href="legislator/{{member.id}}"> <img class="rounded-circle" style="width: 150px;"
-                            src="{{member.image}}" alt=""></a>
+                    <a href="legislator/{{member.id}}"> <img class="rounded" style="width: 150px;"
+                            src="{{member.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                 </div>
                 <div class="col">
                     <dl class="row mt-3">

@@ -1,4 +1,4 @@
-from app import db, headers
+from app import db, headers, CURRENT_SESSION
 from models import Bill, SponsoredBill
 from fileread import FileRead
 import requests
@@ -90,10 +90,10 @@ def get_some_slugs(congress, chamber, status, max_offset):
     
     return all_slugs
 
-all_senate_slugs = get_some_slugs(116, "senate", 'introduced',2)
-get_bill_data(all_senate_slugs, 116)
+all_senate_slugs = get_some_slugs(CURRENT_SESSION, "senate", 'introduced',2)
+get_bill_data(all_senate_slugs, CURRENT_SESSION)
 
 
-# all_senate_slugs = get_all_slugs(116, "senate")
-# get_bill_data(all_senate_slugs, 116)
+# all_senate_slugs = get_all_slugs(CURRENT_SESSION, "senate")
+# get_bill_data(all_senate_slugs, CURRENT_SESSION)
 

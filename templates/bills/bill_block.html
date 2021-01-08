@@ -3,25 +3,30 @@
     {% if bills%}
 
         {%for bill in bills%}
-        <div class="card m-3">
-            <div class="card-header">
-                {{bill.bill}}
-            </div>
-            <div class="card-body">
-                {% if bill.short_title %}
-                <h5 class="card-title font-weight-bold">{{bill.short_title}}</h5>
-                {% else %}
-                <h5 class="card-title font-weight-bold">{{bill.title}}</h5>
-                {% endif %}
 
-                <div class="summary-container d-none">
-                    <h5>Summary</h5>
-                    <p>{{prune_summary(bill.summary)}}</p>
+        <div class="row justify-content-center">
+            <div class="col-9">
+                <div class="card m-3 shadow-sm">
+                    <div class="card-body">
+                        <p>{{bill.bill}}</p>
+
+                        {% if bill.short_title %}
+                        <h5 class="card-title font-weight-bold">{{bill.short_title}}</h5>
+                        {% else %}
+                        <h5 class="card-title font-weight-bold">{{bill.title}}</h5>
+                        {% endif %}
+        
+                        <div class="summary-container d-none">
+                            <h5>Summary</h5>
+                            <p>{{prune_summary(bill.summary)}}</p>
+                        </div>
+                        <div class="buttons mt-3">
+                            <button class="summary-button btn btn-dark"><i class="fas fa-info-circle"></i> View Details</button>
+                            <a href="/bills/{{bill.id}}" class="btn btn-light"><i class="fas fa-external-link-alt"></i> View Bill Page</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="buttons">
-                    <button class="summary-button btn btn-success">View Summary</button>
-                    <a href="/bills/{{bill.id}}" class="btn btn-primary">View Bill</a>
-                </div>
+
             </div>
         </div>
         {% endfor %}

@@ -1,0 +1,22 @@
+
+
+
+{% block content %}
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col">
+                    <a href="/legislator/{{legislators['r'][j].id}}"><img class="rounded member-image" style="max-width:50px"  src="{{legislators['r'][j].image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
+                </div>
+                <div class="col">
+                    <small>{{legislators['r'][j].position.name}}</small> 
+                    <h5>{{legislators['r'][j].first_name}} {{legislators['r'][j].last_name}}</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

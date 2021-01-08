@@ -1,49 +1,68 @@
 {% extends 'base.html' %}
 
-{% block title %} Home {% endblock %}
+{% block title %} My Dashboard {% endblock %}
 
 
 {% block content %}
 
-    <h1 class="text-center mt-5"><span class="font-weight-bold">{{user.username}}'s Dashboard</u></span></h1>
+    <div class="container mt-5">
+        <h1 class="text-center">My State</h1>
+        <h3 class="text-center">{{user.state_id}}</h3>
 
-    <h2>My State: {{user.state_id}}</h2>
 
-
-    <h2>My Legislators</h2>
-
-    {% if legislators:%}
-
-        <h3>Senators</h3>
-        <div class="row">
-                    {% for leg in legislators['s']: %}
-                    <div class="col-6">
-                            {% include 'legislators/legi_card_sm.html'%}
-                    </div>
-                        {% endfor %}
-                    
-        </div>
-        <h3>Representatives</h3>
-        <div class="row">
-
-            {% for leg in legislators['r']: %}
-
-            <div class="col-6 mb-2">
-                {% include 'legislators/legi_card_sm.html'%}
-            </div>
-            {% endfor %}
-        </div>
+        <h1 class="text-center mt-5">My Legislators</h1>
     
 
-    {% else %}
 
-        <p class="text-danger"><i>You must enter your state in your profile to see your legislators</i></p>
-    {% endif %}
+        {% if legislators:%}
 
-    <h5>Followed Bills: </h5>
+            <div class="container mt-5">
+                
+                <h3 class="text-center mb-3">Senators</h3>
+                <div class="row justify-content-center">
+                            {% for leg in legislators['s']: %}
+                            <div class="col-4">
+                                    {% include 'legislators/sen_card_sm.html'%}
+                            </div>
+                                {% endfor %}
+                            
+                </div>
+            </div>
 
-    {% include 'bills/bill_block.html' %}
+            <div class="container mt-5">
 
+                <h3 class="text-center mb-3">Representatives</h3>
+
+                {% for i in range(0,legislators['r']|length,2): %}
+                <div class="row justify-content-center">
+
+                {% for j in range(i,i+2): %}
+
+                        {% if legislators['r']|length > j:  %}
+                        <div class="col-4 mb-2">
+                            {% include 'legislators/rep_card_sm.html'%}
+                        </div>
+                        {% else %}
+                        <!-- empty column for alignment -->
+                        <div class="col-4 mb-2">
+                        </div>
+                        {% endif %}
+
+                {% endfor %}
+
+                </div>
+            {% endfor %}
+            </div>
+            
+        {% else %}
+
+            <p class="text-danger"><i>You must enter your state in your profile to see your legislators</i></p>
+        {% endif %}
+
+        <h1 class="text-center mt-5">My Bills</h1>
+
+        {% include 'bills/bill_block.html' %}
+    </div>
     <h3>To Do:</h3>
     <p class="small text-danger font-italic">(Add view bills by subject/date/congresspeople?)</p>
 
