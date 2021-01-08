@@ -228,9 +228,11 @@ def show_homepage():
 
         if user.state_id:
 
-            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.').all()
-            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.').all()
-            return render_template('user/dashboard.html', user=user, bills=user.followed_bills, senators=senators, representatives=representatives)
+            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.').order_by(Member.last_name).all()
+            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.').order_by(Member.last_name).all()
+            legislators = {'s':senators, 'r':representatives}
+
+            return render_template('user/dashboard.html', user=user, bills=user.followed_bills, legislators=legislators)
 
 
         return render_template('user/dashboard.html', user=user, bills=user.followed_bills)
@@ -312,12 +314,7 @@ def signup():
 
     if form.validate_on_submit():
 
-        if request.args.get('state', False):
-            new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = request.args.get('state'))
-
-        else:
-            
-            new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data )
+        new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = form.state.data)
 
         db.session.add(new_user)
         db.session.commit()

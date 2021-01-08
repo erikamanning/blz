@@ -139,7 +139,7 @@ class User(db.Model):
 
         hashed_utf8 = hashed.decode("utf8")
 
-        return cls(username=username, password=hashed_utf8, email=email)
+        return cls(username=username, password=hashed_utf8, email=email, state_id=state_id)
         
     @classmethod
     def authenticate(cls, username, password):
