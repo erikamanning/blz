@@ -6,11 +6,11 @@
     <div class="card shadow-sm">
         <div class="card-body">
 
-            <div class="row">
-                <div class="col">
+            <div class="row justify-content-start">
+                <div class="col-2">
                     <a href="/legislator/{{legislators['r'][j].id}}"><img class="rounded member-image" style="max-width:50px"  src="{{legislators['r'][j].image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                 </div>
-                <div class="col">
+                <div class="col-6">
                     <small>{{legislators['r'][j].position.name}}</small> 
                     <h5>{{legislators['r'][j].first_name}} {{legislators['r'][j].last_name}}</h5>
                 </div>

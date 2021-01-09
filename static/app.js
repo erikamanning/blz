@@ -1,58 +1,4 @@
 
-// async function getPolicyAreas(){
-
-//     let req = await axios.get('/get-policy-areas')
-
-//     let policy_areas = []
-
-//     for(let policy_area of req.data){
-
-//         let new_pa = new PolicyArea(policy_area['id'], policy_area['name'])
-//         policy_areas.push(new_pa)
-//         console.log(new_pa)
-//         console.log(policy_areas)
-//     }
-
-//     return policy_areas
-// }
-
-// async function start(){
-
-//     let policy_areas = await getPolicyAreas();
-
-//     const $ul = $('<ul>')
-    
-//     for(let pa of policy_areas){
-    
-//         console.log('pa: ', pa['name'])
-//         const new_li = $(`<li>${pa['name']}</li>`);
-//         $ul.append(new_li);
-//     }
-    
-//     $('body').append($ul)
-// }
-
-// start();
-
-// async function start(){
-
-//     let policy_areas = await getPolicyAreas();
-
-//     const $ul = $('<ul>')
-    
-//     for(let pa of policy_areas){
-    
-//         console.log('pa: ', pa['name'])
-//         const new_li = $(`<li>${pa['name']}</li>`);
-//         $ul.append(new_li);
-//     }
-    
-//     $('body').append($ul)
-// }
-
-// start();
-
-// src="{{legislators['r'][j].image}}"
 
 function handleImageError(image){
 
@@ -61,22 +7,6 @@ function handleImageError(image){
 }
 
 $(document).ready(function(){
-
-
-
-    // images = document.getElementsByTagName('img')
-
-    // setTimeout(function(){
-
-    //     for( img of images){
-
-    //         if(!img.complete){
-    //             console.log('HELLOOOo!')
-    //             img.src='https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F4%2F4b%2FSeal_of_the_United_States_Congress.svg%2F1200px-Seal_of_the_United_States_Congress.svg.png&sp=1610138024T619f5c322555cb24e633f46780b99fe389b1000dbb6ac1c9e5181bf85415ac79'
-    //         }
-    //     }
-
-    // },500)
 
     $billSearchForm = $('#bill-search-form');
 
@@ -130,17 +60,14 @@ $(document).ready(function(){
 
         if(status == 'foll_success'){
 
-            $(button).removeClass('btn-success');
-            $(button).addClass('btn-outline-danger');
-            $(button).text('Unfollow')
-
+            $(button).removeClass('btn-outline-dark');
+            $(button).addClass('btn-dark');
 
         }
         else if(status == 'unfoll_success'){
 
-            $(button).removeClass('btn-outline-danger');
-            $(button).addClass('btn-success');
-            $(button).text('Follow')
+            $(button).removeClass('btn-dark');
+            $(button).addClass('btn-outline-dark');
         }
         else{
 

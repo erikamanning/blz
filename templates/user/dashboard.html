@@ -7,8 +7,13 @@
 
     <div class="container mt-5">
         <h1 class="text-center">My State</h1>
-        <h3 class="text-center">{{user.state_id}}</h3>
-
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div class="card shadow-sm p-2">
+                    <h3 class="text-center">{{user.state_id}}</h3>
+                </div>
+            </div>
+        </div>
 
         <h1 class="text-center mt-5">My Legislators</h1>
     
@@ -60,8 +65,15 @@
         {% endif %}
 
         <h1 class="text-center mt-5">My Bills</h1>
+        {% if bills%}
+            
+        <div class="container">
+            {%for bill in bills%}
+            {% include 'bills/bill_block.html' %}
+            {% endfor %}
+        </div>
 
-        {% include 'bills/bill_block.html' %}
+        {% endif %}
     </div>
     <h3>To Do:</h3>
     <p class="small text-danger font-italic">(Add view bills by subject/date/congresspeople?)</p>

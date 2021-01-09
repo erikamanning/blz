@@ -1,36 +1,68 @@
-<div class='container'>
 
-    {% if bills%}
-
-        {%for bill in bills%}
-
-        <div class="row justify-content-center">
-            <div class="col-9">
-                <div class="card m-3 shadow-sm">
-                    <div class="card-body">
-                        <p>{{bill.bill}}</p>
-
-                        {% if bill.short_title %}
-                        <h5 class="card-title font-weight-bold">{{bill.short_title}}</h5>
-                        {% else %}
-                        <h5 class="card-title font-weight-bold">{{bill.title}}</h5>
-                        {% endif %}
-        
-                        <div class="summary-container d-none">
-                            <h5>Summary</h5>
-                            <p>{{prune_summary(bill.summary)}}</p>
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <div id="{{bill.id}}" class="card m-3 shadow-sm bill p-3">
+                <div class="card-body">
+                    <div class="row justify-content-between mb-4">
+                        <div class="col-2">
+                            <p class="shadow-sm rounded border border-dark text-center bg-dark text-light">{{bill.bill}}</p>
                         </div>
-                        <div class="buttons mt-3">
-                            <button class="summary-button btn btn-dark"><i class="fas fa-info-circle"></i> View Details</button>
-                            <a href="/bills/{{bill.id}}" class="btn btn-light"><i class="fas fa-external-link-alt"></i> View Bill Page</a>
+                        <div class="col-1">
+                            <i class="btn btn-outline-dark fas fa-bookmark follow-button"></i>
                         </div>
                     </div>
+                    
+                    <div class="row last-major-action d-none mb-3">
+                        <div class="col-12">
+                            <p class="card py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between mb-3">
+                        <div class="col-7">
+                            {% if bill.short_title %}
+                            <p class="lead p-1 rounded text-capitalize">{{bill.short_title}}</p>
+                            {% else %}
+                            <p class="lead p-1 rounded text-capitalize">{{bill.title}}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-5">
+
+                            <dl class="row">
+                                <dt class="col-sm-7">
+                                    <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Introduced: </span>
+                                </dt>
+                                <dd class="col">
+                                    {{bill.introduced_date}}
+                                </dd>
+                                <dt class="col-sm-7">
+                                    <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Last Major Action: </span>
+                                </dt>
+                                <dd class="col">
+                                    {{bill.latest_major_action_date}}
+                                </dd>
+
+                                <dt class="col-sm-7">
+                                    <span class="font-weight-bold"><i class="fas fa-user-edit"></i> Primary Sponsor:</span>
+                                </dt>
+                                <dd class="col">
+                                    <a href="legislator/{{bill.sponsor[0].members.id}}"> <img class="rounded" style="width: 40px;" src="{{bill.sponsor[0].members.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
+                                </dd>
+                                
+                            </dl>
+                        </div>
+                    </div>
+    
+                    <div class="summary-container d-none">
+                        <h5>Summary</h5>
+                        <p>{{prune_summary(bill.summary)}}</p>
+                    </div>
+                    <div class="buttons">
+                        <button class="summary-button btn btn-outline-dark"><i class="fas fa-info-circle"></i> Details</button>
+                        <a href="/bills/{{bill.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill Page</a>
+                    </div>
                 </div>
-
             </div>
+
         </div>
-        {% endfor %}
-
-    {% endif %}
-
-</div>
+    </div>
