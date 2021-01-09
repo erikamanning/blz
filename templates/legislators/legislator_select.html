@@ -1,6 +1,6 @@
 
 
-    <form id='bill-search-form' action="/legislators" method="GET">
+    <form class='my-5' id='bill-search-form' action="/legislators" method="GET">
 
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}
@@ -11,7 +11,7 @@
 
                     {% if field.widget.input_type != 'hidden' %}
 
-                            <div class="col-4">
+                            <div class="col-xl-2">
                                 <p>
                                     {{ field.label }}
                                     {{ field }}

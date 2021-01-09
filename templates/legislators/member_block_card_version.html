@@ -1,48 +1,69 @@
 
     {%for member in members.items%}
 
-    <div class="row justify-content-center align-items-center mb-3">
-        <div class="col-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="row justify-content-start align-items-center p-3">
-                            <div class="col-3">
-                                <a href="/legislator/{{memberid}}"><img class="rounded member-image shadow-sm" style="width:150px"  src="{{member.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
-                            </div>
-                            <div class="col-5 align-self-center">
-
-                                <h5>
-                                    {{member.position.name}}
-                                    <small class="text-muted">| {{member.state.name}}</small></small>
-                                </h5>
-                                <h2 class="">{{member.first_name}} {{member.last_name}}</h2>
-                                <div class="mt-5">
-                                    <a href="/legislator/{{member.id}}" class="btn btn-dark"><i class="fas fa-search"></i> View
-                                        Member</a>
-                                </div>
-                            </div>
-                            <div class="col-4 align-self-start">
-                                <div class="row justify-content-around align-items-start">
-                                    <div class="social-media col-1">
-                                        <a href="#">
-                                            <h1><i class="text-dark fab fa-facebook-square"></i></h1>
-                                        </a>
-                                    </div>                        
-                                    <div class="social-media col-1">
-                                        <a href="#">
-                                            <h1><i class="text-dark fab fa-twitter-square"></i></h1>
-                                        </a>
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row p-3 justify-content-around">
+                        <div class="col-6 col-sm-6 col-md-4">
+                            <a href="/legislator/{{memberid}}"><img class="rounded member-image shadow-sm" style="width:150px"  src="{{member.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-12">
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <h5>
+                                                        {{member.position.name}}
+                                                        <small class="text-muted">| {{member.state.name}}</small></small>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <h2 class="">{{member.first_name}} {{member.last_name}}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <a href="/legislator/{{member.id}}" class="btn btn-dark"><i class="fas fa-search"></i> View
+                                                        Member</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="social-media col-1">
-                                        <a href="#">
-                                            <h1><i class="text-dark fab fa-youtube-square"></i></h1>
-                                        </a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 mt-2 align-self-start">
+                                            <div class="row justify-content-center align-items-start">
+                                                <div class="social-media col-4">
+                                                    <a href="#">
+                                                        <h1><i class="text-dark fab fa-facebook-square"></i></h1>
+                                                    </a>
+                                                </div>                        
+                                                <div class="social-media col-4">
+                                                    <a href="#">
+                                                        <h1><i class="text-dark fab fa-twitter-square"></i></h1>
+                                                    </a>
+                                                </div>
+                                                <div class="social-media col-4">
+                                                    <a href="#">
+                                                        <h1><i class="text-dark fab fa-youtube-square"></i></h1>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
     {% endfor %}
