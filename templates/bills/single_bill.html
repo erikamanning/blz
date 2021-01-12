@@ -7,48 +7,87 @@
 
 {% block content %}    
 
-    <div class="container mt-5">
 
-        <div id='{{bill.id}}' class="card">
-            <div class="card-header font-weight-bold">
-                <div class="row">
-                    <div class="col-9">
-                        {{bill.bill}}
-                    </div>
-                    <div class="col-3">
-                        <span class="text-right"> Last Major Action: <span class="font-weight-bold text-danger">{{bill.latest_major_action_date}}</span></span>
-                    </div>
-                </div>
-            </div>
-
+        <div id='{{bill.id}}' class="card mt-5 shadow-sm">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-11">
-                        <p class="py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
+                <!-- Top of Bill Data  -->
+                <div class="row justify-content-between mb-5">
+                    <div class="col-3">
+                        <a href="/bills/{{bill.id}}" class="shadow-sm btn btn-dark py-1"><i class="fas fa-scroll"></i> {{bill.bill}}</a>
                     </div>
-                    <div class="col-1">
-                        <i class="btn btn-dark fas fa-bookmark follow-button"></i>
+                    <div class="col-2 col-md-1">
+                        <button class="btn btn-outline-dark follow-button"><i class="far fa-bookmark"></i></button>
+                    </div>
+                </div>
+                <div class="row last-major-action mb-5">
+                    <div class="col-sm-12  col-lg-12 text-center">
+                        <p class="card py-1 px-2 text-light bg-dark rounded d-inline-block mb-3 text-center"> <span class="fw-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
                     </div>
                 </div>
 
-                {%if bill.short_title%}
-                <h4 class="card-title font-weight-bold text-capitalize my-4">{{bill.short_title}}</h4>
-                {% else %}
-                <h4 class="card-title font-weight-bold text-capitalize my-4">{{bill.title}}</h4>
-                {% endif %}
+                <!-- Bill Title -->
+                <div class="container">
+                    <div class="row justify-content-center mb-2">
+                        <div class="col-sm-12 col-md-10 mb-3">
+                            {% if bill.short_title %}
+                            <p class="lead p-1 text-capitalize text-center text-md-left">{{bill.short_title}}</p>
+                            {% else %}
+                            <p class="lead p-1 text-capitalize text-center text-md-left">{{bill.title}}</p>
+                            {% endif %}
+                        </div>
+                    </div>
 
-                <h5 class="card-title">Summary</h5>
-                <p class="card-text mb-4">{{summary}}</p>
-                <a href="{{bill.congressdotgov_url}}}/text" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View Full Bill at  <span class="font-italic">Congress.gov</span></a>
-                <h5>Sponsor: </h5>
-                <p>{{bill.sponsor[0].members.position.name}} {{bill.sponsor[0].members.first_name}} {{bill.sponsor[0].members.last_name}}</p>
-                <a href="/legislator/{{bill.sponsor[0].members.id}}"><img class="rounded-circle" src="{{bill.sponsor[0].members.image}}" style="width:200px" alt=""></a>
-                <div>
-                    <a href="/legislator/{{bill.sponsor[0].members.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor[0].members.position_code}} {{bill.sponsor[0].members.last_name}}'s Page</a>
+                <!-- Key Bill Dates Section -->
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-12 col-md-6">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-4 text-center text-lg-start">
+                                    <span class="fw-bold"><i class="far fa-calendar-check"></i> </i>Introduced: </span>
+                                </div>
+                                <div class="col-sm-4 text-center text-lg-start">
+                                    <span class="">{{bill.introduced_date}}</span>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-sm-4 text-center text-lg-start">
+                                    <span class="fw-bold"><i class="far fa-calendar-check"></i> </i>Last Major Action: </span>
+                                </div>
+                                <div class="col-sm-4 text-center text-lg-start">
+                                    <span class="">{{bill.latest_major_action_date}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- Bill Summary Section -->
+                <div class="bill-summary mt-5">
+                    <h5 class="card-title"><i class="fas fa-feather-alt"></i> Summary</h5>
+                    <div class="container">
+                        {% if summary: %}
+                        <p class="card-text mb-4">{{summary}}</p>
+                    {% else %}
+
+                        <p class="fst-italic">No summary currently available.</p>
+                    {% endif %}
+                    </div>
+                </div>
+                <!-- Link to Congress Website -->
+                <div class="text-center mb-5 mt-3">
+                    <a href="{{bill.congressdotgov_url}}}/text" class="btn btn-outline-dark text-center"><i class="fas fa-external-link-alt"></i> View Full Bill at  <span class="font-italic">Congress.gov</span></a>
+
+                </div>
+                <h5><i class="fas fa-user-edit mb-2"> </i> Primary Sponsor </h5>
+                <div class="align-items-center">
+                    <a class="" href="/legislator/{{bill.sponsor[0].members.id}}"><img class="rounded mx-auto d-block" src="{{bill.sponsor[0].members.image}}" style="width:150px" alt=""></a>
+                </div>
+                <h5 class="text-center mt-2">{{bill.sponsor[0].members.position.name}} {{bill.sponsor[0].members.first_name}} {{bill.sponsor[0].members.last_name}}</h5>
+                <div class="text-center mt-3">
+                    <a href="/legislator/{{bill.sponsor[0].members.id}}" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor[0].members.position_code}} {{bill.sponsor[0].members.last_name}}'s Page</a>
+                </div>
+                </div>
+
                 </div>
             </div>
         </div>
-
-    </div>
 
 {% endblock %}

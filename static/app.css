@@ -10,25 +10,6 @@ body{
     text-align: center;
 }
 
-.navbar{
-    background-color: #212021;
-    overflow: hidden;
-
-}
-
-.navbar a{
-    float: left;
-    color: #f1f1f1;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-.navbar a:hover{
-    background-color: #f1f1f1;
-    color:#212021;
-}
 
 h1{
 

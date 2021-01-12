@@ -1,11 +1,11 @@
 
     <div class="row justify-content-center">
         <div class="col-12">
-            <div id="{{bill.id}}" class="card m-3 shadow-sm bill p-3">
+            <div id="{{bill.bills.id}}" class="card m-3 shadow-sm bill p-3">
                 <div class="card-body">
                     <div class="row justify-content-between mb-5">
                         <div class="col-3">
-                            <a href="/bills/{{bill.id}}" class="shadow-sm btn btn-dark py-1"><i class="fas fa-scroll"></i> {{bill.bill}}</a>
+                            <a href="/bills/{{bill.bills.id}}" class="shadow-sm btn btn-dark py-1"><i class="fas fa-scroll"></i> {{bill.bills.bill}}</a>
                         </div>
                         <div class="col-2 col-md-1">
                             <button class="btn btn-outline-dark follow-button"><i class="far fa-bookmark"></i></button>
@@ -14,16 +14,16 @@
                     
                     <div class="row last-major-action d-none mb-3">
                         <div class="col-sm-12  col-lg-12">
-                            <p class="card py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
+                            <p class="card py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.bills.latest_major_action}}</span></p>
                         </div>
                     </div>
 
                     <div class="row justify-content-center mb-3">
                         <div class="col-sm-12 col-lg-7">
-                            {% if bill.short_title %}
-                            <p class="lead p-1 text-capitalize text-center">{{bill.short_title}}</p>
+                            {% if bill.bills.short_title %}
+                            <p class="lead p-1 text-capitalize text-center">{{bill.bills.short_title}}</p>
                             {% else %}
-                            <p class="lead p-1 text-capitalize text-center">{{bill.title}}</p>
+                            <p class="lead p-1 text-capitalize text-center">{{bill.bills.title}}</p>
                             {% endif %}
                         </div>
                         <div class="col-sm-12  col-lg-5">
@@ -33,20 +33,20 @@
                                     <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Introduced: </span>
                                 </dt>
                                 <dd class="col text-md-start text-sm-center">
-                                    {{bill.introduced_date}}
+                                    {{bill.bills.introduced_date}}
                                 </dd>
                                 <dt class="col-sm-7 text-md-end text-sm-center">
                                     <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Last Major Action: </span>
                                 </dt>
                                 <dd class="col text-md-start text-sm-center">
-                                    {{bill.latest_major_action_date}}
+                                    {{bill.bills.latest_major_action_date}}
                                 </dd>
 
                                 <dt class="col-sm-7 text-md-end text-sm-center">
                                     <span class="font-weight-bold"><i class="fas fa-user-edit"></i> Primary Sponsor:</span>
                                 </dt>
                                 <dd class="col text-md-start text-sm-center">
-                                    <a href="legislator/{{bill.sponsor[0].members.id}}"> <img class="rounded" style="width: 40px;" src="{{bill.sponsor[0].members.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
+                                    <a href="legislator/{{bill.bills.sponsor[0].members.id}}"> <img class="rounded" style="width: 40px;" src="{{bill.bills.sponsor[0].members.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                                 </dd>
                                 
                             </dl>
@@ -55,12 +55,12 @@
     
                     <div class="summary-container d-none">
                         <h5>Summary</h5>
-                        <p>{{prune_summary(bill.summary)}}</p>
+                        <p>{{prune_summary(bill.bills.summary)}}</p>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-sm-12 text-md-left">
                             <button class="summary-button btn btn-outline-dark m-2 btn-block"><i class="fas fa-info-circle"></i> Details</button>
-                            <a href="/bills/{{bill.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill</a>
+                            <a href="/bills/{{bill.bills.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill</a>
                         </div>
                     </div>
                 </div>

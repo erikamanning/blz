@@ -69,23 +69,7 @@
                         <h4>Sponsored Bills:</h4>
                         {% for bill in sponsored_bills:%}
 
-                            <div class="row mb-3">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            {{bill.bills.bill}}
-                                        </div>
-                                        <div class="card-body">
-                                            <h5>{{bill.bills.short_title}}</h5>
-                                            <div class="row justify-content-end">
-                                                <div class="col">
-                                                    <a class="btn btn-dark" href="/bills/{{bill.bills.id}}">Go To Bill</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% include 'bills/sponsored_bill_block.html' %}
 
                         {% endfor %}
                     </div>
