@@ -1,7 +1,38 @@
 
 
-
 $(document).ready(function(){
+
+    async function getFollowedBills(){
+
+        console.log('gUser: ', gUserId);
+
+        let req = await axios.get(`/user/${gUserId}/followed-bills`);
+        console.log('req data: ', req);
+
+        fBills = req.data;
+        console.log('F BILLS: ', fBills);
+
+        return fBills
+
+        
+    }
+    async function UIFollowButtons(){
+
+        followed_bills = await getFollowedBills()
+    
+        for(let bill of followed_bills){
+    
+            $(`#${bill}`).find('#follow-button').toggleClass('btn-outline-dark')
+            $(`#${bill}`).find('#follow-button').toggleClass('btn-dark')
+        }
+    
+    }
+
+    if( gUserId != ''){
+
+        UIFollowButtons();
+
+    }
 
     // visuals for dashboard buttons and show hide content functionality
     $('#dash-buttons').on('click', function(event){
@@ -61,15 +92,18 @@ $(document).ready(function(){
 
     $('.follow-button').on('click', async function(evt){
 
-        console.log(`Bill ID: ${$(evt.target).parent().parent().parent().parent().attr('id')}`);
+        console.log(`Bill ID: ${$(this).parent().parent().parent().parent().attr('id')}`);
 
-        let billId = $(evt.target).parent().parent().parent().parent().attr('id');
+        let billId = $(this).parent().parent().parent().parent().attr('id');
 
         let req = await axios.post(`/bill/${billId}/follow`);
 
         console.log('Request data: ', req.data);
 
-        UIFollowAction(req.data.resp_code, evt.target);
+        $(this).toggleClass('btn-outline-dark')
+        $(this).toggleClass('btn-dark')
+
+        // UIFollowAction(req.data.resp_code, evt.target);
 
     });
 

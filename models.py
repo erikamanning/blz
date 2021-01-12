@@ -198,21 +198,3 @@ class Session(db.Model):
 
     __tablename__ = "sessions"
     id = db.Column(db.Integer, primary_key=True)
-
-
-# classes to add later
-
-# class Chamber(db.Model):
-
-#     __tablename__ = "chambers"
-
-#     code = db.Column(db.String(3), primary_key=True)
-#     name = db.Column(db.String, nullable=False)
-
-# class Vote(db.Model):
-#     __tablename__ = "votes"
-
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     member_id = db.Column(db.String, db.ForeignKey('members.id'), nullable=False)
-#     bill_id = db.Column(db.String, db.ForeignKey('bills.id'), nullable=False)
-#     vote_position = db.Column(db.String, nullable=False)

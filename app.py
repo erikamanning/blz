@@ -279,26 +279,9 @@ def edit_profile():
             db.session.add(user)
             db.session.commit()
 
-            # seems I may need to make a new user with the details 
-            # and then copy the data over then delete the data
-
-            # if form.username.data != user.username:
-
-            #     # update bill follows table / this needs to be a function later
-            #     for bf in BillFollows.query.filter(BillFollows.username == user.username).all():
-
-            #         bf.username = form.username.data
-            #         db.session.add(bf)
-            #         db.session.commit()
-
-            # session['username'] = user.username
-            flash('made it to here')
-
         else:
 
-            flash('idk lol')
-
-        return render_template('user/edit_profile.html', user=user, form=form)
+            return render_template('user/edit_profile.html', user=user, form=form)
 
     else:
 
@@ -371,6 +354,16 @@ def logout():
     else:
         flash('No user logged in')
         return redirect('/')
+
+@app.route('/user/<int:user_id>/followed-bills')
+def get_followed_bills(user_id):
+
+    followed_bill_ids = db.session.query(BillFollows.bill_id).filter(BillFollows.user_id == user_id )
+
+    bill_ids = [el[0] for el in followed_bill_ids ]
+
+
+    return jsonify(bill_ids)
 
 #temporary fix for api keeping title awkwardly in summary, will update full database eventually
 def prune_summary(summary):
