@@ -3,16 +3,15 @@
 
 {% block content %}
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-
-            <div class="row justify-content-start">
+<div class="card shadow-sm h-100">
+    <div class="card-body">
+            <div class="row legislator">
                 <div class="col-2">
-                    <a href="/legislator/{{leg.id}}"><img class="rounded" style="max-width:50px"  src="{{leg.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
+                    <a href="/legislator/{{legislators['s'][j].id}}"><img class="rounded member-image" style="width:50px;"  src="{{legislators['s'][j].image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                 </div>
-                <div class="col-6">
-                    <small>{{leg.position.name}}</small> 
-                    <h5>{{leg.first_name}} {{leg.last_name}}</h5>
+                <div class="col">
+                    <small>{{legislators['s'][j].position.name}}</small> 
+                    <h5>{{legislators['s'][j].first_name}} {{legislators['s'][j].last_name}}</h5>
                 </div>
             </div>
 

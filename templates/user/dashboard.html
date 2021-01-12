@@ -6,74 +6,107 @@
 {% block content %}
 
     <div class="container mt-5">
-        <h1 class="text-center">My State</h1>
-        <div class="row justify-content-center">
-            <div class="col-3">
-                <div class="card shadow-sm p-2">
-                    <h3 class="text-center">{{user.state_id}}</h3>
-                </div>
-            </div>
+
+        <h1 class="text-center mb-3 display-3">My Dashboard</h1>
+
+        <div class="btn-group d-flex justify-content-center mb-5" role="group" aria-label="Basic outlined example">
+            <button type="button" class="d-block btn btn-outline-dark">My State</button>
+            <button type="button" class="d-block btn btn-outline-dark">Saved Bills</button>
         </div>
 
-        <h1 class="text-center mt-5">My Legislators</h1>
-    
 
+        <div class="container mb-5">
 
-        {% if legislators:%}
-
-            <div class="container mt-5">
-                
-                <h3 class="text-center mb-3">Senators</h3>
-                <div class="row justify-content-center">
-                            {% for leg in legislators['s']: %}
-                            <div class="col-4">
-                                    {% include 'legislators/sen_card_sm.html'%}
+            <div id="dash-state-info" >
+                <!-- state -->
+                <div class="container mt-5">
+                    <h1 class="text-center">State</h1>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-sm-4">
+                            <div class="card shadow-sm p-2">
+                                <h3 class="text-center">{{user.state_id}}</h3>
                             </div>
-                                {% endfor %}
-                            
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="container mt-5">
+                <h1 class="text-center mt-5">{{user.state_id}} Legislators</h1>
 
-                <h3 class="text-center mb-3">Representatives</h3>
 
-                {% for i in range(0,legislators['r']|length,2): %}
-                <div class="row justify-content-center">
 
-                {% for j in range(i,i+2): %}
+                {% if legislators:%}
 
-                        {% if legislators['r']|length > j:  %}
-                        <div class="col-4 mb-2">
-                            {% include 'legislators/rep_card_sm.html'%}
-                        </div>
-                        {% else %}
-                        <!-- empty column for alignment -->
-                        <div class="col-4 mb-2">
-                        </div>
-                        {% endif %}
+                <div class="container mt-5">
 
+                    <h3 class="text-center mb-3">Senators</h3>
+
+                    {% for i in range(0,legislators['s']|length,2): %}
+                    <div class="row row-cols justify-content-center">
+
+                    {% for j in range(i,i+2): %}
+
+                            {% if legislators['s']|length > j:  %}
+                            <div class="col-12 col-sm-11 col-md-8 col-lg-6  col-xl-5 mb-2">
+                                {% include 'legislators/sen_card_sm.html'%}
+                            </div>
+                            {% else %}
+                            <!-- empty column for alignment -->
+                            <div class="col-12 col-sm-11 col-md-8 col-lg-6  col-xl-5 mb-2">
+                            </div>
+                            {% endif %}
+
+                    {% endfor %}
+
+                    </div>
                 {% endfor %}
-
                 </div>
-            {% endfor %}
+
+                    <div class="container mt-5">
+
+                        <h3 class="text-center mb-3">Representatives</h3>
+
+                        {% for i in range(0,legislators['r']|length,2): %}
+                        <div class="row row-cols justify-content-center">
+
+                        {% for j in range(i,i+2): %}
+
+                                {% if legislators['r']|length > j:  %}
+                                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5  mb-2">
+                                    {% include 'legislators/rep_card_sm.html'%}
+                                </div>
+                                {% else %}
+                                <!-- empty column for alignment -->
+                                <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 mb-2">
+                                </div>
+                                {% endif %}
+
+                        {% endfor %}
+
+                        </div>
+                    {% endfor %}
+                    </div>
+                    
+                {% else %}
+
+                    <p class="text-danger"><i>You must enter your state in your profile to see your legislators</i></p>
+                {% endif %}
             </div>
-            
-        {% else %}
 
-            <p class="text-danger"><i>You must enter your state in your profile to see your legislators</i></p>
-        {% endif %}
+            <div id="dash-saved-bills">
 
-        <h1 class="text-center mt-5">My Bills</h1>
-        {% if bills%}
-            
-        <div class="container">
-            {%for bill in bills%}
-            {% include 'bills/bill_block.html' %}
-            {% endfor %}
+                <h1 class="text-center mt-5">My Bills</h1>
+                {% if bills%}
+                    
+                <div class="container">
+                    {%for bill in bills%}
+                    {% include 'bills/bill_block.html' %}
+                    {% endfor %}
+                </div>
+        
+                {% endif %}
+            </div>
         </div>
-
-        {% endif %}
+        
     </div>
     <h3>To Do:</h3>
     <p class="small text-danger font-italic">(Add view bills by subject/date/congresspeople?)</p>

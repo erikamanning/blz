@@ -1,12 +1,11 @@
 
 
-function handleImageError(image){
-
-    console.log('THISSSSSSSSS: ', this)
-
-}
 
 $(document).ready(function(){
+
+    $(function() {
+        $('.legislator').matchHeight();
+    });
 
     $billSearchForm = $('#bill-search-form');
 
