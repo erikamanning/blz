@@ -65,7 +65,7 @@
                                         </dd>
                                     </dl>
                                     <div class="d-grid gap-1 d-md-block">
-                                        <a href="#" class="btn btn-dark"><i class="fas fa-caret-square-down"></i> View Sponsored Bills</a>
+                                        <button id="sponsored-bills-button" class="btn btn-dark"><i id='sponsored-bills-button-icon'  class="fas fa-caret-square-down fa-caret-square-up"></i> View Sponsored Bills</button>
                                     </div>
                                 </div>
                             </div>
@@ -74,13 +74,15 @@
         
         
         
-                    <div class="mt-3">
-                        <h5 class="card-title"><i class="fas fa-scroll"></i> Sponsored Bills </h5>
+                    <div id="sponsored-bills" class="d-none mt-3">
+                        <h5 class="card-title mb-4"><i class="fas fa-scroll"></i> Sponsored Bills </h5>
         
                                 {% if sponsored_bills: %}
                                     {% for bill in sponsored_bills:%}
         
-                                        {% include 'bills/sponsored_bill_block.html' %}
+                                        <div class="mb-3">
+                                            {% include 'bills/sponsored_bill_block.html' %}
+                                        </div>
         
                                     {% endfor %}
         

@@ -3,7 +3,7 @@
 
 $(document).ready(function(){
 
-    // visuals for dash buttons and show hide content functionality
+    // visuals for dashboard buttons and show hide content functionality
     $('#dash-buttons').on('click', function(event){
 
         if( !$(event.target).hasClass('active') ){
@@ -17,11 +17,17 @@ $(document).ready(function(){
 
             $(event.target).siblings().toggleClass('active')
         }
+    });
+
+    // show/hide sponsored bills functionality
+    $('#sponsored-bills-button').on('click', function(event){
+
+        $('#sponsored-bills').toggleClass('d-none');
+        $('#sponsored-bills-button-icon').toggleClass('fa-caret-square-up');
 
     });
 
     $billSearchForm = $('#bill-search-form');
-
 
     // change to updated javascript
     $billSearchForm.change(function(evt){
