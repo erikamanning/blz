@@ -29,23 +29,23 @@
                         <div class="col-sm-12  col-lg-5">
 
                             <dl class="row">
-                                <dt class="col-sm-7 text-md-end text-center">
+                                <dt class="col-12 col-lg-7 text-lg-end text-center">
                                     <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Introduced: </span>
                                 </dt>
-                                <dd class="col text-md-start text-center">
+                                <dd class="col text-lg-start text-center">
                                     {{bill.introduced_date}}
                                 </dd>
-                                <dt class="col-sm-7 text-md-end text-center">
+                                <dt class="col-12 col-lg-7 text-lg-end text-center">
                                     <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Last Major Action: </span>
                                 </dt>
-                                <dd class="col text-md-start text-center">
+                                <dd class="col text-lg-start text-center">
                                     {{bill.latest_major_action_date}}
                                 </dd>
 
-                                <dt class="col-sm-7 text-md-end text-center">
+                                <dt class="col-12 col-lg-7 text-lg-end text-center">
                                     <span class="font-weight-bold"><i class="fas fa-user-edit"></i> Primary Sponsor:</span>
                                 </dt>
-                                <dd class="col text-md-start text-center">
+                                <dd class="col text-lg-start text-center">
                                     <a href="legislator/{{bill.sponsor[0].members.id}}"> <img class="rounded" style="width: 40px;" src="{{bill.sponsor[0].members.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                                 </dd>
                                 
@@ -57,12 +57,11 @@
                         <h5>Summary</h5>
                         <p>{{prune_summary(bill.summary)}}</p>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-sm-12 text-center text-md-start">
-                            <button class="summary-button btn btn-outline-dark m-2 btn-block"><i class="fas fa-info-circle"></i> Details</button>
-                            <a href="/bills/{{bill.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill</a>
-                        </div>
+                    <div class="d-grid gap-1 d-md-block">
+                        <button class="summary-button btn btn-outline-dark btn-block"><i class="fas fa-info-circle"></i> Details</button>
+                        <a href="/bills/{{bill.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill</a>
                     </div>
+                    
                 </div>
             </div>
         </div>
