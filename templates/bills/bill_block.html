@@ -4,7 +4,7 @@
             <div id="{{bill.id}}" class="card m-3 shadow-sm bill p-3">
                 <div class="card-body">
                     <div class="row justify-content-between mb-5">
-                        <div class="col-3">
+                        <div class="col-5">
                             <a href="/bills/{{bill.id}}" class="shadow-sm btn btn-dark py-1"><i class="fas fa-scroll"></i> {{bill.bill}}</a>
                         </div>
                         <div class="col-2 col-md-1">
@@ -14,7 +14,7 @@
                     
                     <div class="row last-major-action d-none mb-3">
                         <div class="col-sm-12  col-lg-12">
-                            <p class="card py-1 px-2 text-light bg-dark rounded d-inline-block mb-3"> <span class="font-weight-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="font-italic">{{bill.latest_major_action}}</span></p>
+                            <p class="p-3 text-light bg-dark rounded d-inline-block mb-3"><span class="fw-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="fst-italic">{{bill.latest_major_action}}</span></p>
                         </div>
                     </div>
 
@@ -29,23 +29,23 @@
                         <div class="col-sm-12  col-lg-5">
 
                             <dl class="row">
-                                <dt class="col-sm-7 text-md-end text-sm-center">
+                                <dt class="col-sm-7 text-md-end text-center">
                                     <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Introduced: </span>
                                 </dt>
-                                <dd class="col text-md-start text-sm-center">
+                                <dd class="col text-md-start text-center">
                                     {{bill.introduced_date}}
                                 </dd>
-                                <dt class="col-sm-7 text-md-end text-sm-center">
+                                <dt class="col-sm-7 text-md-end text-center">
                                     <i class="far fa-calendar-check"></i> <span class="font-weight-bold"></i>Last Major Action: </span>
                                 </dt>
-                                <dd class="col text-md-start text-sm-center">
+                                <dd class="col text-md-start text-center">
                                     {{bill.latest_major_action_date}}
                                 </dd>
 
-                                <dt class="col-sm-7 text-md-end text-sm-center">
+                                <dt class="col-sm-7 text-md-end text-center">
                                     <span class="font-weight-bold"><i class="fas fa-user-edit"></i> Primary Sponsor:</span>
                                 </dt>
-                                <dd class="col text-md-start text-sm-center">
+                                <dd class="col text-md-start text-center">
                                     <a href="legislator/{{bill.sponsor[0].members.id}}"> <img class="rounded" style="width: 40px;" src="{{bill.sponsor[0].members.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
                                 </dd>
                                 
@@ -58,7 +58,7 @@
                         <p>{{prune_summary(bill.summary)}}</p>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-sm-12 text-md-left">
+                        <div class="col-sm-12 text-center text-md-start">
                             <button class="summary-button btn btn-outline-dark m-2 btn-block"><i class="fas fa-info-circle"></i> Details</button>
                             <a href="/bills/{{bill.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill</a>
                         </div>
