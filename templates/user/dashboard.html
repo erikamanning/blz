@@ -7,11 +7,11 @@
 
     <div class="container mt-5">
 
-        <h1 class="text-center mb-3 display-3">My Dashboard</h1>
+        <h1 class="text-center mb-5 display-3">My Dashboard</h1>
 
-        <div class="btn-group d-flex justify-content-center mb-5" role="group" aria-label="Basic outlined example">
-            <button type="button" class="d-block btn btn-outline-dark">My State</button>
-            <button type="button" class="d-block btn btn-outline-dark">Saved Bills</button>
+        <div id='dash-buttons' class="btn-group d-flex justify-content-center mb-5" role="group" aria-label="Basic outlined example">
+            <button id='dash-button-my-state' type="button" class="d-block btn btn-outline-dark active shadow-none">My State</button>
+            <button id='dash-button-saved-bills'  type="button" class="d-block btn btn-outline-dark shadow-none">Saved Bills</button>
         </div>
 
 
@@ -92,7 +92,7 @@
                 {% endif %}
             </div>
 
-            <div id="dash-saved-bills">
+            <div id="dash-saved-bills d-none">
 
                 <h1 class="text-center mt-5">My Bills</h1>
                 {% if bills%}

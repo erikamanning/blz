@@ -3,8 +3,21 @@
 
 $(document).ready(function(){
 
-    $(function() {
-        $('.legislator').matchHeight();
+    // visuals for dash buttons and show hide content functionality
+    $('#dash-buttons').on('click', function(event){
+
+        if( !$(event.target).hasClass('active') ){
+
+            $(event.target).toggleClass('active')
+            $('#dash-state-info').toggleClass('d-none');
+            $('#dash-saved-bills').toggleClass('d-none');  
+        }
+
+        if( $(event.target).siblings().hasClass('active') ){
+
+            $(event.target).siblings().toggleClass('active')
+        }
+
     });
 
     $billSearchForm = $('#bill-search-form');
@@ -13,10 +26,10 @@ $(document).ready(function(){
     // change to updated javascript
     $billSearchForm.change(function(evt){
 
-        $billSearchForm.submit()
+        $billSearchForm.submit();
         console.log( "form change" );
 
-    })
+    });
 
 
     $paginationLinks = $('#pagination-links');
@@ -27,10 +40,10 @@ $(document).ready(function(){
 
         
 
-        $paginationLinks.submit()
+        $paginationLinks.submit();
         console.log( "pagination clicked" );
 
-    })
+    });
 
     
     $("#show-details").click(function(evt){
@@ -42,17 +55,17 @@ $(document).ready(function(){
 
     $('.follow-button').on('click', async function(evt){
 
-        console.log(`Bill ID: ${$(evt.target).parent().parent().parent().parent().attr('id')}`)
+        console.log(`Bill ID: ${$(evt.target).parent().parent().parent().parent().attr('id')}`);
 
-        let billId = $(evt.target).parent().parent().parent().parent().attr('id')
+        let billId = $(evt.target).parent().parent().parent().parent().attr('id');
 
-        let req = await axios.post(`/bill/${billId}/follow`)
+        let req = await axios.post(`/bill/${billId}/follow`);
 
-        console.log('Request data: ', req.data)
+        console.log('Request data: ', req.data);
 
-        UIFollowAction(req.data.resp_code, evt.target)
+        UIFollowAction(req.data.resp_code, evt.target);
 
-    })
+    });
 
 
     function UIFollowAction(status, button){
@@ -70,7 +83,7 @@ $(document).ready(function(){
         }
         else{
 
-            $('body').append($("<p>You can't do that at this time</p>"))
+            $('body').append($("<p>You can't do that at this time</p>"));
         }
 
     }
