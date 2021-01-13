@@ -2,6 +2,7 @@
 
 $(document).ready(function(){
 
+
     async function getFollowedBills(){
 
         console.log('gUser: ', gUserId);

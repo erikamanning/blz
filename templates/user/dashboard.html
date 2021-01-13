@@ -96,12 +96,26 @@
 
                 <h1 class="text-center mt-5">My Bills</h1>
                 {% if bills%}
-                    
-                <div class="container">
-                    {%for bill in bills%}
-                    {% include 'bills/bill_block.html' %}
-                    {% endfor %}
-                </div>
+
+
+                    <div class="container">
+                        <div class="container">
+                            <div class="container d-flex align-items-end flex-column mb-none">
+                                <div class="form-check form-switch mt-3 d-flex justify-content-end">
+                                    <p class="mb-0">
+                                        <input class="form-control form-check-input " type="checkbox" id="show-details">
+                                        <label class="form-check-label" for="show-details">Show Updates</label>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="container">
+                        {%for bill in bills%}
+                        {% include 'bills/bill_block.html' %}
+                        {% endfor %}
+                    </div>
         
                 {% endif %}
             </div>

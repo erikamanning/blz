@@ -157,7 +157,6 @@ def follow_bill(bill_id):
             return jsonify({'resp_code': 'foll_success'})
 
     else:
-        # flash('You must be logged in to do that!')
         return jsonify({'resp_code': 'not_logged_in'})
 
 @app.route('/legislators')
@@ -240,7 +239,6 @@ def show_homepage():
         return render_template('user/dashboard.html', user=user, bills=user.followed_bills)
 
     else:
-        flash('No user logged in')
         return redirect('/')
 
 @app.route('/profile')
@@ -254,7 +252,6 @@ def show_profile():
         return render_template('user/profile.html', user=user)
 
     else:
-        flash('No user logged in')
         return redirect('/')
 
 @app.route('/profile/edit', methods=['GET', 'POST'])
@@ -285,7 +282,6 @@ def edit_profile():
 
     else:
 
-        flash('You must be logged in to do that!')
         return redirect('/')
 
 

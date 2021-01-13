@@ -12,8 +12,8 @@
                         </div>
                     </div>
                     
-                    <div class="row last-major-action d-none mb-3">
-                        <div class="col-sm-12  col-lg-12">
+                    <div class="row last-major-action d-none mb-5 justify-content-center">
+                        <div class="col-sm-12  col-lg-12 text-center">
                             <p class="px-3 py-2 text-light bg-dark rounded d-inline-block mb-3"><span class="fw-bold"><i class="far fa-dot-circle"></i> Last Major Action: </span> <span class="fst-italic">{{bill.latest_major_action}}</span></p>
                         </div>
                     </div>
@@ -52,11 +52,7 @@
                             </dl>
                         </div>
                     </div>
-    
-                    <div class="summary-container d-none">
-                        <h5>Summary</h5>
-                        <p>{{prune_summary(bill.summary)}}</p>
-                    </div>
+
                     <div class="d-grid gap-1 d-md-block">
                         <button class="summary-button btn btn-outline-dark btn-block"><i class="fas fa-info-circle"></i> Details</button>
                         <a href="/bills/{{bill.id}}" class="btn btn-dark"><i class="fas fa-external-link-alt"></i> View Bill</a>

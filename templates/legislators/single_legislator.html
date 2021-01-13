@@ -78,6 +78,15 @@
                         <h5 class="card-title mb-4"><i class="fas fa-scroll"></i> Sponsored Bills </h5>
         
                                 {% if sponsored_bills: %}
+
+                                    <div class="container d-flex align-items-end flex-column mb-none">
+                                        <div class="form-check form-switch mt-3 d-flex justify-content-end">
+                                            <p class="mb-2">
+                                                <input class="form-control form-check-input " type="checkbox" id="show-details">
+                                                <label class="form-check-label" for="show-details">Show Updates</label>
+                                            </p>
+                                        </div>
+                                    </div>
                                     {% for bill in sponsored_bills:%}
         
                                         <div class="mb-3">
