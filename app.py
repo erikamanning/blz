@@ -131,7 +131,7 @@ def view_bill(bill_id):
 
     if bill:
     
-        return render_template("bills/single_bill.html", bill=bill
+        return render_template("bills/single_bill.html", bill=bill)
 
 @app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
