@@ -16,6 +16,7 @@ except:
     print('*****************************************') 
     print('No secrets file found!') 
     print('*****************************************') 
+    API_SECRET_KEY = 'NOT A KEY'
 
 from sqlalchemy import and_
 import os
