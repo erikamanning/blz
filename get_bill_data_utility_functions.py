@@ -31,7 +31,7 @@ def create_bill(bill_data):
             latest_major_action = bill_data["latest_major_action"],
             house_passage_vote = bill_data["house_passage_vote"],
             senate_passage_vote = bill_data["senate_passage_vote"],
-            summary = bill_data["summary"],
+            summary = prune_summary(bill_data["summary"]),
             summary_short = bill_data["summary_short"]
     )
 
@@ -66,3 +66,21 @@ def add_sponsored_bill(new_bill):
 
     db.session.add(new_sponsored_bill)
     db.session.commit()
+
+def prune_summary(summary):
+
+    if 'This bill' in summary:
+
+        find_index = summary.find('This bill')
+        
+        lst = summary[find_index::]
+
+        # print('Pruned summary: ', lst)
+
+        new_summary = str(lst)
+
+        return new_summary
+    
+    else:
+
+        return summary

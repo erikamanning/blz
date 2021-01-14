@@ -40,7 +40,7 @@ debug = DebugToolbarExtension(app)
 @app.before_request
 def add_user_to_g():
 
-    """If we're logged in, add curr user to Flask global."""
+    """If we're logged in, add current user to Flask global."""
 
     g.member_default_image_path = MEMBER_DEFAULT_IMAGE_PATH
 
@@ -129,13 +129,9 @@ def view_bill(bill_id):
 
     bill = Bill.query.get_or_404(bill_id)
 
-    # bill = Bill.query.filter(Bill.bill_slug==bill_slug).one_or_none()
-
     if bill:
-
-        summary = prune_summary(bill.summary)
     
-        return render_template("bills/single_bill.html", bill=bill, summary=summary)
+        return render_template("bills/single_bill.html", bill=bill
 
 @app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
@@ -365,26 +361,10 @@ def get_followed_bills(user_id):
     return jsonify(bill_ids)
 
 #temporary fix for api keeping title awkwardly in summary, will update full database eventually
-def prune_summary(summary):
-
-    if 'This bill' in summary:
-
-        find_index = summary.find('This bill')
-        
-        lst = summary[find_index::]
-
-        # print('Pruned summary: ', lst)
-
-        new_summary = str(lst)
-
-        return new_summary
-    
-    else:
-
-        return summary
 
 
-app.jinja_env.globals.update(prune_summary=prune_summary)
+
+# app.jinja_env.globals.update(prune_summary=prune_summary)
 
 
 def get_bills(bill_ids):

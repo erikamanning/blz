@@ -63,8 +63,8 @@
                 <div class="bill-summary mt-5">
                     <h5 class="card-title"><i class="fas fa-feather-alt"></i> Summary</h5>
                     <div class="container">
-                        {% if summary: %}
-                        <p class="card-text mb-4">{{summary}}</p>
+                        {% if bill.summary: %}
+                        <p class="card-text mb-4">{{bill.summary}}</p>
                     {% else %}
 
                         <p class="fst-italic">No summary currently available.</p>
