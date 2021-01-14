@@ -2,6 +2,24 @@ from app import db, headers
 from models import Bill, SponsoredBill
 import requests
 
+def prune_summary(summary):
+
+    if 'This bill' in summary:
+
+        find_index = summary.find('This bill')
+        
+        lst = summary[find_index::]
+
+        # print('Pruned summary: ', lst)
+
+        new_summary = str(lst)
+
+        return new_summary
+    
+    else:
+
+        return summary
+
 def create_bill(bill_data):
 
     bill_data = bill_data['results'][0]
@@ -66,21 +84,3 @@ def add_sponsored_bill(new_bill):
 
     db.session.add(new_sponsored_bill)
     db.session.commit()
-
-def prune_summary(summary):
-
-    if 'This bill' in summary:
-
-        find_index = summary.find('This bill')
-        
-        lst = summary[find_index::]
-
-        # print('Pruned summary: ', lst)
-
-        new_summary = str(lst)
-
-        return new_summary
-    
-    else:
-
-        return summary
