@@ -2,23 +2,24 @@ from flask import Flask, request, render_template, redirect, session, flash, jso
 import json
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_bcrypt import Bcrypt
-from secrets import API_SECRET_KEY
+import secrets
 from fileread import FileRead
 import requests
 import pprint
 from classes import BillSearch
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session, Party, State
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile
-from secrets import API_SECRET_KEY
+# from secrets import API_SECRET_KEY
 from sqlalchemy import and_
-
+import os
 
 # current session of US Congress
 CURRENT_SESSION = '117'
 CURRENT_USER = 'user_id'
 MEMBER_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
-headers = {'X-API-Key': API_SECRET_KEY}
+# headers = {'X-API-Key': API_SECRET_KEY}
+headers = {'X-API-Key': os.environ.get('SECRET-API-KEY','none')}
 
 pp = pprint.PrettyPrinter(indent=4)
 
