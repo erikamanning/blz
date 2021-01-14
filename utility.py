@@ -3,8 +3,8 @@ from models import Member
 
 from secrets import API_SECRET_KEY
 
+from app import headers
 
-headers = {'X-API-Key': API_SECRET_KEY}
 
 # debug string
 # print("***********************************")
