@@ -275,6 +275,8 @@ def edit_profile():
 
             db.session.add(user)
             db.session.commit()
+            return render_template('user/edit_profile.html', user=user, form=form)
+
 
         else:
 
