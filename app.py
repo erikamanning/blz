@@ -9,7 +9,14 @@ import pprint
 from classes import BillSearch
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session, Party, State
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile
-# from secrets import API_SECRET_KEY
+
+try:
+    from secrets import API_SECRET_KEY
+except:
+    print('*****************************************') 
+    print('No secrets file found!') 
+    print('*****************************************') 
+
 from sqlalchemy import and_
 import os
 
@@ -19,7 +26,8 @@ CURRENT_USER = 'user_id'
 MEMBER_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
 # headers = {'X-API-Key': API_SECRET_KEY}
-headers = {'X-API-Key': os.environ.get('SECRET-API-KEY','none')}
+# headers = {'X-API-Key': secrets.API_SECRET_KEY}
+headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
 
 pp = pprint.PrettyPrinter(indent=4)
 
