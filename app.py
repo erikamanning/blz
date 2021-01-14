@@ -9,6 +9,7 @@ import pprint
 from classes import BillSearch
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session, Party, State
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile
+import click
 
 try:
     from secrets import API_SECRET_KEY
@@ -45,6 +46,11 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
 debug = DebugToolbarExtension(app)
+
+
+@app.cli.command("update-app")
+@click.argument("name")
+def create_user(name):
 
 @app.before_request
 def add_user_to_g():
