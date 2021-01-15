@@ -233,9 +233,10 @@ def show_homepage():
         user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
 
         if user.state_id:
-
-            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.', Member.in_office==True).order_by(Member.last_name).all()
-            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.', Member.in_office==True).order_by(Member.last_name).all()
+            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.').order_by(Member.last_name).all()
+            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.').order_by(Member.last_name).all()
+            # senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.', Member.in_office==True).order_by(Member.last_name).all()
+            # representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.', Member.in_office==True).order_by(Member.last_name).all()
             legislators = {'s':senators, 'r':representatives}
 
             return render_template('user/dashboard.html', user=user, bills=user.followed_bills, legislators=legislators)

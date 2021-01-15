@@ -167,6 +167,8 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False,unique=True)
     state_id = db.Column(db.String(5), db.ForeignKey('states.acronym', ondelete="CASCADE"), nullable=True)
 
+    # state = db.relationship('State', backref='users', cascade="all, delete")
+
     followed_bills=db.relationship(
         'Bill', 
         secondary='bill_follows',

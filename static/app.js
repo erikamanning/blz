@@ -2,6 +2,11 @@
 
 $(document).ready(function(){
 
+    $('.sm-leg-card').on('click', function(){
+
+        let leg_id = $(this).attr('id') 
+        window.location = `/legislator/${leg_id}`
+    })
 
     async function getFollowedBills(){
 
