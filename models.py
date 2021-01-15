@@ -101,13 +101,13 @@ class Member(db.Model):
     party_id = db.Column(db.String,db.ForeignKey('parties.code', ondelete="CASCADE"),nullable=False)
     position_code = db.Column(db.String, db.ForeignKey('positions.code', ondelete="CASCADE"), nullable=False)
 
-    # website = db.Column(db.String,nullable=False)
+    website = db.Column(db.String,nullable=False)
     in_office = db.Column(db.Boolean, primary_key= True, nullable=False)
-    # twitter_handle = db.Column(db.String, nullable=True)
-    # facebook_account = db.Column(db.String, nullable=True)
-    # youtube_account = db.Column(db.String, nullable=True)
-    # office_address = db.Column(db.String,nullable=False)
-    # phone = db.Column(db.String,nullable=False)
+    twitter_account = db.Column(db.String, default='Not Listed',nullable=True)
+    facebook_account = db.Column(db.String, default='Not Listed',nullable=True)
+    youtube_account = db.Column(db.String, default='Not Listed',nullable=True)
+    office_address = db.Column(db.String, default='Not Listed',nullable=False)
+    phone = db.Column(db.String,default='Not Listed',nullable=False)
      
 
     state = db.relationship('State', backref='members', cascade="all, delete")

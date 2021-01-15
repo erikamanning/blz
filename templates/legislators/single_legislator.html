@@ -37,29 +37,30 @@
                                         <dt class="text-end col-6 ">Party:</dt>
                                         <dd class="col-6">{{legislator.party.name}}</dd>
                                         
-                                        <dt class="text-end col-6 text-truncate">Contact Info:</dt>
-                                        <dd class="col-6">Street</dd>
+                                        <dt class="text-end col-6 text-truncate">Office:</dt>
+                                        <dd class="col-6">{{legislator.office_address}}</dd>
+
+                                        <dt class="text-end col-6 text-truncate">Phone:</dt>
+                                        <dd class="col-6">{{legislator.phone}}</dd>
                 
-                                        <dt class="text-end col-6">Links:</dt>
+                                        <dt class="text-end col-6">Website:</dt>
                                         <dd class="col-6 col-lg-6 d-grid gap-1">
-                                            <a class="btn btn-outline-dark" href='#'><i class="fas fa-external-link-alt"></i> Congress</a>
-                                            <a class="btn btn-outline-dark" href="#"><i class="fas fa-external-link-alt"></i> State</a>
-                                            <a class="btn btn-outline-dark" href="#"><i class="fas fa-external-link-alt"></i> Personal</a>
+                                            <a class="btn btn-outline-dark" href='{{legislator.website}}'><i class="fas fa-external-link-alt"></i> Go </a>
                                         </dd>
                 
                                         <dt class="text-end col-6">Social Media:</dt>
                                         <dd class="col-2">
-                                            <a href="#">
+                                            <a href="https://www.facebook.com/{{legislator.facebook_account}}">
                                                 <h1><i class="text-dark fab fa-facebook-square"></i></h1>
                                             </a>  
                                         </dd>
                                         <dd class="col-2">
-                                            <a href="#">
+                                            <a href="https://www.twitter.com/{{legislator.twitter_account}}">
                                                 <h1><i class="text-dark fab fa-twitter-square"></i></h1>
                                             </a>     
                                         </dd>
                                         <dd class="col-2">
-                                            <a href="#">
+                                            <a href="https://www.youtube.com/{{legislator.youtube_account}}">
                                                 <h1><i class="text-dark fab fa-youtube-square"></i></h1>
                                             </a>   
                                         </dd>

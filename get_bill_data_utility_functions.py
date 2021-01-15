@@ -24,6 +24,11 @@ def create_bill(bill_data):
 
     bill_data = bill_data['results'][0]
 
+    if not bill_data["short_title"]:
+        short_title = bill_data["title"]
+    else:
+        short_title=bill_data['short_title']
+
     new_bill = Bill(
             id = bill_data["bill_id"],
             bill_slug = bill_data["bill_slug"],
@@ -32,7 +37,7 @@ def create_bill(bill_data):
             bill_type = bill_data["bill_type"],
             number = bill_data["number"],
             title = bill_data["title"],
-            short_title = bill_data["short_title"],
+            short_title = short_title,
             sponsor_id = bill_data["sponsor_id"],
             congressdotgov_url = bill_data["congressdotgov_url"],
             introduced_date = bill_data["introduced_date"],

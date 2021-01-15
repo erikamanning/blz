@@ -44,11 +44,25 @@ def save_members(members):
         mem_id = member['id']
 
         if not Member.query.filter(Member.id==mem_id).one_or_none():
-            new_member = Member(id=mem_id,first_name=member['first_name'], last_name=member['last_name'], image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', state_id=member['state'], party_id=member['party'], position_code=member['short_title'], in_office=member['in_office'])
+            new_member = Member(
+                id=mem_id,
+                first_name=member['first_name'], 
+                last_name=member['last_name'], 
+                image= f'https://theunitedstates.io/images/congress/original/{mem_id}.jpg', 
+                state_id=member['state'], party_id=member['party'], 
+                position_code=member['short_title'], 
+                website = member['url'],
+                in_office=member['in_office'],
+                twitter_account = member['twitter_account'],
+                facebook_account =member['facebook_account'],
+                youtube_account =member['youtube_account'],
+                office_address = member['office'],
+                phone = member['phone']
+            )
 
-            print('****************************')
-            print('Member In Office: ', member['in_office'])
-            print('****************************')
+            # print('****************************')
+            # print('Member In Office: ', member['in_office'])
+            # print('****************************')
             db.session.add(new_member)
             db.session.commit()
 

@@ -23,12 +23,10 @@ from sqlalchemy import and_
 import os
 
 # current session of US Congress
-CURRENT_SESSION = '117'
+CURRENT_SESSION = '116'
 CURRENT_USER = 'user_id'
 MEMBER_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
-# headers = {'X-API-Key': API_SECRET_KEY}
-# headers = {'X-API-Key': secrets.API_SECRET_KEY}
 headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
 
 pp = pprint.PrettyPrinter(indent=4)
@@ -46,11 +44,6 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
 debug = DebugToolbarExtension(app)
-
-
-@app.cli.command("update-app")
-@click.argument("name")
-def create_user(name):
 
 @app.before_request
 def add_user_to_g():
