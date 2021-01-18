@@ -5,10 +5,10 @@
 <div id="{{legislators['s'][j].id}}" class="sm-leg-card card shadow-sm h-100">
     <div class="card-body">
             <div class="row legislator">
-                <div class="col-2">
+                <div class="col-3 col-lg-3">
                     <a href="/legislator/{{legislators['s'][j].id}}"><img class="rounded legislator-image" style="width:50px;"  src="{{legislators['s'][j].image}}" alt="No Image Available" onerror='this.src="{{g.legislator_default_image_path}}"'></a>
                 </div>
-                <div class="col">
+                <div class="col-9 col-lg-8">
                     <small>{{legislators['s'][j].position.name}}</small> 
                     <h5>{{legislators['s'][j].first_name}} {{legislators['s'][j].last_name}}</h5>
                 </div>

@@ -12,10 +12,10 @@
             <div class="card-body">
                 <!-- Top of Bill Data  -->
                 <div class="row justify-content-between mb-5">
-                    <div class="col-3">
+                    <div class="col-6 col-sm-3">
                         <a href="/bills/{{bill.id}}" class="shadow-sm btn btn-dark py-1"><i class="fas fa-scroll"></i> {{bill.bill}}</a>
                     </div>
-                    <div class="col-2 col-md-1">
+                    <div class="col-3 col-sm-2 col-md-1 text-end">
                         <button  id="follow-button" class="btn btn-outline-dark follow-button"><i class="far fa-bookmark"></i></button>
                     </div>
                 </div>
@@ -61,27 +61,27 @@
                 
                 <!-- Bill Summary Section -->
                 <div class="bill-summary mt-5">
-                    <h5 class="card-title"><i class="fas fa-feather-alt"></i> Summary</h5>
+                    <h5 class="card-title text-center text-sm-start"><i class="fas fa-feather-alt"></i> Summary</h5>
                     <div class="container">
                         {% if bill.summary: %}
-                        <p class="card-text mb-4">{{bill.summary}}</p>
+                        <p class="card-text  text-center text-sm-start mb-4">{{bill.summary}}</p>
                     {% else %}
 
-                        <p class="fst-italic">No summary currently available.</p>
+                        <p class="fst-italic text-center text-sm-start">No summary currently available.</p>
                     {% endif %}
                     </div>
                 </div>
                 <!-- Link to Congress Website -->
-                <div class="text-center mb-5 mt-3">
+                <div class="d-grid gap-1 d-md-block text-sm-center mb-5 mt-3">
                     <a href="{{bill.congressdotgov_url}}}/text" class="btn btn-dark text-center"><i class="fas fa-external-link-alt"></i> View Full Bill at  <span class="font-italic">Congress.gov</span></a>
 
                 </div>
-                <h5><i class="fas fa-user-edit mb-2"> </i> Primary Sponsor </h5>
+                <h5 class="card-title text-center text-sm-start"><i class="fas fa-user-edit mb-2"> </i> Primary Sponsor </h5>
                 <div class="align-items-center">
                     <a class="" href="/legislator/{{bill.sponsor[0].legislators.id}}"><img class="rounded mx-auto d-block" src="{{bill.sponsor[0].legislators.image}}" style="width:150px" alt=""></a>
                 </div>
                 <h5 class="text-center mt-2">{{bill.sponsor[0].legislators.position.name}} {{bill.sponsor[0].legislators.first_name}} {{bill.sponsor[0].legislators.last_name}}</h5>
-                <div class="text-center mt-3">
+                <div class="d-grid gap-1 d-sm-block text-sm-center mt-3">
                     <a href="/legislator/{{bill.sponsor[0].legislators.id}}" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor[0].legislators.position_code}} {{bill.sponsor[0].legislators.last_name}}'s Page</a>
                 </div>
             </div>

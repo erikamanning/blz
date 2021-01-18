@@ -232,7 +232,7 @@ def show_homepage():
 
         user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
 
-        if user.state_id != 'NONE':
+        if user and user.state_id != 'NONE':
             senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.').order_by(Legislator.last_name).all()
             representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.').order_by(Legislator.last_name).all()
             # senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.', Legislator.in_office==True).order_by(Legislator.last_name).all()
@@ -324,7 +324,7 @@ def delete_account():
             db.session.delete(user)
             db.session.commit()
 
-            flash('Your profile has been deleted.')
+            flash('Your account has been deleted.')
             do_logout()
             return redirect('/')
 
