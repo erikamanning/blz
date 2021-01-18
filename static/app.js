@@ -18,10 +18,9 @@ $(document).ready(function(){
         fBills = req.data;
         console.log('F BILLS: ', fBills);
 
-        return fBills
-
-        
+        return fBills    
     }
+
     async function UIFollowButtons(){
 
         followed_bills = await getFollowedBills()
@@ -31,13 +30,11 @@ $(document).ready(function(){
             $(`#${bill}`).find('#follow-button').toggleClass('btn-outline-dark')
             $(`#${bill}`).find('#follow-button').toggleClass('btn-dark')
         }
-    
     }
 
     if( gUserId != ''){
 
         UIFollowButtons();
-
     }
 
     // visuals for dashboard buttons and show hide content functionality
@@ -61,7 +58,6 @@ $(document).ready(function(){
 
         $('#sponsored-bills').toggleClass('d-none');
         $('#sponsored-bills-button-icon').toggleClass('fa-caret-square-up');
-
     });
 
     $billSearchForm = $('#bill-search-form');
@@ -71,30 +67,22 @@ $(document).ready(function(){
 
         $billSearchForm.submit();
         console.log( "form change" );
-
     });
 
-
     $paginationLinks = $('#pagination-links');
-
 
     // change to updated javascript
     $paginationLinks.change(function(evt){
 
-        
-
         $paginationLinks.submit();
         console.log( "pagination clicked" );
-
     });
-
     
     $("#show-details").click(function(evt){
 
         $('.summary-container').toggleClass('d-none');
         $('.last-major-action').toggleClass('d-none');
     });
-
 
     $('.follow-button').on('click', async function(evt){
 
@@ -109,37 +97,6 @@ $(document).ready(function(){
         $(this).toggleClass('btn-outline-dark')
         $(this).toggleClass('btn-dark')
 
-        // UIFollowAction(req.data.resp_code, evt.target);
-
     });
 
-
-    function UIFollowAction(status, button){
-
-        if(status == 'foll_success'){
-
-            $(button).removeClass('btn-outline-dark');
-            $(button).addClass('btn-dark');
-
-        }
-        else if(status == 'unfoll_success'){
-
-            $(button).removeClass('btn-dark');
-            $(button).addClass('btn-outline-dark');
-        }
-        else{
-
-            $('body').append($("<p>You can't do that at this time</p>"));
-        }
-
-    }
 });
-
-
-// currently this hides/shows all summaries, which is a feature I want to keep, but not attached to this button
-
-// clicking follow should be an ajax requestin in this file so that the page doesn't refresh or leave and the button is changed to unfollow when clicked
-
-
-
-// next steps, make a user model

@@ -45,7 +45,7 @@
                                     <span class="fw-bold"><i class="far fa-calendar-check"></i> </i>Introduced: </span>
                                 </div>
                                 <div class="col-sm-4 text-center text-lg-start">
-                                    <span class="">{{bill.introduced_date}}</span>
+                                    <span class="">{{convert_date(bill.introduced_date)}}</span>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
@@ -53,7 +53,7 @@
                                     <span class="fw-bold"><i class="far fa-calendar-check"></i> </i>Last Major Action: </span>
                                 </div>
                                 <div class="col-sm-4 text-center text-lg-start">
-                                    <span class="">{{bill.latest_major_action_date}}</span>
+                                    <span class="">{{convert_date(bill.latest_major_action_date)}}</span>
                                 </div>
                             </div>
                         </div>
@@ -78,11 +78,11 @@
                 </div>
                 <h5><i class="fas fa-user-edit mb-2"> </i> Primary Sponsor </h5>
                 <div class="align-items-center">
-                    <a class="" href="/legislator/{{bill.sponsor[0].members.id}}"><img class="rounded mx-auto d-block" src="{{bill.sponsor[0].members.image}}" style="width:150px" alt=""></a>
+                    <a class="" href="/legislator/{{bill.sponsor[0].legislators.id}}"><img class="rounded mx-auto d-block" src="{{bill.sponsor[0].legislators.image}}" style="width:150px" alt=""></a>
                 </div>
-                <h5 class="text-center mt-2">{{bill.sponsor[0].members.position.name}} {{bill.sponsor[0].members.first_name}} {{bill.sponsor[0].members.last_name}}</h5>
+                <h5 class="text-center mt-2">{{bill.sponsor[0].legislators.position.name}} {{bill.sponsor[0].legislators.first_name}} {{bill.sponsor[0].legislators.last_name}}</h5>
                 <div class="text-center mt-3">
-                    <a href="/legislator/{{bill.sponsor[0].members.id}}" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor[0].members.position_code}} {{bill.sponsor[0].members.last_name}}'s Page</a>
+                    <a href="/legislator/{{bill.sponsor[0].legislators.id}}" class="btn btn-outline-dark"><i class="fas fa-external-link-alt"></i> View {{bill.sponsor[0].legislators.position_code}} {{bill.sponsor[0].legislators.last_name}}'s Page</a>
                 </div>
             </div>
         </div>

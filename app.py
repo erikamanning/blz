@@ -7,9 +7,9 @@ from fileread import FileRead
 import requests
 import pprint
 from classes import BillSearch
-from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Member, Session, Party, State
-from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile
-import click
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State
+from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser
+from sqlalchemy.exc import IntegrityError
 
 try:
     from secrets import API_SECRET_KEY
@@ -23,9 +23,9 @@ from sqlalchemy import and_
 import os
 
 # current session of US Congress
-CURRENT_SESSION = '116'
+CURRENT_SESSION = 116
 CURRENT_USER = 'user_id'
-MEMBER_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
+LEGISLATOR_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
 headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
 
@@ -50,7 +50,7 @@ def add_user_to_g():
 
     """If we're logged in, add current user to Flask global."""
 
-    g.member_default_image_path = MEMBER_DEFAULT_IMAGE_PATH
+    g.legislator_default_image_path = LEGISLATOR_DEFAULT_IMAGE_PATH
 
     if CURRENT_USER in session:
         g.user = User.query.get(session[CURRENT_USER])
@@ -58,6 +58,17 @@ def add_user_to_g():
     else:
         g.user = None
 
+
+def do_login(user):
+
+    session[CURR_USER_KEY] = user.id
+
+
+def do_logout():
+
+    if CURRENT_USER in session:
+
+        del session[CURRENT_USER]
 
 @app.route('/')
 def show_home_page():
@@ -109,7 +120,7 @@ def view_bills():
 
     # session
     if request.args.get('session',False):
-        session_id=request.args['session']
+        session_id=int(request.args['session'])
         filter_args.append(Bill.congress == session_id)
     else:
         session_id=CURRENT_SESSION
@@ -188,29 +199,29 @@ def view_legislators():
     if request.args.get('state',False) and request.args.get('state') != '0':
 
         state_code = request.args['state']
-        filter_args.append(Member.state_id == state_code)
+        filter_args.append(Legislator.state_id == state_code)
 
     if request.args.get('party',False) and request.args.get('party') != '0':
 
         party_code = request.args['party']
-        filter_args.append(Member.party_id == party_code)
+        filter_args.append(Legislator.party_id == party_code)
 
     if request.args.get('chamber',False) and request.args.get('chamber') != '0':
 
         position_code = request.args['chamber']
-        filter_args.append(Member.position_code == position_code)
+        filter_args.append(Legislator.position_code == position_code)
 
-    # filter out member in office or add select option
-    # filter_args.append(Member.in_office==True)
-    legislators = Member.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
+    # filter out legislator in office or add select option
+    # filter_args.append(Legislator.in_office==True)
+    legislators = Legislator.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
 
-    return render_template('legislators/legislators.html', members = legislators, form=form)
+    return render_template('legislators/legislators.html', legislators = legislators, form=form)
 
 @app.route('/legislator/<legislator_id>')
 def view_legislator(legislator_id):
 
 
-    legislator = Member.query.filter(Member.id==legislator_id).first()
+    legislator = Legislator.query.filter(Legislator.id==legislator_id).first()
 
     sponsored_bills = legislator.sponsored_bills
 
@@ -233,10 +244,10 @@ def show_homepage():
         user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
 
         if user.state_id:
-            senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.').order_by(Member.last_name).all()
-            representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.').order_by(Member.last_name).all()
-            # senators = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Sen.', Member.in_office==True).order_by(Member.last_name).all()
-            # representatives = Member.query.filter(Member.state_id==user.state_id, Member.position_code=='Rep.', Member.in_office==True).order_by(Member.last_name).all()
+            senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.').order_by(Legislator.last_name).all()
+            representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.').order_by(Legislator.last_name).all()
+            # senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.', Legislator.in_office==True).order_by(Legislator.last_name).all()
+            # representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.', Legislator.in_office==True).order_by(Legislator.last_name).all()
             legislators = {'s':senators, 'r':representatives}
 
             return render_template('user/dashboard.html', user=user, bills=user.followed_bills, legislators=legislators)
@@ -267,7 +278,15 @@ def edit_profile():
 
         user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
 
-        form = EditProfile(obj=user)
+        user_form_obj = {
+
+            'username': user.username,
+            'email': user.email,
+            'state': user.state_id
+
+        }
+
+        form = EditProfile(data=user_form_obj)
 
         states = db.session.query(State.acronym, State.name).all()
     
@@ -279,10 +298,17 @@ def edit_profile():
             user.email =  form.email.data
             user.state_id = form.state.data
 
+            if form.current_password.data and form.new_password.data:
+
+                authenticated = User.authenticate(username=form.username.data, password=form.current_password.data)
+
+                if authenticated:
+
+                    user.change_password(form.new_password.data)                
+
             db.session.add(user)
             db.session.commit()
             return render_template('user/edit_profile.html', user=user, form=form)
-
 
         else:
 
@@ -292,6 +318,27 @@ def edit_profile():
 
         return redirect('/')
 
+@app.route('/profile/delete', methods=['GET','POST'])
+def delete_account():
+
+    if session.get('user_id', False):
+
+        form = DeleteUser()
+
+        if form.validate_on_submit():
+
+            user_id = session['user_id']
+            user = User.query.get_or_404(user_id)
+            db.session.delete(user)
+            db.session.commit()
+
+            flash('User deleted')
+            do_logout()
+            return redirect('/')
+
+        else:
+
+            return render_template('user/delete_form.html', form=form)
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
@@ -306,8 +353,13 @@ def signup():
         new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = form.state.data)
 
         db.session.add(new_user)
-        db.session.commit()
 
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash('Username taken. Please pick another.')
+            return redirect('/signup')
         
         session['user_id'] = str(new_user.id)
 
@@ -351,6 +403,7 @@ def logout():
 
     if session.get('user_id', False):
         session.pop('user_id')
+        # g.pop(user)
 
         flash('Successfully logged out!')
         return redirect('/')
@@ -371,20 +424,31 @@ def get_followed_bills(user_id):
 
 #temporary fix for api keeping title awkwardly in summary, will update full database eventually
 
+def convert_date(date_str):
+
+    months = {
+
+        1: 'January',
+        2: 'February',
+        3: 'March',
+        4: 'April',
+        5: 'May',
+        6: 'June',
+        7: 'July',
+        8: 'August',
+        9: 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December'
+    }
+
+    date_data = date_str.split('-')
+
+    month = months[int(date_data[1])]
+
+    new_date_str = f'{month} {date_data[2]}, {date_data[0]}'
+
+    return new_date_str
 
 
-# app.jinja_env.globals.update(prune_summary=prune_summary)
-
-
-def get_bills(bill_ids):
-
-    bills = []
-
-    for bill_id in bill_ids:
-
-        bill = Bill.query.filter(Bill.id == bill_id[0]).one_or_none()
-
-        bills.append(bill)
-
-    
-    return bills
+app.jinja_env.globals.update(convert_date=convert_date)

@@ -1,5 +1,5 @@
 
-    {%for member in members.items%}
+    {%for legislator in legislators.items%}
 
     <div class="row justify-content-center mb-3">
         <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="row p-3 row align-items-center">
                         <div class="col-5 col-md-4 col-lg-3 col-xl-3">
-                            <a href="/legislator/{{member.id}}"><img class="rounded shadow-sm" style="width:150px"  src="{{member.image}}" alt="No Image Available" onerror='this.src="{{g.member_default_image_path}}"'></a>
+                            <a href="/legislator/{{legislator.id}}"><img class="rounded shadow-sm" style="width:150px"  src="{{legislator.image}}" alt="No Image Available" onerror='this.src="{{g.legislator_default_image_path}}"'></a>
                         </div>
                         <div class="col-7 col-md-8 col-lg-9 col-xl-9">
                             <div class="row">
@@ -16,18 +16,18 @@
                                         <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <h5 class="d-flex flex-wrap p-0">{{member.position.name}}&nbsp;<small class="text-secondary font-italic">| <i> {{member.state.name}} </i></small> </h5>
+                                                    <h5 class="d-flex flex-wrap p-0">{{legislator.position.name}}&nbsp;<small class="text-secondary font-italic">| <i> {{legislator.state.name}} </i></small> </h5>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <h2 class="d-flex flex-nowrap p-0">{{member.first_name}} {{member.last_name}}</h2>
+                                                    <h2 class="d-flex flex-nowrap p-0">{{legislator.first_name}} {{legislator.last_name}}</h2>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <a href="/legislator/{{member.id}}" class="btn btn-dark mt-2 mb-3"><i class="fas fa-search"></i> View
-                                                        Member</a>
+                                                    <a href="/legislator/{{legislator.id}}" class="btn btn-dark mt-2 mb-3"><i class="fas fa-search"></i> View
+                                                        Legislator</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -36,17 +36,17 @@
                                 <div class="col-6 col-md-4 col-lg-4">
                                     <div class="row justify-content-around">
                                         <div class="social-media col-4 col-lg-3">
-                                            <a href="https://www.facebook.com/{{member.facebook_account}}">
+                                            <a href="https://www.facebook.com/{{legislator.facebook_account}}">
                                                 <h1><i class="text-dark fab fa-facebook-square"></i></h1>
                                             </a>
                                         </div>                        
                                         <div class="social-media col-4 col-lg-3">
-                                            <a href="https://www.twitter.com/{{member.twitter_account}}">
+                                            <a href="https://www.twitter.com/{{legislator.twitter_account}}">
                                                 <h1><i class="text-dark fab fa-twitter-square"></i></h1>
                                             </a>
                                         </div>
                                         <div class="social-media col-4 col-lg-3">
-                                            <a href="https://www.youtube.com/{{member.youtube_account}}">
+                                            <a href="https://www.youtube.com/{{legislator.youtube_account}}">
                                                 <h1><i class="text-dark fab fa-youtube-square"></i></h1>
                                             </a>
                                         </div>

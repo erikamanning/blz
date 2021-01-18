@@ -1,5 +1,5 @@
 from app import db, headers
-from models import Member, Bill, SponsoredBill
+from models import Legislator, Bill, SponsoredBill
 import requests
 from sqlalchemy import and_
 from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
@@ -9,8 +9,8 @@ from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_dat
 # so they can be called in both, cannot do it now with current setip
 
 # update bills
-# update Sponsored bills/ new sponsored bills should show up for members
-# update members?
+# update Sponsored bills/ new sponsored bills should show up for legislators
+# update legislators?
 
 
 # checks slugs to see if not caught up yet, returns boolean status 

@@ -1,5 +1,5 @@
 from app import db, headers, CURRENT_SESSION
-from models import Member, Bill, SponsoredBill
+from models import Legislator, Bill, SponsoredBill
 import requests
 from sqlalchemy import and_, or_
 from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data

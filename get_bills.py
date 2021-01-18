@@ -90,7 +90,7 @@ def get_some_slugs(congress, chamber, status, max_offset):
     
     return all_slugs
 
-all_senate_slugs = get_some_slugs(CURRENT_SESSION, "senate", 'introduced',4)
+all_senate_slugs = get_some_slugs(CURRENT_SESSION, "senate", 'introduced',0)
 get_bill_data(all_senate_slugs, CURRENT_SESSION)
 
 

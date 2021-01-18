@@ -30,7 +30,7 @@ class SponsoredBill(db.Model):
     __tablename__ = 'sponsored_bills'
 
     bill_id = db.Column(db.String, db.ForeignKey('bills.id', ondelete="CASCADE"), primary_key=True)
-    sponsor_id = db.Column(db.String, db.ForeignKey('members.id', ondelete="CASCADE"), primary_key=True)
+    sponsor_id = db.Column(db.String, db.ForeignKey('legislators.id', ondelete="CASCADE"), primary_key=True)
 
     def __repr__(self):
 
@@ -43,13 +43,13 @@ class Bill(db.Model):
 
     id = db.Column(db.String, primary_key=True, nullable = False, unique=True)
     bill_slug = db.Column(db.String, nullable = False)
-    congress = db.Column(db.String, nullable = False)
+    congress = db.Column(db.Integer, nullable = False)
     bill = db.Column(db.String, nullable = False)
     bill_type = db.Column(db.String, nullable = False)
     number = db.Column(db.String, nullable = False)
     title = db.Column(db.String, nullable = False)
     short_title = db.Column(db.String, nullable = True)
-    sponsor_id = db.Column(db.String, db.ForeignKey('members.id', ondelete="CASCADE"), nullable = False)
+    sponsor_id = db.Column(db.String, db.ForeignKey('legislators.id', ondelete="CASCADE"), nullable = False)
     congressdotgov_url = db.Column(db.String, nullable = False)
     introduced_date = db.Column(db.String, nullable = False)
     active = db.Column(db.Boolean, nullable = False)
@@ -89,9 +89,9 @@ class PolicyArea(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String, nullable=False)
 
-class Member(db.Model):
+class Legislator(db.Model):
 
-    __tablename__ = "members"
+    __tablename__ = "legislators"
 
     id = db.Column(db.String, primary_key=True, unique=True)
     first_name = db.Column(db.String, nullable=False)
@@ -110,11 +110,11 @@ class Member(db.Model):
     phone = db.Column(db.String,default='Not Listed',nullable=False)
      
 
-    state = db.relationship('State', backref='members', cascade="all, delete")
-    party = db.relationship('Party', backref='members', cascade="all, delete")
-    position = db.relationship('Position', backref='members', cascade="all, delete")
+    state = db.relationship('State', backref='legislators', cascade="all, delete")
+    party = db.relationship('Party', backref='legislators', cascade="all, delete")
+    position = db.relationship('Position', backref='legislators', cascade="all, delete")
 
-    sponsored_bills = db.relationship('SponsoredBill', backref='members', cascade="all, delete")
+    sponsored_bills = db.relationship('SponsoredBill', backref='legislators', cascade="all, delete")
 
 class State(db.Model):
 
@@ -165,9 +165,9 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False,unique=True)
-    state_id = db.Column(db.String(5), db.ForeignKey('states.acronym', ondelete="CASCADE"), nullable=True)
+    state_id = db.Column(db.String(5), db.ForeignKey('states.acronym'), nullable=True)
 
-    # state = db.relationship('State', backref='users', cascade="all, delete")
+    state = db.relationship('State', backref='users')
 
     followed_bills=db.relationship(
         'Bill', 
@@ -175,6 +175,14 @@ class User(db.Model):
         primaryjoin=(BillFollows.user_id == id),
         cascade="all, delete"
     )
+
+    def change_password(self, new_password):
+
+        hashed = bcrypt.generate_password_hash(new_password)
+
+        hashed_utf8 = hashed.decode("utf8")
+
+        self.password = hashed_utf8
 
     def __repr__(self):
 

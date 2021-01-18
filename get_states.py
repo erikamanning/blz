@@ -1,7 +1,7 @@
 from app import db, headers
 from models import State
 from fileread import FileRead
-from utility import parse_state_data, get_members_json
+from utility import parse_state_data, get_legislators_json
 
 
 # State.__table__.drop(db.get_engine())

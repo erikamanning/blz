@@ -1,14 +1,7 @@
 import requests
-from models import Member
+from models import Legislator
 
 from app import headers
-
-
-# debug string
-# print("***********************************")
-# print("Subject name for query: ", subject_name)
-# print("***********************************")
-
 
 # separates state name string from acronym string and removes space from beginning of acronym string, 
 # could also just delete space from local text file
@@ -31,28 +24,31 @@ def cure_query_str(query_str):
 
 
 
-def get_members_json(chamber_str):
+def get_legislators_json(chamber_str):
 
     req = requests.get(f"https://api.propublica.org/congress/v1/116/{chamber_str}/members.json", headers=headers)
     json_data = req.json()
-    members = json_data["results"][0]["members"]
+    legislators = json_data["results"][0]["members"]
 
-    extracted_members = extract_member_data(members)
+    extracted_legislators = extract_legislator_data(legislators)
 
-    return extracted_members
+    return extracted_legislators
 
-def extract_member_data(members):
+def extract_legislator_data(legislators):
 
-    chamber_members = []
+    chamber_legislators = []
 
-    for member in members:
+    for legislator in legislators:
 
-        if member["in_office"]:
+        if legislator["in_office"]:
 
-            position=member["short_title"].replace('.','')
+            position=legislator["short_title"].replace('.','')
             position=position.lower()
-            new_member = Member(id = member["id"], first_name=member["first_name"], last_name=member["last_name"], state_id=member["state"], party_id=member["party"], position_code=position)
-            chamber_members.append(new_member)
+            new_legislator = Legislator(id = legislator["id"], first_name=legislator["first_name"], last_name=legislator["last_name"], state_id=legislator["state"], party_id=legislator["party"], position_code=position)
+            chamber_legislators.append(new_legislator)
 
-    return chamber_members
+    return chamber_legislators
+
+
+
 

@@ -24,13 +24,13 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-4">
                             <div class="card shadow-sm p-2">
-                                <h3 class="text-center">{{user.state_id}}</h3>
+                                <h3 class="text-center">{{user.state.name}} ({{user.state_id}})</h3>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h1 class="text-center mt-5">{{user.state_id}} Legislators</h1>
+                <h1 class="text-center mt-5">{{user.state.name}} Legislators</h1>
 
 
 
@@ -116,6 +116,7 @@
                         {% include 'bills/bill_block.html' %}
                         {% endfor %}
                     </div>
+                    
         
                 {% endif %}
             </div>
