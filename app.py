@@ -6,7 +6,6 @@ import secrets
 from fileread import FileRead
 import requests
 import pprint
-from classes import BillSearch
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser
 from sqlalchemy.exc import IntegrityError
@@ -31,9 +30,7 @@ headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
 
 pp = pprint.PrettyPrinter(indent=4)
 
-
 ROWS_PER_PAGE = 10
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY','2@!4q18&5l!D32d%^!#4')
@@ -43,7 +40,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
-debug = DebugToolbarExtension(app)
+# debug = DebugToolbarExtension(app)
 
 @app.before_request
 def add_user_to_g():
@@ -228,14 +225,6 @@ def view_legislator(legislator_id):
     return render_template('legislators/single_legislator.html', legislator = legislator, sponsored_bills=sponsored_bills)
 
 
-# a page to give information on the chambers/ scronyms etc, mostly will be done in js dropping and revealing information
-@app.route('/learn')
-def view_learn_page():
-
-
-    return render_template('learn.html')
-
-
 @app.route('/dashboard')
 def show_homepage():
 
@@ -243,7 +232,7 @@ def show_homepage():
 
         user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
 
-        if user.state_id != 'NOAPP':
+        if user.state_id != 'NONE':
             senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.').order_by(Legislator.last_name).all()
             representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.').order_by(Legislator.last_name).all()
             # senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.', Legislator.in_office==True).order_by(Legislator.last_name).all()
@@ -308,6 +297,8 @@ def edit_profile():
 
             db.session.add(user)
             db.session.commit()
+
+            flash('Your information has been updated!')
             return render_template('user/edit_profile.html', user=user, form=form)
 
         else:
@@ -316,6 +307,7 @@ def edit_profile():
 
     else:
 
+        flash('You must be logged in to do that!')
         return redirect('/')
 
 @app.route('/profile/delete', methods=['GET','POST'])
@@ -332,7 +324,7 @@ def delete_account():
             db.session.delete(user)
             db.session.commit()
 
-            flash('User deleted')
+            flash('Your profile has been deleted.')
             do_logout()
             return redirect('/')
 
@@ -358,12 +350,12 @@ def signup():
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            flash('Username taken. Please pick another.')
+            flash('That username is already taken! Please choose another.')
             return redirect('/signup')
         
         session['user_id'] = str(new_user.id)
 
-        flash(f'New user: {new_user.username} added!')
+        flash(f'Welcome {new_user.username}!')
 
         return redirect('/dashboard')
 
@@ -383,12 +375,12 @@ def login():
         if user:
 
             session['user_id'] = str(user.id)
-            flash(f'User: {user.username} authenticated!')
+            flash(f'Welcome back {user.username}!')
 
             return redirect('/dashboard')
         
         else:
-            flash('User not authenticated!')
+            flash('Login information not correct! Please try again.',"alert alert-light text-center")
             return redirect('/login')
 
     else:
@@ -401,11 +393,11 @@ def logout():
         session.pop('user_id')
         # g.pop(user)
 
-        flash('Successfully logged out!')
+        flash('Successfully logged out. See you later!')
         return redirect('/')
     
     else:
-        flash('No user logged in')
+        flash('No user currently logged in!')
         return redirect('/')
 
 @app.route('/user/<int:user_id>/followed-bills')

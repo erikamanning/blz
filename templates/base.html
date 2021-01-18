@@ -31,9 +31,6 @@
         <li class="nav-item active">
           <a class="nav-link" href="/legislators">Legislators</a>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/learn">Learn</a>
-        </li>
       </ul>
       <ul class="nav navbar-nav align-items-center align-items-md-end">
       {% if 'user_id' not in session %}
@@ -46,7 +43,7 @@
         </li>
         {% else %}
         <li class="nav-button nav-item active">
-          <a class="nav-link" href="/profile"><u>{{g.user.username}}'s</u> Profile</a>
+          <a class="nav-link" href="/profile"><u>{{g.user.username}}</u>'s Profile</a>
         </li>
         <li class="nav-button nav-item active">
           <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -60,15 +57,20 @@
     </div>
   </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <div class="container text-center">
+      {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        <ul class=flashes>
         {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
+        <div class="alert shadow-sm border alert-light alert-dismissible fade show text-center" role="alert">
+           {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         {% endfor %}
-        </ul>
       {% endif %}
-    {% endwith %}
+      {% endwith %}
+
+    </div>
+
 
     <div class="container">
       {% block content %}{% endblock %}

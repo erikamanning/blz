@@ -10,13 +10,8 @@ $(document).ready(function(){
 
     async function getFollowedBills(){
 
-        console.log('gUser: ', gUserId);
-
         let req = await axios.get(`/user/${gUserId}/followed-bills`);
-        console.log('req data: ', req);
-
         fBills = req.data;
-        console.log('F BILLS: ', fBills);
 
         return fBills    
     }
@@ -84,9 +79,14 @@ $(document).ready(function(){
         $('.last-major-action').toggleClass('d-none');
     });
 
-    $('.follow-button').on('click', async function(evt){
+    $(".details-button").click(function(evt){
 
-        console.log(`Bill ID: ${$(this).parent().parent().parent().parent().attr('id')}`);
+        lma = $(this).parent().parent().find('.last-major-action')
+        $(lma).toggleClass('d-none')
+
+    });
+
+    $('.follow-button').on('click', async function(evt){
 
         let billId = $(this).parent().parent().parent().parent().attr('id');
 
@@ -97,6 +97,11 @@ $(document).ready(function(){
         $(this).toggleClass('btn-outline-dark')
         $(this).toggleClass('btn-dark')
 
+        // if this is the follow section, remove bill from list
+        if ($(this).parent().parent().parent().parent().parent().parent().parent().attr('id') == 'followed-bills'){
+
+            $(this).parent().parent().parent().parent().parent().parent().fadeOut("slow")
+        }
     });
 
 });

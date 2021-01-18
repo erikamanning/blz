@@ -32,7 +32,6 @@
                                     <h3 class="text-center">None</h3>
 
                                 {% endif %}
-
                             </div>
                         </div>
                     </div>
@@ -118,7 +117,7 @@
                         </div>
                     </div>
                         
-                    <div class="container">
+                    <div class="container" id="followed-bills">
                         {%for bill in bills%}
                         {% include 'bills/bill_block.html' %}
                         {% endfor %}
