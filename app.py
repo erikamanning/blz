@@ -243,7 +243,7 @@ def show_homepage():
 
         user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
 
-        if user.state_id:
+        if user.state_id != 'NOAPP':
             senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.').order_by(Legislator.last_name).all()
             representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.').order_by(Legislator.last_name).all()
             # senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.', Legislator.in_office==True).order_by(Legislator.last_name).all()
@@ -362,10 +362,6 @@ def signup():
             return redirect('/signup')
         
         session['user_id'] = str(new_user.id)
-
-        print('********************************')
-        print('User Id: ', session['user_id'])
-        print('********************************')
 
         flash(f'New user: {new_user.username} added!')
 

@@ -17,49 +17,57 @@
           {% include 'legislators/legislator_select.html'%}
 
             {% include 'legislators/legislator_block_card_version.html'%}
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <!-- Pagination Links-->
+                    <div id='pagination-links' class="text-center">
+                        <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                        class="btn btn-outline-dark 
+                        {% if legislators.page == 1 %}disabled{% endif %}">
+                        &laquo;
+                        </a>
+                        <!-- Loop through the number of pages to display a link for each-->
+                        {% for page_num in legislators.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                            <!-- Check for the active page and set the link to "Active"-->
+                                {% if legislators.page == page_num %}
+                                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                                class="btn btn-dark">
+                                    {{ page_num }}
+                                </a>
+                                {% else %}
+                                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                                class="btn btn-outline-dark">
+                                    {{ page_num }}
+                                </a>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                        <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=legislators.next_num) }}"
+                        class="btn btn-outline-dark 
+                        {% if legislators.page == legislators.pages %}disabled{% endif %}">
+                        &raquo;
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <p class="mt-3 text-center fst-italic">
+                        Showing page {{ legislators.page }} of {{ legislators.pages }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
         {% endif %}
-
     </div>
 
-
-  <div class="container">
-    <!-- Pagination Links-->
-    <div id='pagination-links' class="text-right">
-      <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=legislators.prev_num) }}"
-      class="btn btn-outline-dark 
-        {% if legislators.page == 1 %}disabled{% endif %}">
-            &laquo;
-        </a>
-    <!-- Loop through the number of pages to display a link for each-->
-        {% for page_num in legislators.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-          {% if page_num %}
-    <!-- Check for the active page and set the link to "Active"-->
-                {% if legislators.page == page_num %}
-                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
-                class="btn btn-dark">
-                    {{ page_num }}
-                </a>
-                {% else %}
-                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
-                class="btn btn-outline-dark">
-                    {{ page_num }}
-                </a>
-                {% endif %}
-            {% else %}
-                ...
-            {% endif %}
-        {% endfor %}
-        <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=legislators.next_num) }}"
-        class="btn btn-outline-dark 
-        {% if legislators.page == legislators.pages %}disabled{% endif %}">
-            &raquo;
-        </a>
-    </div>
-    <p class="text-right mt-3">
-    Showing page {{ legislators.page }} of {{ legislators.pages }}
-    </p>
-    </div>
-  </div>
-  
 {% endblock %}
 

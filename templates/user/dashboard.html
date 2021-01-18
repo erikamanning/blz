@@ -24,17 +24,23 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-4">
                             <div class="card shadow-sm p-2">
-                                <h3 class="text-center">{{user.state.name}} ({{user.state_id}})</h3>
+                                {% if legislators:%}
+
+                                    <h3 class="text-center">{{user.state.name}} ({{user.state_id}})</h3>
+                                {% else %}
+
+                                    <h3 class="text-center">None</h3>
+
+                                {% endif %}
+
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h1 class="text-center mt-5">{{user.state.name}} Legislators</h1>
-
-
-
                 {% if legislators:%}
+
+                <h1 class="text-center mt-5">{{user.state.name}} Legislators</h1>
 
                 <div class="container mt-5">
 
@@ -88,7 +94,8 @@
                     
                 {% else %}
 
-                    <p class="text-danger"><i>You must enter your state in your profile to see your legislators</i></p>
+                    <p class="fst-italic text-center mt-5"><i>Enter your state in your profile to see your legislators!</i></p>
+
                 {% endif %}
             </div>
 
@@ -116,8 +123,9 @@
                         {% include 'bills/bill_block.html' %}
                         {% endfor %}
                     </div>
-                    
-        
+                {%else%}
+                    <p class="text-center fst-italic"><i>No bills saved yet!</i></p>
+
                 {% endif %}
             </div>
         </div>

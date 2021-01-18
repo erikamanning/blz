@@ -55,4 +55,4 @@ US Virgin Islands, VI
 American Samoa, AS
 Northern Mariana Islands, MP
 Guam, GU
-Not Applicable, NOAPP
+None, NONE

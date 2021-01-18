@@ -46,8 +46,7 @@
         </li>
         {% else %}
         <li class="nav-button nav-item active">
-          <!-- need to do g.user thing here, or else won't show username top right -->
-          <a class="nav-link" href="/profile">Hello, <u><span class="font-weight-bold">{{g.user.username}}</span></u></a>
+          <a class="nav-link" href="/profile"><u>{{g.user.username}}'s</u> Profile</a>
         </li>
         <li class="nav-button nav-item active">
           <a class="nav-link" href="/dashboard">Dashboard</a>
