@@ -49,7 +49,9 @@
           <a class="nav-link" href="/dashboard">Dashboard</a>
         </li>
         <li class="nav-button nav-item active">
-          <a class="nav-link" href="/logout">Logout</a>
+          <form action="/logout" method="POST">
+            <button class="btn nav-link">Logout</button>
+          </form>
         </li>
         {% endif%}
   
@@ -61,7 +63,7 @@
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-        <div class="alert shadow-sm border alert-light alert-dismissible fade show text-center" role="alert">
+        <div class="msg alert shadow-sm border alert-light alert-dismissible fade show text-center" role="alert">
            {{message}}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>

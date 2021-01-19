@@ -7,7 +7,7 @@ from fileread import FileRead
 import requests
 import pprint
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State
-from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser
+from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser, EditPassword
 from sqlalchemy.exc import IntegrityError
 
 try:
@@ -22,7 +22,7 @@ from sqlalchemy import and_
 import os
 
 # current session of US Congress
-CURRENT_SESSION = 116
+CURRENT_SESSION = 117
 CURRENT_USER = 'user_id'
 LEGISLATOR_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
@@ -36,7 +36,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY','2@!4q18&5l!D32d%^!#4')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///lumine')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
@@ -90,7 +90,6 @@ def get_policy_areas():
 @app.route('/bills', methods=['GET'])
 def view_bills():
     policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).all()
-    sessions = db.session.query(Session.id).all()
     
     pas = [('','Any Subject') ]
 
@@ -100,12 +99,8 @@ def view_bills():
 
     filter_args = []
 
-    # unpack tuple into list
-    s = [session[0] for session in sessions]
-
     form = BillForm(request.args)
     form.policy_area.choices = pas
-    form.session.choices = s
 
     page = request.args.get('page', 1, type=int)
 
@@ -114,14 +109,6 @@ def view_bills():
         policy_area_id = request.args['policy_area']
         policy_area = PolicyArea.query.get_or_404(policy_area_id)
         filter_args.append(Bill.primary_subject == policy_area.name )
-
-    # session
-    if request.args.get('session',False):
-        session_id=int(request.args['session'])
-        filter_args.append(Bill.congress == session_id)
-    else:
-        session_id=CURRENT_SESSION
-        filter_args.append(Bill.congress == session_id)
 
     #start date/ end date
     if request.args.get('start-date',False):
@@ -138,7 +125,7 @@ def view_bills():
         end_date=''
 
     bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
-    return render_template('bills/bills.html', policy_areas=policy_areas, sessions=sessions, form=form, bills=bills, start_date=start_date, end_date=end_date)
+    return render_template('bills/bills.html', policy_areas=policy_areas, form=form, bills=bills, start_date=start_date, end_date=end_date)
 
 @app.route('/bills/<bill_id>')
 def view_bill(bill_id):
@@ -241,10 +228,10 @@ def show_homepage():
 
             return render_template('user/dashboard.html', user=user, bills=user.followed_bills, legislators=legislators)
 
-
         return render_template('user/dashboard.html', user=user, bills=user.followed_bills)
 
     else:
+        flash('You must be logged in to do that!')
         return redirect('/')
 
 @app.route('/profile')
@@ -252,12 +239,12 @@ def show_profile():
 
     if session.get('user_id', False):
 
-
         user = User.query.filter(User.id==int(session['user_id'])).first()
 
         return render_template('user/profile.html', user=user)
 
     else:
+        flash('You must be logged in to do that!')
         return redirect('/')
 
 @app.route('/profile/edit', methods=['GET', 'POST'])
@@ -275,40 +262,68 @@ def edit_profile():
 
         }
 
-        form = EditProfile(data=user_form_obj)
+        edit_password_form = EditPassword()
+        edit_profile_form = EditProfile(data=user_form_obj)
 
         states = db.session.query(State.acronym, State.name).all()
     
-        form.state.choices = states
+        edit_profile_form.state.choices = states
 
-        if form.validate_on_submit():
+        if edit_profile_form.validate_on_submit():
 
-            user.username = form.username.data
-            user.email =  form.email.data
-            user.state_id = form.state.data
-
-            if form.current_password.data and form.new_password.data:
-
-                authenticated = User.authenticate(username=form.username.data, password=form.current_password.data)
-
-                if authenticated:
-
-                    user.change_password(form.new_password.data)                
+            user.username = edit_profile_form.username.data
+            user.email =  edit_profile_form.email.data
+            user.state_id = edit_profile_form.state.data
 
             db.session.add(user)
             db.session.commit()
 
             flash('Your information has been updated!')
-            return render_template('user/edit_profile.html', user=user, form=form)
+            return render_template('user/edit_profile.html', user=user, edit_profile_form=edit_profile_form, edit_password_form=edit_password_form)
 
         else:
 
-            return render_template('user/edit_profile.html', user=user, form=form)
+            return render_template('user/edit_profile.html', user=user, edit_profile_form=edit_profile_form, edit_password_form=edit_password_form)
 
     else:
 
         flash('You must be logged in to do that!')
         return redirect('/')
+
+
+@app.route('/password/edit', methods=['POST'])
+def edit_password():
+    
+    form = EditPassword()
+
+    if session.get('user_id',False):
+
+        user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
+
+        if form.validate_on_submit():
+
+            authenticated = User.authenticate(username=g.user.username, password=form.current_password.data)
+
+            if authenticated:
+
+                user.change_password(form.new_password.data)   
+                db.session.add(user)
+                db.session.commit()
+
+                flash('Password successfully changed!')
+                return redirect('/profile/edit')      
+
+            else:
+
+                flash('Authentication failed. Please try again.')
+                return redirect('/profile/edit')      
+
+
+    else:
+
+        flash('You must be logged in to do that!')
+
+        return reroute('/login')  
 
 @app.route('/profile/delete', methods=['GET','POST'])
 def delete_account():
@@ -332,61 +347,81 @@ def delete_account():
 
             return render_template('user/delete_form.html', form=form)
 
+    else:
+
+        flash('You must be logged in to do that!')
+        return redirect('/')
+
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 
-    form = SignupForm()
-    states = db.session.query(State.acronym, State.name).all()    
-    form.state.choices = states
-    
+    if session.get('user_id',False):
 
-    if form.validate_on_submit():
-
-        new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = form.state.data)
-
-        db.session.add(new_user)
-
-        try:
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback()
-            flash('That username is already taken! Please choose another.')
-            return redirect('/signup')
+        flash("You are already logged in! You must logout before creating another account.")
+        return redirect('/')
         
-        session['user_id'] = str(new_user.id)
-
-        flash(f'Welcome {new_user.username}!')
-
-        return redirect('/dashboard')
-
     else:
-        return render_template('user/signup.html', form=form)
+
+        form = SignupForm()
+        states = db.session.query(State.acronym, State.name).all()    
+        form.state.choices = states
+        
+
+        if form.validate_on_submit():
+
+            new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = form.state.data)
+
+            db.session.add(new_user)
+
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+                flash('That username is already taken! Please choose another.')
+                return redirect('/signup')
+            
+            session['user_id'] = str(new_user.id)
+
+            flash(f'Welcome {new_user.username}!')
+
+            return redirect('/dashboard')
+
+        else:
+            return render_template('user/signup.html', form=form)
 
 
 @app.route('/login', methods=['GET','POST'])
 def login():
 
-    form = LoginForm()
+    if session.get('user_id',False):
 
-    if form.validate_on_submit():
-
-        user = User.authenticate(username = form.username.data, password = form.password.data)
-
-        if user:
-
-            session['user_id'] = str(user.id)
-            flash(f'Welcome back {user.username}!')
-
-            return redirect('/dashboard')
-        
-        else:
-            flash('Login information not correct! Please try again.',"alert alert-light text-center")
-            return redirect('/login')
+        flash("You are already logged in! You must logout before signing into another account.")
+        return redirect('/')
 
     else:
-        return render_template('user/login.html', form=form)
 
-@app.route('/logout')
+        form = LoginForm()
+
+        if form.validate_on_submit():
+
+            user = User.authenticate(username = form.username.data, password = form.password.data)
+
+            if user:
+
+                session['user_id'] = str(user.id)
+                flash(f'Welcome back {user.username}!')
+
+                return redirect('/dashboard')
+            
+            else:
+                flash('Login information not correct! Please try again.',"alert alert-light text-center")
+                return redirect('/login')
+
+        else:
+
+            return render_template('user/login.html', form=form)
+
+@app.route('/logout', methods=['POST'])
 def logout():
 
     if session.get('user_id', False):
@@ -403,15 +438,20 @@ def logout():
 @app.route('/user/<int:user_id>/followed-bills')
 def get_followed_bills(user_id):
 
-    followed_bill_ids = db.session.query(BillFollows.bill_id).filter(BillFollows.user_id == user_id )
+    if session.get('user_id',False):
 
-    bill_ids = [el[0] for el in followed_bill_ids ]
+        followed_bill_ids = db.session.query(BillFollows.bill_id).filter(BillFollows.user_id == user_id )
 
+        bill_ids = [el[0] for el in followed_bill_ids ]
 
-    return jsonify(bill_ids)
+        return jsonify(bill_ids)
 
-#temporary fix for api keeping title awkwardly in summary, will update full database eventually
+    else:
 
+        flash('Access denied!')
+        return redirect('/')
+
+# function to convert date to different format
 def convert_date(date_str):
 
     months = {

@@ -7,7 +7,6 @@ CURRENT_SESSION = 116
 class BillForm(FlaskForm):
 
     policy_area = SelectField('Subject', validate_choice=False,render_kw={'class':'form-control'})
-    session = SelectField('Session', validate_choice=False, default = CURRENT_SESSION,render_kw={'class':'form-control'})
 
 class LegislatorForm(FlaskForm):
 
@@ -30,10 +29,13 @@ class LoginForm(FlaskForm):
 class EditProfile(FlaskForm):
 
     username = StringField("Username", validators=[InputRequired(message="Username cannot be blank")], render_kw={'class':'form-control'})
-    current_password = PasswordField("Current Password (you will need to enter this to change your password)", render_kw={'class':'form-control'})
-    new_password = PasswordField("New Password", render_kw={'class':'form-control'})
     email = EmailField("Email", validators=[InputRequired(message="Email cannot be blank"),Email()], render_kw={'class':'form-control'})
     state = SelectField('State', render_kw={'class':'form-control'})
+
+class EditPassword(FlaskForm):
+
+    current_password = PasswordField("Current Password", validators=[InputRequired(message="Current password is required.")], render_kw={'class':'form-control'})
+    new_password = PasswordField("New Password", validators=[InputRequired(message="New password cannot be blank.")], render_kw={'class':'form-control'})
 
 class DeleteUser(FlaskForm):
 

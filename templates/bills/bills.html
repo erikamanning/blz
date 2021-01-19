@@ -8,7 +8,7 @@
 
     <h2 class="text-center mt-5">Bills </h2>
 
-    <p class="text-center">A place to view and follow bills. </p>
+    <p class="text-center">A place to view and follow bills from the 117th (current) Session of Congress.</p>
 
     <div class='container'>
         
@@ -37,7 +37,7 @@
                     <div class="col-2">
                         <!-- Pagination Links-->
                         <div id='pagination-links' class="text-center">
-                            <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data,page=bills.prev_num) }}"
+                            <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, page=bills.prev_num) }}"
                             class="btn btn-outline-dark 
                             {% if bills.page == 1 %}disabled{% endif %}">
                                 &laquo;
@@ -47,12 +47,12 @@
                                 {% if page_num %}
                                 <!-- Check for the active page and set the link to "Active"-->
                                     {% if bills.page == page_num %}
-                                    <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=page_num) }}"
+                                    <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, page=page_num) }}"
                                     class="btn btn-dark">
                                         {{ page_num }}
                                     </a>
                                     {% else %}
-                                    <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=page_num) }}"
+                                    <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, page=page_num) }}"
                                     class="btn btn-outline-dark">
                                         {{ page_num }}
                                     </a>
@@ -61,7 +61,7 @@
                                     ...
                                 {% endif %}
                             {% endfor %}
-                            <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, session=form.session.data, page=bills.next_num) }}"
+                            <a href="{{ url_for('view_bills',policy_area=form.policy_area.data, page=bills.next_num) }}"
                             class="btn btn-outline-dark 
                             {% if bills.page == bills.pages %}disabled{% endif %}">
                                 &raquo;
@@ -80,7 +80,5 @@
             </div>
         {% endif %}
     </div>
-        
-
 {% endblock %}
 

@@ -32,6 +32,8 @@ $(document).ready(function(){
         UIFollowButtons();
     }
 
+    $('.msg').fadeOut(5000);
+
     // visuals for dashboard buttons and show hide content functionality
     $('#dash-buttons').on('click', function(event){
 

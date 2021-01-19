@@ -4,7 +4,7 @@ import requests
 
 sessions = []
 
-for x in range(103,int(CURRENT_SESSION)+1):
+for x in range(116,int(CURRENT_SESSION)+1):
 
     new_session = Session(id=x)
     sessions.append(new_session)
