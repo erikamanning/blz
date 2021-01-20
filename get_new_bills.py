@@ -3,15 +3,8 @@ from models import Legislator, Bill, SponsoredBill
 import requests
 from sqlalchemy import and_
 from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
-
-# Notes for improvements
-# turn reusuable functions here and in get_bills module to a separate file 
-# so they can be called in both, cannot do it now with current setip
-
-# update bills
-# update Sponsored bills/ new sponsored bills should show up for legislators
-# update legislators?
-
+import pprint
+pp = pprint.PrettyPrinter(indent=4) 
 
 # checks slugs to see if not caught up yet, returns boolean status 
 def check_slugs(slugs, current_session):
@@ -21,8 +14,7 @@ def check_slugs(slugs, current_session):
         if Bill.query.filter(and_(Bill.bill_slug == slug, Bill.congress == current_session)).one_or_none():
 
             caught_up_index = slugs.index(slug)
-            trimmed_slugs_list = []
-            trimmed_slugs_list[0:caught_up_index]
+            trimmed_slugs_list = slugs[0:caught_up_index]
 
             return trimmed_slugs_list
 
@@ -50,7 +42,11 @@ def get_new_bill_slugs(current_session, chamber, status):
 
         slugs = get_slugs(resp_data)
 
+        print('Slugs: ', slugs)
+
         checked_slugs = check_slugs(slugs, current_session)
+
+        print('Checked Slugs: ', checked_slugs)
 
         for slug in checked_slugs:
 
@@ -73,7 +69,4 @@ def get_new_bills(current_session, chamber, status):
     get_bill_data(new_bill_slugs, current_session)
 
 
-
-
-
-get_new_bills('116', "senate", 'introduced')
+get_new_bills(117, "both", 'introduced')

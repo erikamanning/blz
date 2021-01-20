@@ -10,4 +10,3 @@ import get_parties
 import get_legislators
 import get_bills
 import get_policy_areas
-import get_sessions

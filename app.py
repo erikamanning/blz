@@ -127,14 +127,14 @@ def view_bills():
     bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
     return render_template('bills/bills.html', policy_areas=policy_areas, form=form, bills=bills, start_date=start_date, end_date=end_date)
 
-@app.route('/bills/<bill_id>')
+@app.route('/bill/<bill_id>')
 def view_bill(bill_id):
 
     bill = Bill.query.get_or_404(bill_id)
 
     if bill:
     
-        return render_template("bills/single_bill.html", bill=bill)
+        return render_template("bills/bill_single.html", bill=bill)
 
 @app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
@@ -209,7 +209,7 @@ def view_legislator(legislator_id):
 
     sponsored_bills = legislator.sponsored_bills
 
-    return render_template('legislators/single_legislator.html', legislator = legislator, sponsored_bills=sponsored_bills)
+    return render_template('legislators/legislator_single.html', legislator = legislator, sponsored_bills=sponsored_bills)
 
 
 @app.route('/dashboard')

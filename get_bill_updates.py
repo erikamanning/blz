@@ -71,27 +71,10 @@ def get_bill_updates(chamber, session):
 
         resp_data = json['results'][0]['bills']
 
-        pp.pprint(resp_data)
+        # pp.pprint(resp_data)
 
         got_all_updates = save_updates(resp_data, session)
 
         count+=1
 
-
-# get updates for bills/ stop while last updated stamp is not same as bill we are currently on
-
-    # get most recent last updated timestamp/ query all bills in order of last updated limit 1
-
-    # loop and get updated bill data until there are no bills newer than the last updated timestamp
-
-    # commit sponsored bills
-
-    # check that both of these are the same
-
-        #   "latest_major_action_date": "2020-12-31",
-        #   "latest_major_action": "Presented to President."
-
-
-# will need to write loop later to go through all sessions since the api
-# does not grab updates without a session specified
-get_bill_updates('senate',CURRENT_SESSION)
+get_bill_updates('both',CURRENT_SESSION)

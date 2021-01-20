@@ -10,8 +10,6 @@ def prune_summary(summary):
         
         lst = summary[find_index::]
 
-        # print('Pruned summary: ', lst)
-
         new_summary = str(lst)
 
         return new_summary
