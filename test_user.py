@@ -12,6 +12,8 @@
 
 # follow
 # unfollow
+
+# add tests for edit checking and signup checking
 from unittest import TestCase
 from app import app, db
 from flask import session
