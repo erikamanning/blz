@@ -45,13 +45,6 @@ def save_updates(updates_json, session):
     print('ROUND OF UPDATES COMPLETE, MOVING TO NEXT ROUND')
     print('**********************************')
     return False
-    
-    # else:
-
-    #     print('**********************************')
-    #     print('NO UPDATES AVAILBLE')
-    #     print('**********************************')
-    #     return True
 
 def get_bill_updates(chamber, session):
 
@@ -77,4 +70,3 @@ def get_bill_updates(chamber, session):
 
         count+=1
 
-get_bill_updates('both',CURRENT_SESSION)
