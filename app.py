@@ -23,7 +23,7 @@ import os
 
 # current session of US Congress
 CURRENT_SESSION = 117
-CURRENT_USER = 'user_id'
+CURRENT_USER_ID = 'user_id'
 LEGISLATOR_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 
 headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
@@ -40,37 +40,33 @@ app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
-# debug = DebugToolbarExtension(app)
+debug = DebugToolbarExtension(app)
 
 @app.before_request
 def add_user_to_g():
 
-    """If we're logged in, add current user to Flask global."""
-
     g.legislator_default_image_path = LEGISLATOR_DEFAULT_IMAGE_PATH
 
-    if CURRENT_USER in session:
-        g.user = User.query.get(session[CURRENT_USER])
+    if CURRENT_USER_ID in session:
+        g.user = User.query.get(session[CURRENT_USER_ID])
 
     else:
         g.user = None
 
-
 def do_login(user):
 
-    session[CURR_USER_KEY] = user.id
-
+    session[CURRENT_USER_ID] = user.id
 
 def do_logout():
 
-    if CURRENT_USER in session:
+    if CURRENT_USER_ID in session:
 
-        del session[CURRENT_USER]
+        del session[CURRENT_USER_ID]
 
 @app.route('/')
 def show_home_page():
 
-    if session.get('user_id', False):
+    if session.get(CURRENT_USER_ID, False):
 
         return redirect('/dashboard')
 
@@ -139,9 +135,9 @@ def view_bill(bill_id):
 @app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
 
-    if session.get('user_id', False):
+    if session.get(CURRENT_USER_ID, False):
 
-        bill = BillFollows.query.filter(BillFollows.bill_id == bill_id and BillFollows.user_id == session['user_id']).one_or_none()
+        bill = BillFollows.query.filter(BillFollows.bill_id == bill_id and BillFollows.user_id == session[CURRENT_USER_ID]).one_or_none()
 
         if bill:
 
@@ -149,9 +145,8 @@ def follow_bill(bill_id):
             db.session.commit()
             return jsonify({'resp_code': 'unfoll_success'})
 
-        
         else:
-            new_bill_follow = BillFollows(bill_id = bill_id, user_id=session['user_id'])
+            new_bill_follow = BillFollows(bill_id = bill_id, user_id=session[CURRENT_USER_ID])
             db.session.add(new_bill_follow)
             db.session.commit()
             return jsonify({'resp_code': 'foll_success'})
@@ -177,7 +172,6 @@ def view_legislators():
 
         form.state.choices.append(state)  
 
-
     page = request.args.get('page', 1, type=int)
 
     if request.args.get('state',False) and request.args.get('state') != '0':
@@ -195,8 +189,6 @@ def view_legislators():
         position_code = request.args['chamber']
         filter_args.append(Legislator.position_code == position_code)
 
-    # filter out legislator in office or add select option
-    # filter_args.append(Legislator.in_office==True)
     legislators = Legislator.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
 
     return render_template('legislators/legislators.html', legislators = legislators, form=form)
@@ -204,9 +196,7 @@ def view_legislators():
 @app.route('/legislator/<legislator_id>')
 def view_legislator(legislator_id):
 
-
     legislator = Legislator.query.filter(Legislator.id==legislator_id).first()
-
     sponsored_bills = legislator.sponsored_bills
 
     return render_template('legislators/legislator_single.html', legislator = legislator, sponsored_bills=sponsored_bills)
@@ -215,15 +205,14 @@ def view_legislator(legislator_id):
 @app.route('/dashboard')
 def show_homepage():
 
-    if session.get('user_id', False):
+    if session.get(CURRENT_USER_ID, False):
 
-        user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
+        user = User.query.filter(User.id==int(session[CURRENT_USER_ID])).one_or_none()
 
         if user and user.state_id != 'NONE':
-            senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.').order_by(Legislator.last_name).all()
-            representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.').order_by(Legislator.last_name).all()
-            # senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.', Legislator.in_office==True).order_by(Legislator.last_name).all()
-            # representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.', Legislator.in_office==True).order_by(Legislator.last_name).all()
+
+            senators = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Sen.', Legislator.in_office==True).order_by(Legislator.last_name).all()
+            representatives = Legislator.query.filter(Legislator.state_id==user.state_id, Legislator.position_code=='Rep.', Legislator.in_office==True).order_by(Legislator.last_name).all()
             legislators = {'s':senators, 'r':representatives}
 
             return render_template('user/dashboard.html', user=user, bills=user.followed_bills, legislators=legislators)
@@ -237,49 +226,59 @@ def show_homepage():
 @app.route('/profile')
 def show_profile():
 
-    if session.get('user_id', False):
+    if session.get(CURRENT_USER_ID, False):
 
-        user = User.query.filter(User.id==int(session['user_id'])).first()
-
+        user = User.query.filter(User.id==int(session[CURRENT_USER_ID])).first()
         return render_template('user/profile.html', user=user)
 
     else:
+
         flash('You must be logged in to do that!')
         return redirect('/')
 
 @app.route('/profile/edit', methods=['GET', 'POST'])
 def edit_profile():
 
-    if session.get('user_id',False):
+    if session.get(CURRENT_USER_ID,False):
 
-        user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
+        user = User.query.filter(User.id==int(session[CURRENT_USER_ID])).one_or_none()
 
         user_form_obj = {
 
             'username': user.username,
             'email': user.email,
             'state': user.state_id
-
         }
 
+        # create forms/ fill form data
         edit_password_form = EditPassword()
         edit_profile_form = EditProfile(data=user_form_obj)
 
         states = db.session.query(State.acronym, State.name).all()
-    
         edit_profile_form.state.choices = states
 
+        # handle form submit
         if edit_profile_form.validate_on_submit():
 
-            user.username = edit_profile_form.username.data
-            user.email =  edit_profile_form.email.data
-            user.state_id = edit_profile_form.state.data
+            # check if changes to profile conflict with other users' data
+            data_check = user.edit_profile_check(username = edit_profile_form.username.data, email = edit_profile_form.email.data)
+            messages = check_user_info_messages(data_check['username_check'], data_check['email_check'])
 
-            db.session.add(user)
-            db.session.commit()
+            # let user know about conflicts and refresh
+            if messages:
 
-            flash('Your information has been updated!')
-            return render_template('user/edit_profile.html', user=user, edit_profile_form=edit_profile_form, edit_password_form=edit_password_form)
+                for message in messages:
+                    flash(message)
+                
+                return redirect('/profile/edit')
+
+            # otherwise make edits and refresh
+            else:
+
+                changes_made = user.edit_profile(edit_profile_form.username.data,edit_profile_form.email.data,edit_profile_form.state.data)
+                message = post_edit_submit_message(changes_made)
+                flash(message)
+                return render_template('user/edit_profile.html', user=user, edit_profile_form=edit_profile_form, edit_password_form=edit_password_form)
 
         else:
 
@@ -296,9 +295,9 @@ def edit_password():
     
     form = EditPassword()
 
-    if session.get('user_id',False):
+    if session.get(CURRENT_USER_ID,False):
 
-        user = User.query.filter(User.id==int(session['user_id'])).one_or_none()
+        user = User.query.filter(User.id==int(session[CURRENT_USER_ID])).one_or_none()
 
         if form.validate_on_submit():
 
@@ -317,24 +316,21 @@ def edit_password():
 
                 flash('Authentication failed. Please try again.')
                 return redirect('/profile/edit')      
-
-
     else:
 
         flash('You must be logged in to do that!')
-
         return reroute('/login')  
 
 @app.route('/profile/delete', methods=['GET','POST'])
 def delete_account():
 
-    if session.get('user_id', False):
+    if session.get(CURRENT_USER_ID, False):
 
         form = DeleteUser()
 
         if form.validate_on_submit():
 
-            user_id = session['user_id']
+            user_id = session[CURRENT_USER_ID]
             user = User.query.get_or_404(user_id)
             db.session.delete(user)
             db.session.commit()
@@ -355,7 +351,7 @@ def delete_account():
 @app.route('/signup', methods=['GET','POST'])
 def signup():
 
-    if session.get('user_id',False):
+    if session.get(CURRENT_USER_ID,False):
 
         flash("You are already logged in! You must logout before creating another account.")
         return redirect('/')
@@ -369,22 +365,29 @@ def signup():
 
         if form.validate_on_submit():
 
-            new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = form.state.data)
+            submitted_username = form.username.data
+            submitted_email = form.email.data
 
-            db.session.add(new_user)
+            messages = check_user_info_messages( User.check_for_duplicate_username(submitted_username), User.check_for_duplicate_email(submitted_email) )
 
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()
-                flash('That username is already taken! Please choose another.')
+            if messages:
+
+                for message in messages:
+                    flash(message)
+                
                 return redirect('/signup')
-            
-            session['user_id'] = str(new_user.id)
 
-            flash(f'Welcome {new_user.username}!')
+            else:
 
-            return redirect('/dashboard')
+                new_user = User.register(username = form.username.data, password = form.password.data, email = form.email.data, state_id = form.state.data)
+                db.session.add(new_user)
+                db.session.commit()
+
+                session[CURRENT_USER_ID] = new_user.id
+
+                flash(f'Welcome {new_user.username}!')
+
+                return redirect('/dashboard')
 
         else:
             return render_template('user/signup.html', form=form)
@@ -393,7 +396,7 @@ def signup():
 @app.route('/login', methods=['GET','POST'])
 def login():
 
-    if session.get('user_id',False):
+    if session.get(CURRENT_USER_ID,False):
 
         flash("You are already logged in! You must logout before signing into another account.")
         return redirect('/')
@@ -408,7 +411,7 @@ def login():
 
             if user:
 
-                session['user_id'] = str(user.id)
+                session[CURRENT_USER_ID] = str(user.id)
                 flash(f'Welcome back {user.username}!')
 
                 return redirect('/dashboard')
@@ -424,24 +427,24 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
 
-    if session.get('user_id', False):
-        session.pop('user_id')
-        # g.pop(user)
+    if session.get(CURRENT_USER_ID, False):
+
+        session.pop(CURRENT_USER_ID)
 
         flash('Successfully logged out. See you later!')
         return redirect('/')
     
     else:
+
         flash('No user currently logged in!')
         return redirect('/')
 
 @app.route('/user/<int:user_id>/followed-bills')
 def get_followed_bills(user_id):
 
-    if session.get('user_id',False):
+    if session.get(CURRENT_USER_ID,False):
 
         followed_bill_ids = db.session.query(BillFollows.bill_id).filter(BillFollows.user_id == user_id )
-
         bill_ids = [el[0] for el in followed_bill_ids ]
 
         return jsonify(bill_ids)
@@ -478,5 +481,30 @@ def convert_date(date_str):
 
     return new_date_str
 
-
 app.jinja_env.globals.update(convert_date=convert_date)
+
+def check_user_info_messages(username_good,email_good):
+
+    messages = []
+
+    if not username_good:
+
+        messages.append('That username is already taken! Please choose another.')
+
+    if not email_good:
+
+        messages.append('There is already an account with that email. Please use another email.')        
+
+    return messages
+
+def post_edit_submit_message(changes_made):
+
+    if changes_made:
+
+        message = 'Your information has been updated!'
+
+    else:
+
+        message = 'No changes were made.'
+
+    return message

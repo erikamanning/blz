@@ -159,7 +159,38 @@ class User(db.Model):
         
         else:
             return False
+    
+    @classmethod
+    def check_for_duplicate_username(cls, new_username):
 
+        """ 
+            Checks if username is not already in system. Returns True if not,
+            False if the username already exists.
+
+        """
+        if User.query.filter(User.username == new_username).one_or_none():
+
+            return False
+        
+        else:
+
+            return True
+
+    @classmethod
+    def check_for_duplicate_email(cls, new_email):
+
+        """ 
+            Checks if email is not already in system. Returns True if not,
+            False if the email already exists.
+
+        """
+        if User.query.filter(User.email == new_email).one_or_none():
+
+            return False
+        
+        else:
+
+            return True
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String, nullable=False, unique=True)
@@ -175,6 +206,50 @@ class User(db.Model):
         primaryjoin=(BillFollows.user_id == id),
         cascade="all, delete"
     )
+
+    def edit_profile_check(self, username, email):
+        
+        data_check = {
+
+            'username_check': True,
+            'email_check'   : True
+        }
+
+        if username != self.username:
+
+            new_username_check = User.check_for_duplicate_username(username)
+            data_check['username_check'] = new_username_check
+
+        if email != self.email:
+
+            new_email_check = User.check_for_duplicate_email(email) 
+            data_check['email_check'] = new_email_check
+
+        return data_check
+
+    def edit_profile(self,username,email,state_id):
+
+        changes_made = False
+
+        if self.username!=username:
+
+            self.username=username
+            changes_made = True
+
+        if self.email!=email:
+
+            self.email=email
+            changes_made = True
+
+        if self.state_id!=state_id:
+
+            self.state_id=state_id
+            changes_made = True
+
+        db.session.add(self)
+        db.session.commit()
+
+        return changes_made
 
     def change_password(self, new_password):
 

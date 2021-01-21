@@ -1,6 +1,8 @@
 from app import db, headers
 from models import Bill, SponsoredBill
 import requests
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 def prune_summary(summary):
 
@@ -75,11 +77,16 @@ def get_slugs(bill_data):
 
 def get_bill_data(bill_slugs, congress):
 
+    i=0
+
     for slug in bill_slugs:
 
         req = requests.get(f'https://api.propublica.org/congress/v1/{congress}/bills/{slug}.json', headers=headers)
         json = req.json()
+        i+=1
+        print('Creating bill: ', i)
         create_bill(json)
+
 
 def add_sponsored_bill(new_bill):
 

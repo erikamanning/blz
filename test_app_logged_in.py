@@ -61,8 +61,8 @@ class ViewsLoggedInTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1 class="text-center mt-3">Edit Profile</h1>', html)
 
-    # test if delete profile screen loads when logged in
-    def test_delete_profile_view(self):
+    # test if delete account screen loads when logged in
+    def test_delete_account_view(self):
         with app.test_client() as client:
 
             with client.session_transaction() as change_session:

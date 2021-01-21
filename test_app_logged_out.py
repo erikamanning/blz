@@ -7,6 +7,20 @@ app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 
+
+
+    # def test_duplicate_username_rejected(self):
+
+    #     test_user_c = User.register(username='test_user_a', password='test123', email='testuser_c@email.com', state_id='NV')
+
+    #     self.assertFalse(test_user_c)
+
+    # def test_duplicate_email_rejected(self):
+
+    #     test_user_c = User.register(username='test_user_c', password='test123', email='testuser_a@email.com', state_id='NV')
+
+    #     self.assertFalse(test_user_c)
+
 class ViewsLoggedOutTests(TestCase):
 
     # test if home page loads
