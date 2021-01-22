@@ -1,8 +1,12 @@
 import requests
-from models import Legislator
+from models import Legislator, Bill, PolicyArea, SponsoredBill
 
-from app import headers
-
+from app import headers,db, CURRENT_SESSION
+from datetime import date 
+  
+  
+# Returns the current local date 
+today = date.today() 
 # separates state name string from acronym string and removes space from beginning of acronym string, 
 # could also just delete space from local text file
 def parse_state_data(state_str):
@@ -48,7 +52,4 @@ def extract_legislator_data(legislators):
             chamber_legislators.append(new_legislator)
 
     return chamber_legislators
-
-
-
 

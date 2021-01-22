@@ -97,9 +97,9 @@ class Legislator(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     image = db.Column(db.String,nullable=True)
-    state_id = db.Column(db.String(2), db.ForeignKey('states.acronym', ondelete="CASCADE"), nullable=False)
-    party_id = db.Column(db.String,db.ForeignKey('parties.code', ondelete="CASCADE"),nullable=False)
-    position_code = db.Column(db.String, db.ForeignKey('positions.code', ondelete="CASCADE"), nullable=False)
+    state_id = db.Column(db.String, db.ForeignKey('states.acronym'), nullable=False)
+    party_id = db.Column(db.String,db.ForeignKey('parties.code'),nullable=False)
+    position_code = db.Column(db.String, db.ForeignKey('positions.code'), nullable=False)
 
     website = db.Column(db.String,nullable=False)
     in_office = db.Column(db.Boolean, primary_key= True, nullable=False)
@@ -110,9 +110,9 @@ class Legislator(db.Model):
     phone = db.Column(db.String,default='Not Listed',nullable=False)
      
 
-    state = db.relationship('State', backref='legislators', cascade="all, delete")
-    party = db.relationship('Party', backref='legislators', cascade="all, delete")
-    position = db.relationship('Position', backref='legislators', cascade="all, delete")
+    state = db.relationship('State', backref='legislators')
+    party = db.relationship('Party', backref='legislators')
+    position = db.relationship('Position', backref='legislators')
 
     sponsored_bills = db.relationship('SponsoredBill', backref='legislators', cascade="all, delete")
 
@@ -120,7 +120,7 @@ class State(db.Model):
 
     __tablename__ = "states"
 
-    acronym = db.Column(db.String(5), primary_key=True)
+    acronym = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
     def __repr__(self):
@@ -196,7 +196,7 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False,unique=True)
-    state_id = db.Column(db.String(5), db.ForeignKey('states.acronym'), nullable=True)
+    state_id = db.Column(db.String, db.ForeignKey('states.acronym'), nullable=True)
 
     state = db.relationship('State', backref='users')
 

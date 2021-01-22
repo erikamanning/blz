@@ -1,5 +1,5 @@
 from app import db, headers
-from models import Bill, SponsoredBill
+from models import Bill, SponsoredBill,PolicyArea
 import requests
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -62,8 +62,13 @@ def create_bill(bill_data):
     db.session.add(new_bill)
     db.session.commit()
 
+    # handle policy area
+    handle_policy_area(new_bill.primary_subject)
+
     # add sponsored bill
     add_sponsored_bill(new_bill)
+
+
 
 def get_slugs(bill_data):
 
@@ -94,3 +99,11 @@ def add_sponsored_bill(new_bill):
 
     db.session.add(new_sponsored_bill)
     db.session.commit()
+
+def handle_policy_area(policy_area):
+
+    if not PolicyArea.query.filter(PolicyArea.name == policy_area).one_or_none():
+
+        new_policy_area = PolicyArea(name=policy_area)
+        db.session.add(new_policy_area)
+        db.session.commit()

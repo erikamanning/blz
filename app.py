@@ -85,7 +85,7 @@ def get_policy_areas():
 
 @app.route('/bills', methods=['GET'])
 def view_bills():
-    policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).all()
+    policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).order_by(PolicyArea.name).all()
     
     pas = [('','Any Subject') ]
 
@@ -107,14 +107,14 @@ def view_bills():
         filter_args.append(Bill.primary_subject == policy_area.name )
 
     #start date/ end date
-    if request.args.get('start-date',False):
-        start_date = request.args['start-date']
+    if request.args.get('start_date',False):
+        start_date = request.args['start_date']
         filter_args.append(Bill.introduced_date >= start_date)
     else:
         start_date=''
 
-    if request.args.get('end-date',False):
-        end_date = request.args['end-date']
+    if request.args.get('end_date',False):
+        end_date = request.args['end_date']
         filter_args.append(Bill.introduced_date <= end_date)
     
     else:
@@ -189,7 +189,7 @@ def view_legislators():
         position_code = request.args['chamber']
         filter_args.append(Legislator.position_code == position_code)
 
-    legislators = Legislator.query.filter(and_(*filter_args)).paginate(page=page, per_page=10)
+    legislators = Legislator.query.filter(and_(*filter_args)).order_by(Legislator.last_name).paginate(page=page, per_page=10)
 
     return render_template('legislators/legislators.html', legislators = legislators, form=form)
 
@@ -314,8 +314,12 @@ def edit_password():
 
             else:
 
-                flash('Authentication failed. Please try again.')
-                return redirect('/profile/edit')      
+                flash('Current password incorrect. Please try again.')
+                return redirect('/profile/edit')
+        else:
+
+            return redirect('/profile/edit')
+
     else:
 
         flash('You must be logged in to do that!')
@@ -390,6 +394,7 @@ def signup():
                 return redirect('/dashboard')
 
         else:
+            
             return render_template('user/signup.html', form=form)
 
 
@@ -456,6 +461,15 @@ def get_followed_bills(user_id):
 
 # function to convert date to different format
 def convert_date(date_str):
+
+    print('8888888888888888888888888888888888')
+    print('8888888888888888888888888888888888')
+    print('8888888888888888888888888888888888')
+    print(f'DATE STRING: {date_str}')
+    print('8888888888888888888888888888888888')
+    print('8888888888888888888888888888888888')
+    print('8888888888888888888888888888888888')
+
 
     months = {
 
