@@ -72,13 +72,13 @@ class TestUtilityFunctions(TestCase):
             {
                 'bill_slug':'a',
             },
+
             {
                 'bill_slug':'b',
-
             },
+            
             {
                 'bill_slug':'c',
-
             }
         ]
 

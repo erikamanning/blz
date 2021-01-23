@@ -1,19 +1,3 @@
-# creation
-    # no duplicates
-    
-# edit
-    # username - not same as others, no blanks
-    # state - 
-    # email - can't be the same as others
-    # password
-
-# deletion
-    # follows delete as well
-
-# follow
-# unfollow
-
-# add tests for edit checking and signup checking
 from unittest import TestCase
 from app import app, db
 from flask import session

@@ -2,12 +2,11 @@ from unittest import TestCase
 from app import app, db
 from flask import session
 from models import User
+from test_bill_search import TestBillSearch
 
 app.config['TESTING'] = True
 
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-
-
 
 class ViewsLoggedInTests(TestCase):
     app.config['WTF_CSRF_ENABLED'] = False
@@ -21,10 +20,11 @@ class ViewsLoggedInTests(TestCase):
         db.session.add_all([cls.test_user, cls.test_user_b])
         db.session.commit()
 
+
     @classmethod
     def tearDownClass(cls):
 
-        # remove test user
+        # remove test users
         db.session.delete(cls.test_user)
         db.session.delete(cls.test_user_b)
         db.session.commit()
@@ -196,3 +196,4 @@ class ViewsLoggedInTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Current password incorrect. Please try again.', html)
+
