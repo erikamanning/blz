@@ -462,15 +462,6 @@ def get_followed_bills(user_id):
 # function to convert date to different format
 def convert_date(date_str):
 
-    print('8888888888888888888888888888888888')
-    print('8888888888888888888888888888888888')
-    print('8888888888888888888888888888888888')
-    print(f'DATE STRING: {date_str}')
-    print('8888888888888888888888888888888888')
-    print('8888888888888888888888888888888888')
-    print('8888888888888888888888888888888888')
-
-
     months = {
 
         1: 'January',

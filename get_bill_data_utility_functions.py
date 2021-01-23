@@ -6,12 +6,14 @@ pp = pprint.PrettyPrinter(indent=4)
 
 def prune_summary(summary):
 
-    if 'This bill' in summary:
+    bad_string = 'This bill '
+
+    if bad_string in summary:
 
         find_index = summary.find('This bill')
         
-        lst = summary[find_index::]
-
+        lst = summary[find_index+len(bad_string)::]
+        
         new_summary = str(lst)
 
         return new_summary

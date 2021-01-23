@@ -1,10 +1,9 @@
 from unittest import TestCase
-from app import app, db
+from app import app, db, CURRENT_SESSION
 from flask import session
-from models import User, PolicyArea
-
-from bill_test_utility_functions import add_dummy_bill, remove_dummy_bills, remove_dummy_policy_areas
+from models import User, PolicyArea, Bill
 from datetime import date 
+from get_bill_data_utility_functions import handle_policy_area, add_sponsored_bill
   
 app.config['TESTING'] = True
 
@@ -22,9 +21,9 @@ class TestBillSearch(TestCase):
         cls.policy_area_str_1 = 'dummy Cartoon Dog Regulations'
         cls.policy_area_str_2 = 'dummy Anti Rainwater Laws'
 
-        add_dummy_bill('a',cls.policy_area_str_1,TODAY, TODAY)
-        add_dummy_bill('b',cls.policy_area_str_2 ,'2021-01-04', '2021-01-04')
-        add_dummy_bill('c',cls.policy_area_str_2 ,'2021-01-05', '2021-01-05')
+        cls.add_dummy_bill('a',cls.policy_area_str_1,TODAY, TODAY)
+        cls.add_dummy_bill('b',cls.policy_area_str_2 ,'2021-01-04', '2021-01-04')
+        cls.add_dummy_bill('c',cls.policy_area_str_2 ,'2021-01-05', '2021-01-05')
 
         cls.policy_area_1 = PolicyArea.query.filter(PolicyArea.name==cls.policy_area_str_1).one_or_none()
         cls.policy_area_2 = PolicyArea.query.filter(PolicyArea.name==cls.policy_area_str_2).one_or_none()
@@ -35,9 +34,71 @@ class TestBillSearch(TestCase):
     @classmethod
     def tearDownClass(cls):
 
-        remove_dummy_bills()
-        remove_dummy_policy_areas()
+        cls.remove_dummy_bills()
+        cls.remove_dummy_policy_areas()
+
         print("Teardown")
+
+    @classmethod
+    def add_dummy_bill(cls, bill_id, policy_area,introduced_date, latest_major_action_date ):
+
+        new_bill = Bill(
+                id = f'dummy_bill_{bill_id}',
+                bill_slug = 'dummy_slug',
+                congress = CURRENT_SESSION,        
+                bill = 'dummy_bill',            
+                bill_type = 'dummy_bill_type',
+                number = 'dummy_number',
+                title = 'dummy_title',
+                short_title = 'dummy_short_title',
+                sponsor_id = 'B001285',
+                congressdotgov_url = 'dummy_congressdotgov_url',
+                introduced_date = introduced_date,
+                active = False,
+                last_vote = 'dummy_last_vote',
+                house_passage = 'dummy_house_passage',
+                senate_passage = 'dummy_senate_passage',
+                enacted = 'dummy_enacted',
+                vetoed = 'dummy_vetoed',
+                primary_subject = policy_area,
+                committees = 'dummy_committees',
+                committee_codes = 'dummy_committee_codes',
+                latest_major_action_date = latest_major_action_date,
+                latest_major_action = 'dummy_latest_major_action',
+                house_passage_vote = 'dummy_house_passage_vote',
+                senate_passage_vote = 'dummy_senate_passage_vote',
+                summary = 'dummy_summary',
+                summary_short = 'dummy_summary_short'
+        )
+
+        # commit new bill
+        db.session.add(new_bill)
+        db.session.commit()
+
+        handle_policy_area(new_bill.primary_subject)
+        add_sponsored_bill(new_bill)
+
+        return new_bill
+
+    @classmethod
+    def remove_dummy_bills(cls):
+
+        dummy_bills = Bill.query.filter(Bill.id.contains('dummy_bill_')).all()
+
+        for bill in dummy_bills:
+
+            db.session.delete(bill)
+            db.session.commit()
+
+    @classmethod
+    def remove_dummy_policy_areas(cls):
+
+        dummy_policy_areas = PolicyArea.query.filter(PolicyArea.name.contains('dummy')).all()
+
+        for policy_area in dummy_policy_areas:
+
+            db.session.delete(policy_area)
+            db.session.commit()
 
     # test if correct bills load with no data passed to form
     def test_bill_search_any_subject(self):
