@@ -58,7 +58,7 @@ class Bill(db.Model):
     senate_passage = db.Column(db.String, nullable = True)
     enacted = db.Column(db.String, nullable = True)
     vetoed = db.Column(db.String, nullable = True)
-    primary_subject = db.Column(db.String, nullable = True)
+    primary_subject = db.Column(db.String, nullable = False)
     committees = db.Column(db.String, nullable = True)
     committee_codes = db.Column(db.String, nullable = True)
     latest_major_action_date = db.Column(db.String, nullable = True)

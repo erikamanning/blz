@@ -9,7 +9,6 @@ app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 class TestUtilityFunctions(TestCase):
 
-
     def test_date_conversion(self):
 
         good_date = '2021-01-14'

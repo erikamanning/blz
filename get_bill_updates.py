@@ -20,10 +20,11 @@ def save_updates(updates_json, session):
 
         if bill:
 
-            if bill.latest_major_action != bill_json['latest_major_action'] or bill.latest_major_action_date != bill_json['latest_major_action_date']:
+            if bill.primary_subject != bill_json['primary_subject'] or bill.latest_major_action != bill_json['latest_major_action'] or bill.latest_major_action_date != bill_json['latest_major_action_date']:
 
                 bill.latest_major_action = bill_json['latest_major_action']
                 bill.latest_major_action_date = bill_json['latest_major_action_date']
+                bill.primary_subject = bill_json['primary_subject']
                 db.session.add(bill)
                 db.session.commit()
                 print('**********************************')

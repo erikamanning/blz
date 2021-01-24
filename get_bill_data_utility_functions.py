@@ -26,10 +26,15 @@ def create_bill(bill_data):
 
     bill_data = bill_data['results'][0]
 
-    if not bill_data["short_title"]:
+    if bill_data.get("short_title",False):
         short_title = bill_data["title"]
     else:
         short_title=bill_data['short_title']
+
+    if bill_data.get("primary_subject",False):
+        primary_subject='No Primary Subject'
+    else:
+        primary_subject = bill_data['primary_subject']
 
     new_bill = Bill(
             id = bill_data["bill_id"],
@@ -49,7 +54,7 @@ def create_bill(bill_data):
             senate_passage = bill_data["senate_passage"],
             enacted = bill_data["enacted"],
             vetoed = bill_data["vetoed"],
-            primary_subject = bill_data["primary_subject"],
+            primary_subject = primary_subject,
             committees = bill_data["committees"],
             committee_codes = bill_data["committee_codes"],
             latest_major_action_date = bill_data["latest_major_action_date"],
