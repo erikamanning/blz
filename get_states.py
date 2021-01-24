@@ -3,12 +3,6 @@ from models import State
 from fileread import FileRead
 from utility import parse_state_data
 
-
-# State.__table__.drop(db.get_engine())
-# State.__table__.create(db.get_engine())
-
-
-
 states = FileRead("states.txt")
 
 for state in states.items:

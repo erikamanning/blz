@@ -27,14 +27,14 @@ def create_bill(bill_data):
     bill_data = bill_data['results'][0]
 
     if bill_data.get("short_title",False):
-        short_title = bill_data["title"]
-    else:
         short_title=bill_data['short_title']
+    else:
+        short_title = bill_data["title"]
 
     if bill_data.get("primary_subject",False):
-        primary_subject='No Primary Subject'
-    else:
         primary_subject = bill_data['primary_subject']
+    else:
+        primary_subject='No Primary Subject'
 
     new_bill = Bill(
             id = bill_data["bill_id"],

@@ -6,7 +6,7 @@ import secrets
 from fileread import FileRead
 import requests
 import pprint
-from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State, Position
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser, EditPassword, TestForm
 from sqlalchemy.exc import IntegrityError
 
@@ -74,28 +74,6 @@ def show_home_page():
 
         return render_template('index.html')
 
-@app.route('/rand', methods=['GET','POST'])
-def show_rand_page():
-
-    policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).order_by(PolicyArea.name).all()
-    
-    pas = [('','Any Subject') ]
-
-    for policy_area in policy_areas:
-
-        pas.append(policy_area)
-    form = TestForm()
-    form.policy_area.choices = pas
-
-
-    if form.validate_on_submit():
-        flash('Form validated!')
-        return render_template('test_form.html', form=form)
-    else:
-
-        flash('FORM NOT VALIDATED')        
-        return render_template('test_form.html', form=form)
-
 
 @app.route('/get-policy-areas')
 def get_policy_areas():
@@ -106,8 +84,9 @@ def get_policy_areas():
 
     return jsonify(policy_areas)
 
-@app.route('/bills', methods=['GET','POST'])
+@app.route('/bills', methods=['GET'])
 def view_bills():
+
     policy_areas = db.session.query(PolicyArea.id,PolicyArea.name).order_by(PolicyArea.name).all()
     
     pas = [('','Any Subject') ]
@@ -118,46 +97,49 @@ def view_bills():
 
     filter_args = []
 
-    form = BillForm()
+    form = BillForm(request.args)
 
     form.policy_area.choices = pas
 
     page = request.args.get('page', 1, type=int)
 
-    if form.validate_on_submit():
+    messages = []
+    # subject
+    if request.args.get('policy_area',False):
 
-        # subject
-        if request.form.get('policy_area',False):
-            policy_area_id = request.form['policy_area']
+        try: 
+            int(request.args['policy_area'])
+
+        except ValueError:
+            messages.append('Sorry! That is not a valid policy area!')
+
+        else:
+            policy_area_id = request.args['policy_area']
             policy_area = PolicyArea.query.get_or_404(policy_area_id)
             filter_args.append(Bill.primary_subject == policy_area.name )
 
-        #start date/ end date
-        if request.form.get('start_date',False):
-            start_date = request.form['start_date']
-            filter_args.append(Bill.introduced_date >= start_date)
-        else:
-            start_date=''
-
-        if request.form.get('end_date',False):
-            end_date = request.form['end_date']
-            filter_args.append(Bill.introduced_date <= end_date)
-        
-        else:
-            end_date=''
-
-        bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
-        flash('validated on submit')
-        return render_template('bills/bills.html', policy_areas=policy_areas, form=form, bills=bills, start_date=start_date, end_date=end_date)
-
+    #start date/ end date
+    if request.args.get('start_date',False):
+        start_date = request.args['start_date']
+        filter_args.append(Bill.introduced_date >= start_date)
     else:
-        flash('NOT validated on submit')
         start_date=''
+
+    if request.args.get('end_date',False):
+        end_date = request.args['end_date']
+        bills = Bill.query.filter(Bill.introduced_date <= end_date).all()
+
+        filter_args.append(Bill.introduced_date <= end_date)
+    
+    else:
         end_date=''
-        bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
-        return render_template('bills/bills.html', policy_areas=policy_areas, form=form, bills=bills, start_date=start_date, end_date=end_date)
 
+    bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
 
+    show_mesages(messages)
+    return render_template('bills/bills.html', policy_areas=policy_areas, form=form, bills=bills, start_date=start_date, end_date=end_date)
+
+    
 @app.route('/bill/<bill_id>')
 def view_bill(bill_id):
 
@@ -167,7 +149,7 @@ def view_bill(bill_id):
     
         return render_template("bills/bill_single.html", bill=bill)
 
-@app.route('/bill/<bill_id>/follow', methods=['POST'])
+@app.route('/bill/<bill_id>/follow')
 def follow_bill(bill_id):
 
     if session.get(CURRENT_USER_ID, False):
@@ -197,8 +179,12 @@ def view_legislators():
 
     parties = db.session.query(Party.code,Party.name).all()
     states = db.session.query(State.acronym,State.name).all()
+    positions = db.session.query(Position.code,Position.name).all()
 
-    # make a function
+    for position in positions:
+
+        form.position.choices.append(position)
+
     for party in parties:
 
         form.party.choices.append(party)
@@ -219,13 +205,12 @@ def view_legislators():
         party_code = request.args['party']
         filter_args.append(Legislator.party_id == party_code)
 
-    if request.args.get('chamber',False) and request.args.get('chamber') != '0':
+    if request.args.get('position',False) and request.args.get('position') != '0':
 
-        position_code = request.args['chamber']
+        position_code = request.args['position']
         filter_args.append(Legislator.position_code == position_code)
 
     legislators = Legislator.query.filter(and_(*filter_args)).order_by(Legislator.last_name).paginate(page=page, per_page=10)
-
     return render_template('legislators/legislators.html', legislators = legislators, form=form)
 
 @app.route('/legislator/<legislator_id>')
@@ -548,3 +533,9 @@ def post_edit_submit_message(changes_made):
         message = 'No changes were made.'
 
     return message
+
+def show_mesages(messages):
+
+    for message in messages:
+
+        flash(message)

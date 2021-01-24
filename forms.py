@@ -6,11 +6,11 @@ CURRENT_SESSION = 116
 
 class BillForm(FlaskForm):
 
-    policy_area = SelectField('Subject', validate_choice=False,render_kw={'class':'form-control'})
+    policy_area = SelectField('Policy Area', validate_choice=False,render_kw={'class':'form-control'})
 
 class LegislatorForm(FlaskForm):
 
-    chamber = SelectField('Chamber', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any Chamber'),('Sen.',"Senate"),('Rep.', 'House')])
+    position = SelectField('Position', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any Position')])
     state = SelectField('State', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any State')])
     party = SelectField('Party', validate_choice=False, render_kw={'class':'form-control'}, choices=[(0,'Any Party')])
 

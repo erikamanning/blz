@@ -23,7 +23,7 @@
                 <div class="col-12 col-sm-6">
                     <!-- Pagination Links-->
                     <div id='pagination-links' class="text-center">
-                        <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                        <a href="{{ url_for('view_legislators',position=form.position.data, state=form.state.data, party=form.party.data, page=page_num) }}"
                         class="btn btn-outline-dark 
                         {% if legislators.page == 1 %}disabled{% endif %}">
                         &laquo;
@@ -33,12 +33,12 @@
                             {% if page_num %}
                             <!-- Check for the active page and set the link to "Active"-->
                                 {% if legislators.page == page_num %}
-                                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                                <a href="{{ url_for('view_legislators',position=form.position.data, state=form.state.data, party=form.party.data, page=page_num) }}"
                                 class="btn btn-dark">
                                     {{ page_num }}
                                 </a>
                                 {% else %}
-                                <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=page_num) }}"
+                                <a href="{{ url_for('view_legislators',position=form.position.data, state=form.state.data, party=form.party.data, page=page_num) }}"
                                 class="btn btn-outline-dark">
                                     {{ page_num }}
                                 </a>
@@ -47,7 +47,7 @@
                                 ...
                             {% endif %}
                         {% endfor %}
-                        <a href="{{ url_for('view_legislators',chamber=form.chamber.data, state=form.state.data, party=form.party.data, page=legislators.next_num) }}"
+                        <a href="{{ url_for('view_legislators',position=form.position.data, state=form.state.data, party=form.party.data, page=legislators.next_num) }}"
                         class="btn btn-outline-dark 
                         {% if legislators.page == legislators.pages %}disabled{% endif %}">
                         &raquo;
