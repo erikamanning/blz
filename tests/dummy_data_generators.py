@@ -1,6 +1,6 @@
-from app import app, db, CURRENT_SESSION
+from app import app, db, CURRENT_CONGRESS_SESSION
 from models import Bill, Legislator, PolicyArea, Party, State
-from get_bill_data_utility_functions import handle_policy_area, add_sponsored_bill
+from get_app_data.get_bill_data_utility_functions import handle_policy_area, add_sponsored_bill
 
 
 def add_dummy_party(party_code, party_name):
@@ -62,7 +62,7 @@ def add_dummy_bill( bill_id, sponsor_id, policy_area,introduced_date, latest_maj
     new_bill = Bill(
             id = f'dummy_bill_{bill_id}',
             bill_slug = 'dummy_slug',
-            congress = CURRENT_SESSION,        
+            congress = CURRENT_CONGRESS_SESSION,        
             bill = 'dummy_bill',            
             bill_type = 'dummy_bill_type',
             number = 'dummy_number',

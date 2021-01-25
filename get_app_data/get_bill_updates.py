@@ -1,4 +1,4 @@
-from app import db, headers, CURRENT_SESSION
+from app import db, headers, CURRENT_CONGRESS_SESSION
 from models import Legislator, Bill, SponsoredBill
 import requests
 from sqlalchemy import and_, or_

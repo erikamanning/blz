@@ -1,4 +1,4 @@
-from app import db, headers, CURRENT_SESSION
+from app import db, headers, CURRENT_CONGRESS_SESSION
 from models import Legislator
 import requests
 import pprint
@@ -77,19 +77,19 @@ def get_all_legislators(congress,chamber, legislator_status):
 
 # CURRENT SESSION
 print('****************************')
-print(f'* SESSION {CURRENT_SESSION} *')
+print(f'* SESSION {CURRENT_CONGRESS_SESSION} *')
 print('****************************')
 
 print('****************************')
-print(f'* SESSION {CURRENT_SESSION} - SENATORS*')
+print(f'* SESSION {CURRENT_CONGRESS_SESSION} - SENATORS*')
 print('****************************')
 # get senate legislators
-senate_legislators_json = get_legislators_json(CURRENT_SESSION,'senate')
+senate_legislators_json = get_legislators_json(CURRENT_CONGRESS_SESSION,'senate')
 save_legislators(senate_legislators_json)
 
 print('****************************')
-print(f'* SESSION {CURRENT_SESSION} - REPRESENTATIVES*')
+print(f'* SESSION {CURRENT_CONGRESS_SESSION} - REPRESENTATIVES*')
 print('****************************')
 # get house legislators
-house_legislators_json = get_legislators_json(CURRENT_SESSION,'house')
+house_legislators_json = get_legislators_json(CURRENT_CONGRESS_SESSION,'house')
 save_legislators(house_legislators_json)

@@ -2,7 +2,7 @@ from unittest import TestCase
 from app import app, db
 from flask import session
 from models import User, PolicyArea, Party, State, Legislator
-from dummy_data_generators import add_dummy_party, add_dummy_state, add_dummy_legislator, remove_dummy_legislators, remove_dummy_parties, remove_dummy_states
+from tests.dummy_data_generators import add_dummy_party, add_dummy_state, add_dummy_legislator, remove_dummy_legislators, remove_dummy_parties, remove_dummy_states
 
 app.config['TESTING'] = True
 
@@ -93,7 +93,7 @@ class TestBillSearch(TestCase):
     def test_legislators_search_position_only(self):
         with app.test_client() as client:
             d= {
-                'chamber' : 'Sen.'
+                'position' : 'Sen.'
             }
             resp = client.get('/legislators', query_string=d)
             html = resp.get_data(as_text=True)

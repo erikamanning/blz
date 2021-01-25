@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField, FloatField, BooleanField, IntegerField, RadioField, SelectField, PasswordField, DateField
 from wtforms.validators import InputRequired, Email, Optional, URL, NumberRange
 from wtforms.fields.html5 import EmailField
-CURRENT_SESSION = 116
 
 class BillForm(FlaskForm):
 

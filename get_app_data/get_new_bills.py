@@ -1,5 +1,5 @@
-from app import db, headers
-from models import Legislator, Bill, SponsoredBill
+from app import db, headers, CURRENT_CONGRESS_SESSION
+from models import Bill
 import requests
 from sqlalchemy import and_
 from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
@@ -69,4 +69,4 @@ def get_new_bills(current_session, chamber, status):
     get_bill_data(new_bill_slugs, current_session)
 
 
-get_new_bills(117, "both", 'introduced')
+get_new_bills(CURRENT_CONGRESS_SESSION, "both", 'introduced')

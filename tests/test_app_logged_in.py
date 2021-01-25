@@ -2,7 +2,6 @@ from unittest import TestCase
 from app import app, db
 from flask import session
 from models import User
-from test_bill_search import TestBillSearch
 
 app.config['TESTING'] = True
 

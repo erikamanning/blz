@@ -1,7 +1,7 @@
 from unittest import TestCase
 from app import app, db, convert_date, check_user_info_messages, post_edit_submit_message
 from models import User, Bill, BillFollows, PolicyArea,SponsoredBill
-from get_bill_data_utility_functions import get_slugs, prune_summary,handle_policy_area, add_sponsored_bill
+from get_app_data.get_bill_data_utility_functions import get_slugs, prune_summary,handle_policy_area, add_sponsored_bill
 
 app.config['TESTING'] = True
 

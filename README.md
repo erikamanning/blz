@@ -11,7 +11,6 @@
 * [User Flow](##UserFlow)
 * [API](https://github.com/erikamanning/capstone1#api)
 * [Contact](##Contact)
-* [Sources](##Sources)
 * [Contribute](###Contribute)
 
 
@@ -50,7 +49,7 @@ Clone the repo.
 https://github.com/erikamanning/capstone1.git
 ```
 
-Create a virtual environment in the repo directory.
+Create a virtual environment in the project directory.
 ```sh 
 $ python3 -m venv venv
 ```
@@ -89,9 +88,6 @@ $ flask run
 Open web browser go to local host 5000 or whatever.
 
 
-## Features
-
-
 ## User Flows
 ![](readme_files/user_flow_1png)
 
@@ -109,30 +105,9 @@ Open web browser go to local host 5000 or whatever.
 ## API
 
 ![ProPublica Logo](readme_files/8629881-logo.jpg)
-This project owes a lot to [ProPublica Logo](https://projects.propublica.org/api-docs/congress-api/). All ll congressional data was obtained through the ProPublica Congress API.
+This project owes a lot to [ProPublica's Congress API](https://projects.propublica.org/api-docs/congress-api/). All ll congressional data was obtained through the ProPublica Congress API.
 
 ## Contact
 
-
-
-
-
-## Technology Stack
-
-* Python
-* Flask
-* AJAX
-* Javascript
-* HTML
-* CSS
-* Bootstrap
-
-
-
-## Sources
-
-bootstrap
-fontawesome
-propublica
 
 ## Contribute
