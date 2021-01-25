@@ -9,7 +9,7 @@
 * [Installation](##Installation)
 * [Features](##Features)
 * [User Flow](##UserFlow)
-* [API](##api)
+* [API](https://github.com/erikamanning/capstone1#api)
 * [Contact](##Contact)
 * [Sources](##Sources)
 * [Contribute](###Contribute)
