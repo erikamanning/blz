@@ -32,7 +32,7 @@
 
 <br>  
 
-It isn't always possible to keep completely on top of all national legislation, but BLZ makes it easier. With the BLZ app, you can access a dashboard which shows you all your state's senators and representatives, so you can see what legislation they have sponsored recently. You can also browse legislation by policy area and specify a date range that you would like to search by. You can easily save bills to your dashboard, so you can keep tabs on them, and easily access information about their most recent updates. You can also quickly move from any bill on the app, to the bill page on the congress.gov website so you can find out even more. 
+It isn't always possible to keep completely on top of all national legislation, but BLZ makes it easier. With the BLZ app, you can access a dashboard which shows you all your state's senators and representatives, so you can see what legislation they have sponsored recently. You can also browse legislation by policy area and specify a date range that you would like to search by. You can easily save bills to your dashboard, so you can keep tabs on them, and easily access information about their most recent updates. You can also quickly move from any bill on the app, to the bill's page on the official congress website so you can learn more.
 
 ---
 
@@ -62,38 +62,41 @@ Open web browser go to local host 5000 or whatever.
 
 ### Features
 
-**Browse current legislation.**
+#### Browse Current Legislation
 
-![Bill Browse - No Subject, No Date](readme_files/bill_browse_1_nosubject.png)
+![Bill Browse - No Subject, No Date](readme_files/bill_browse.png)
 
 <br>  
 
-**Search bills by subject**
+#### Browse Bills by Subject
+![Bill Browse - Education, No Date](readme_files/bill_browse_education.png)
+
+<br>  
+
+#### View Bill In More Detail
+![Bill View](readme_files/single_bill.png)
 
 
-![Bill Browse - Finance, No Date](readme_files/bill_browse_4_finance.png)
-
-
-
-**Create an account. Delete it whenever you want.**
+#### Create an account. Delete it whenever you want.
 ![Sign Up](readme_files/signup.png)
 
+<br>  
 
-**Access Your Dashboard** Where you can find your state's legislators and bills you have saved. 
+#### Access Your Dashboard. Here you can find your state's legislators and bills you have saved. 
 ![Dashboard - Legislators, No Date](readme_files/dashboard_legislators.png)
+
+<br>  
+
+#### Save bills to your dashboard.
 ![Dashboard - Legislators, No Date](readme_files/dashboard_saved_bills.png)
 
-Save bills to your dashboard.
+<br>  
 
-Click on your legislators to see what legislation they have sponsored recently.
+#### Click on your legislators to view information about them and see what legislation they have sponsored recently.
+![Legislator - Sponsored Bills](readme_files/view_legislator_massie.png)
 
-Use the legislator search to find out information about legislators outside of your state.
-
-
-
----
-
-### Examples
+#### Use the legislator browse feature to discover new legislators and connect with them on social media.
+![Legislator Browse](readme_files/legislator_browse.png)
 
 ---
 
@@ -102,6 +105,8 @@ Use the legislator search to find out information about legislators outside of y
 ---
 
 ### Contact
+
+
 
 ---
 
