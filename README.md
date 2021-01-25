@@ -1,7 +1,7 @@
 # BLZ - US Congress Visibility App
 
 
-### Table of Contents
+## Table of Contents
 
 * [About](###about)
 * [Installation](###about)
@@ -14,7 +14,7 @@
 
 ---
 
-### About
+## About
 
 #### <div align='center'>Did you know that every year US Congress introduces an average of 11,000 bills? <sup>[</sup>[<sup>1</sup>](https://www.ndpanalytics.com/45-years-of-congress-bills)<sup>,</sup>[<sup>2</sup>](congress.gov)<sup>]</sup></div>
 
@@ -35,7 +35,7 @@ It isn't always possible to keep completely on top of all national legislation, 
 
 ---
 
-### Installation
+## Installation
 Download clone the repo.
 ` git instructions `
 
@@ -59,29 +59,17 @@ Open web browser go to local host 5000 or whatever.
 
 ---
 
-### Features
-
-#### Browse Current Legislation
-
-![Bill Browse - No Subject, No Date](readme_files/bill_browse.png)
-
-<br>  
+## Features
 
 #### Browse Bills by Subject
 ![Bill Browse - Education, No Date](readme_files/bill_browse_education.png)
 
 <br>  
 
-#### View Bill In More Detail
-![Bill View](readme_files/single_bill.png)
+#### Use the legislator browse feature to discover new legislators and connect with them on social media.
+![Legislator Browse](readme_files/legislator_browse.png)
 
-
-#### Create an account. Delete it whenever you want.
-![Sign Up](readme_files/signup.png)
-
-<br>  
-
-#### Access Your Dashboard. Here you can find your state's legislators and bills you have saved. 
+#### Create an Account and Access Your Dashboard. Here you can find your state's legislators and bills you have saved. 
 ![Dashboard - Legislators, No Date](readme_files/dashboard_legislators.png)
 
 <br>  
@@ -89,31 +77,26 @@ Open web browser go to local host 5000 or whatever.
 #### Save bills to your dashboard.
 ![Dashboard - Legislators, No Date](readme_files/dashboard_saved_bills.png)
 
-<br>  
-
-#### Click on your legislators to view information about them and see what legislation they have sponsored recently.
-![Legislator - Sponsored Bills](readme_files/view_legislator_massie.png)
-
-#### Use the legislator browse feature to discover new legislators and connect with them on social media.
-![Legislator Browse](readme_files/legislator_browse.png)
-
----
-
-### API
-
----
-
-### Contact
 
 
 
 ---
 
-### Sources
+## API
+
+---
+
+## Contact
+
+
+
+---
+
+## Sources
 
 bootstrap
 fontawesome
 propublica
 ---
 
-### Contribute
+## Contribute
