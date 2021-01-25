@@ -9,6 +9,9 @@ import pprint
 from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State, Position
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser, EditPassword, TestForm
 from sqlalchemy.exc import IntegrityError
+import click
+from flask.cli import with_appcontext
+from initialize_app import initialize_database
 
 try:
     from secrets import API_SECRET_KEY
@@ -41,6 +44,14 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
 debug = DebugToolbarExtension(app)
+
+@click.command(name='init_app')
+@with_appcontext
+def init_app():
+
+    initialize_database(db)
+
+app.cli.add_command(init_app)
 
 @app.before_request
 def add_user_to_g():
@@ -134,7 +145,7 @@ def view_bills():
     else:
         end_date=''
 
-    bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=10)
+    bills = Bill.query.filter(and_(*filter_args)).order_by(Bill.introduced_date.desc()).paginate(page=page, per_page=ROWS_PER_PAGE)
 
     show_mesages(messages)
     return render_template('bills/bills.html', policy_areas=policy_areas, form=form, bills=bills, start_date=start_date, end_date=end_date)
@@ -149,7 +160,7 @@ def view_bill(bill_id):
     
         return render_template("bills/bill_single.html", bill=bill)
 
-@app.route('/bill/<bill_id>/follow')
+@app.route('/bill/<bill_id>/follow', methods=['POST'])
 def follow_bill(bill_id):
 
     if session.get(CURRENT_USER_ID, False):
@@ -210,7 +221,7 @@ def view_legislators():
         position_code = request.args['position']
         filter_args.append(Legislator.position_code == position_code)
 
-    legislators = Legislator.query.filter(and_(*filter_args)).order_by(Legislator.last_name).paginate(page=page, per_page=10)
+    legislators = Legislator.query.filter(and_(*filter_args)).order_by(Legislator.last_name).paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template('legislators/legislators.html', legislators = legislators, form=form)
 
 @app.route('/legislator/<legislator_id>')
@@ -539,3 +550,4 @@ def show_mesages(messages):
     for message in messages:
 
         flash(message)
+

@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 
     $('.sm-leg-card').on('click', function(){
