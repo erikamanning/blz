@@ -3,6 +3,12 @@
 ##### tech stack logos
 <a href="https://www.python.org/" title="Python"><img src="https://github.com/tomchen/stack-icons/blob/master/logos/python.svg" alt="Python" width="21px" height="21px"></a>
 
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" title="JavaScript"><img src="https://github.com/tomchen/stack-icons/blob/master/logos/javascript.svg" alt="JavaScript" width="21px" height="21px"></a>
+
+<a href="https://git-scm.com/" title="Git"><img src="https://github.com/tomchen/stack-icons/blob/master/logos/git-icon.svg" alt="Git" width="21px" height="21px"></a>
+
+<a href="https://flask.palletsprojects.com/en/1.1.x/" title="Flask"><img src="readme_files/flask-logo.png" alt="Flask" width="52px" height="21px"></a>
+
 ## Table of Contents
 
 * [About](###about)
