@@ -16,18 +16,18 @@
 
 ## About
 
-#### <div align='center'>Did you know that every year US Congress introduces an average of 11,000 bills? <sup>[</sup>[<sup>1</sup>](https://www.ndpanalytics.com/45-years-of-congress-bills)<sup>,</sup>[<sup>2</sup>](congress.gov)<sup>]</sup></div>
+### <div align='center'>Did you know that every year US Congress introduces an average of 11,000 bills? <sup>[</sup>[<sup>1</sup>](https://www.ndpanalytics.com/45-years-of-congress-bills)<sup>,</sup>[<sup>2</sup>](congress.gov)<sup>]</sup></div>
 
 
 <br>   
 
-#### <div align='center'>........ </div>  
+### <div align='center'>........ </div>  
 <br>  
 
-#### <div align='center'>:mag: How many have you read? </div>  
+### <div align='center'>:mag: How many have you read? </div>  
 
 
-#### <div align='center'>........ </div>  
+### <div align='center'>........ </div>  
 
 <br>  
 
@@ -37,24 +37,46 @@ It can be difficult to keep on top of all national legislation, but BLZ makes it
 #### <div align='center'>[Try the App Here](www.blz.herokuapp.com)</div>  
 
 ## Installation
-Download clone the repo.
-` git instructions `
 
+Get a free API key from ProPublica
+```sh
+https://www.propublica.org/datastore/api/propublica-congress-api
+```
+
+Download clone the repo.
+```sh
+git instructions 
+```
 
 Create a virtual environment in the repo directory.
-`$ python3 -m venv venv`
+```sh 
+$ python3 -m venv venv
+```
 
-Start the environment
-`$ source venv/bin/activate`
+Start the virtualenvironment.
+```sh
+$ source venv/bin/activate
+```
 
-Install required packages
-`$ pip3 install requirements.txt`
+Install required packages.
+```sh
+sh $ pip3 install requirements.txt
+```
 
-Initialize the database
-`$ flask init_app`
+Initialize the database.
+```sh
+$ flask init_app
+```
+
+Set the environment to development mode.
+```sh
+$ export FLASK_ENV=development 
+```
 
 Run the app (dev or production mode?)
-`$ flask run`
+```sh 
+$ flask run
+```
 
 Open web browser go to local host 5000 or whatever.
 
