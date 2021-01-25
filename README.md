@@ -1,5 +1,7 @@
 # BLZ - US Congress Visibility App
 
+##### tech stack logos
+<a href="https://www.python.org/" title="Python"><img src="https://github.com/tomchen/stack-icons/blob/master/logos/python.svg" alt="Python" width="21px" height="21px"></a>
 
 ## Table of Contents
 
@@ -43,9 +45,9 @@ Get a free API key from ProPublica
 https://www.propublica.org/datastore/api/propublica-congress-api
 ```
 
-Download clone the repo.
+Clone the repo.
 ```sh
-git instructions 
+https://github.com/erikamanning/capstone1.git
 ```
 
 Create a virtual environment in the repo directory.
@@ -60,7 +62,13 @@ $ source venv/bin/activate
 
 Install required packages.
 ```sh
-sh $ pip3 install requirements.txt
+$ pip3 install requirements.txt
+```
+
+Create a secrets.py file and add your API key.
+<sub> In *secrets.py*</sub>
+```sh
+API_SECRET_KEY = 'YOUR_SECRET_KEY'
 ```
 
 Initialize the database.
@@ -84,11 +92,11 @@ Open web browser go to local host 5000 or whatever.
 ## Features
 
 
-## User Flow
+## User Flows
 ![](readme_files/user_flow_1png)
 
 
-## Examples
+
 #### Browse Bills by Subject
 #### Use the legislator browse feature to discover new legislators and connect with them on social media.
 #### Create an Account and Access Your Dashboard. Here you can find your state's legislators and bills you have saved. 
