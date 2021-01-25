@@ -1,6 +1,5 @@
 # BLZ - US Congress Visibility App
 
----
 
 ### Table of Contents
 
