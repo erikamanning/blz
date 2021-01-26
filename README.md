@@ -95,7 +95,7 @@ $ export FLASK_ENV=development
 $ flask run
 ```
 
-Open web browser go to local host 5000 or whatever.
+6. Open web browser and run the app on the port for your server.
 
 
 ## User Flows
