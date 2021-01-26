@@ -12,8 +12,9 @@
       </small>
   </div>
 
-  <div class="card-group landing-cards text-center">
-      <div class="card p-3 mb-3 landing-card">
+  <div class="row text-center">
+    <div class="col-12 col-md-6 col-lg-4 mb-3">
+      <div class="card p-3 mb-3 shadow-sm h-100">
         <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/bills.jpg" role="img" aria-label="Placeholder: 140x140" >
         <div class="card-body">
           <h2 class="card-title text-center">Bills</h2>
@@ -21,15 +22,21 @@
         </div>
         <a class="btn btn-block btn-dark mx-sm-3" href="/bills">Browse Bills</a>
       </div>
-      <div class="card p-3 mb-3 landing-card">
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 mb-3">
+      <div class="card p-3 mb-3 shadow-sm h-100">
         <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/congress.jpg" role="img" aria-label="Placeholder: 140x140" >
         <div class="card-body">
           <h2 class="card-title text-center">Legislators</h2>
-          <p class="card-text">Browse legislators for the 117th congress. Refine your search by State, Party, and Position. From there you can select a legislator and view what bills they have recently sponsored. You can also view how to contact them and connect with them on social media.</p>
+          <p class="card-text">Browse legislators for the 117th congress. Refine your search by State, Party, and Position. 
+            From there you can select a legislator and view what bills they have recently sponsored. You can also view how 
+            to contact them and connect with them on social media.</p>
         </div>
         <a class="btn btn-dark mx-sm-3" href="/legislators">Browse Legislators</a>
       </div>
-      <div class="card p-3 mb-3 landing-card">
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 mb-3">
+      <div class="card p-3 mb-3 shadow-sm h-100">
         <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/dashboard_legislators.jpg" role="img" aria-label="Placeholder: 140x140" >
         <div class="card-body">
           <h2 class="card-title text-center">Dashboard</h2>
@@ -37,6 +44,8 @@
           <span class="fw-bold"> Sign up now to access your dashboard!</span>
         </div>
         <a class="btn btn-block btn-dark mx-sm-3" href="/signup">Sign Up</a>
+      </div>
     </div>
+  </div>
 
 {% endblock %}
