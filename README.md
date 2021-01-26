@@ -96,7 +96,7 @@ Open web browser go to local host 5000 or whatever.
 ![Landing Page](readme_files/landing_page_full_size.png)
 
 ### User Flow: View State Legislators and Sponsored Bills
-![User Flow 3](readme_files/User_flow_3_Legislator_Sponsored Bill.png)
+![User Flow 3](readme_files/User_flow_3.png)
 
 ### User Flow: Browse and Save Bills to Dashboard.
 ![User Flow 1](readme_files/User_flow_1.png)
