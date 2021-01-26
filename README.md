@@ -11,8 +11,6 @@ https://blz.herokuapp.com
 * [Installation](https://github.com/erikamanning/capstone1#installation)
 * [User Flows](https://github.com/erikamanning/capstone1#user-flows)
 * [API](https://github.com/erikamanning/capstone1#api)
-* [Contact](https://github.com/erikamanning/capstone1#contact)
-* [Contribute](https://github.com/erikamanning/capstone1#contribute)
 
 
 
