@@ -18,8 +18,6 @@ class ViewsLoggedInTests(TestCase):
         db.session.add_all([cls.test_user, cls.test_user_b])
         db.session.commit()
 
-        print("Setup")
-
     @classmethod
     def tearDownClass(cls):
 
@@ -27,8 +25,6 @@ class ViewsLoggedInTests(TestCase):
         db.session.delete(cls.test_user)
         db.session.delete(cls.test_user_b)
         db.session.commit()
-
-        print("Teardown")
 
     # test if dashboard loads at root route when logged in
     def test_session_info_set(self):

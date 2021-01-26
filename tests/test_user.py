@@ -25,8 +25,6 @@ class UserTests(TestCase):
         db.session.delete(cls.test_user_b)
         db.session.commit()
 
-        print("Teardown")
-
     def setUp(self):
         # create test user to delete
         self.test_user_c = User.register(username='test_user_c', password='test123', email='testuser_c@email.com', state_id='NV')

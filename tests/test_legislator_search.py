@@ -29,8 +29,6 @@ class TestBillSearch(TestCase):
         add_dummy_legislator('dummy_00000002', 'aaab', 'dummy_acronym3', 'Sen.','dummy_code2')
         add_dummy_legislator('dummy_00000003', 'aaac', 'dummy_acronym2', 'R.C.','dummy_code3')
         add_dummy_legislator('dummy_00000004', 'aaad', 'dummy_acronym1', 'Del.','dummy_code2')
-
-        print('Setup')
     
     @classmethod
     def tearDownClass(cls):
@@ -39,8 +37,6 @@ class TestBillSearch(TestCase):
         remove_dummy_legislators()
         remove_dummy_parties()
         remove_dummy_states()
-
-        print("Teardown")
 
     # test if expected legislators load with no data passed through form
     def test_legislators_search_no_specs(self):

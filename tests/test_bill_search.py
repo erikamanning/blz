@@ -31,8 +31,6 @@ class TestBillSearch(TestCase):
 
         cls.policy_area_1 = PolicyArea.query.filter(PolicyArea.name==cls.policy_area_str_1).one_or_none()
         cls.policy_area_2 = PolicyArea.query.filter(PolicyArea.name==cls.policy_area_str_2).one_or_none()
-
-        print('Setup')
     
     @classmethod
     def tearDownClass(cls):
@@ -42,8 +40,6 @@ class TestBillSearch(TestCase):
         remove_dummy_states()
         remove_dummy_bills()
         remove_dummy_policy_areas()
-
-        print("Teardown")
 
     # test if correct bills load with no data passed to form
     def test_bill_search_any_subject(self):

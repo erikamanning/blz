@@ -26,8 +26,6 @@ class ViewsLoggedOutTests(TestCase):
         db.session.delete(cls.test_user_b)
         db.session.commit()
 
-        print("Teardown")
-
     # test if home page loads
     def test_root_route(self):
         with app.test_client() as client:
