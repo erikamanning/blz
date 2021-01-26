@@ -7,23 +7,19 @@ from flask.cli import with_appcontext
 from initialize_app import initialize_database
 from update_app import update_db
 from sqlalchemy import and_
+from secrets import API_SECRET_KEY, FLASK_SECRET_KEY
 import os
 import requests
 import click
-
-try:
-    from secrets import API_SECRET_KEY
-except:
-    API_SECRET_KEY = 'NOT A KEY'
 
 CURRENT_CONGRESS_SESSION = 117
 CURRENT_USER_ID = 'user_id'
 LEGISLATOR_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
 ROWS_PER_PAGE = 10
-headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
+headers = {'X-API-Key': API_SECRET_KEY}
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY','2@!4q18&5l!D32d%^!#4')
+app.config['SECRET_KEY'] = FLASK_SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///blz')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
