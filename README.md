@@ -40,11 +40,11 @@ It can be difficult to keep on top of all national legislation, but BLZ makes it
 
 ## Installation
 
-##### Before You Begin
+#### Before You Begin
 _You will need python3 and pip3 installed for this project. You will also need to setup a Postgres Database for the app._
 
 
-##### Installation Instructions
+#### Installation Instructions
 
 1. Get a free API key from ProPublica
 ```sh
@@ -72,14 +72,15 @@ $ pip3 install requirements.txt
 ```
 
 6. Open the secrets.py file and add your API key and Flask Secret Key in the fields specified below. _**Make sure to add secretys.py tp your .gitignore so your personal API key doesn't get shared accidentally.**_
+   
 <sub> In *secrets.py*</sub>
 ```sh
 API_SECRET_KEY = os.environ.get('SECRET_API_KEY', '##NOT A KEY##')
 FLASK_SECRET_KEY = os.environ.get('SECRET_KEY', '##NOT A KEY##')
 ```
-
+<br>  
 _**You will need to set up a postgres database for this application. Once that is done you can move to the next step.**_
-
+<br>  
 
 7. Initialize the database.
 ```sh
