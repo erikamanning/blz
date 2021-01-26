@@ -7,8 +7,7 @@
 
 * [About](https://github.com/erikamanning/capstone1#about)
 * [Installation](https://github.com/erikamanning/capstone1#installation)
-* [Features](https://github.com/erikamanning/capstone1#features)
-* [User Flow](https://github.com/erikamanning/capstone1#user-flow)
+* [User Flows](https://github.com/erikamanning/capstone1#user-flows)
 * [API](https://github.com/erikamanning/capstone1#api)
 * [Contact](https://github.com/erikamanning/capstone1#contact)
 * [Contribute](https://github.com/erikamanning/capstone1#contribute)
