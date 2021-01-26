@@ -115,7 +115,7 @@ $ flask run
 ![User Flow 1](readme_files/User_flow_1.png)
 
 ## API
-This project owes much to [ProPublica's Congress API](https://projects.propublica.org/api-docs/congress-api/). All ll congressional data was obtained through the ProPublica Congress API.
+This project owes much to [ProPublica's Congress API](https://projects.propublica.org/api-docs/congress-api/). All congressional data was obtained through the ProPublica Congress API.
 
 ![ProPublica Logo](readme_files/propublica_logo.jpg)
 
