@@ -6,3 +6,7 @@
  .sm-leg-card:hover{
      cursor: pointer;
 }
+
+.landing-card{
+    border: none;
+}

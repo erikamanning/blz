@@ -18,39 +18,60 @@
             </div>
         </div>
 
-            <div id="dash-state-info" >
-                <!-- state -->
-                    <h1 class="text-center mb-3">State</h1>
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-sm-10">
-                            <div class="card shadow-sm py-3 p-2">
-                                {% if legislators:%}
+        <div id="dash-state-info" >
+            <!-- state -->
+            <h1 class="text-center mb-3">State</h1>
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+                    <div class="card shadow-sm py-3 p-2">
+                        {% if legislators:%}
 
-                                    <h3 class="text-center">{{user.state.name}} ({{user.state_id}})</h3>
-                                {% else %}
+                            <h3 class="text-center">{{user.state.name}} ({{user.state_id}})</h3>
+                        {% else %}
 
-                                    <h3 class="text-center">None</h3>
+                            <h3 class="text-center">None</h3>
 
-                                {% endif %}
-                            </div>
-                        </div>
+                        {% endif %}
                     </div>
+                </div>
+            </div>
 
-                {% if legislators:%}
+            {% if legislators:%}
 
                 <h1 class="text-center mt-5">{{user.state.name}} Legislators</h1>
 
+                <h3 class="text-center mt-5 mb-3">Senators</h3>
 
-                    <h3 class="text-center mt-5 mb-3">Senators</h3>
+                {% for i in range(0,legislators['s']|length,2): %}
+                    <div class="row row-cols justify-content-center">
 
-                    {% for i in range(0,legislators['s']|length,2): %}
+                        {% for j in range(i,i+2): %}
+
+                                {% if legislators['s']|length > j:  %}
+                                <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-2">
+                                    {% include 'legislators/legislator_card_sm_sen.html'%}
+                                </div>
+                                {% else %}
+                                <!-- empty column for alignment -->
+                                <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-2">
+                                </div>
+                                {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+                {% endfor %}
+
+                <h3 class="text-center my-3">Representatives</h3>
+
+                {% for i in range(0,legislators['r']|length,2): %}
                     <div class="row row-cols justify-content-center">
 
                     {% for j in range(i,i+2): %}
 
-                            {% if legislators['s']|length > j:  %}
+                            {% if legislators['r']|length > j:  %}
                             <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-2">
-                                {% include 'legislators/legislator_card_sm_sen.html'%}
+                                {% include 'legislators/legislator_card_sm_rep.html'%}
                             </div>
                             {% else %}
                             <!-- empty column for alignment -->
@@ -62,64 +83,40 @@
 
                     </div>
                 {% endfor %}
+                
+            {% else %}
 
+                <p class="fst-italic text-center mt-5"><i>Enter your state in your profile to see your legislators!</i></p>
 
-                        <h3 class="text-center my-3">Representatives</h3>
+            {% endif %}
+        </div>
 
-                        {% for i in range(0,legislators['r']|length,2): %}
-                        <div class="row row-cols justify-content-center">
+        <div id="dash-saved-bills" class="d-none">
 
-                        {% for j in range(i,i+2): %}
+            <h1 class="text-center mt-5">My Bills</h1>
+            {% if bills%}
 
-                                {% if legislators['r']|length > j:  %}
-                                <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-2">
-                                    {% include 'legislators/legislator_card_sm_rep.html'%}
-                                </div>
-                                {% else %}
-                                <!-- empty column for alignment -->
-                                <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-2">
-                                </div>
-                                {% endif %}
-
-                        {% endfor %}
-
+                <div class="container">
+                    <div class="container d-flex align-items-end flex-column mb-none">
+                        <div class="form-check form-switch mt-3 d-flex justify-content-end">
+                            <p class="mb-0">
+                                <input class="form-control form-check-input " type="checkbox" id="show-details">
+                                <label class="form-check-label" for="show-details">Show Updates</label>
+                            </p>
                         </div>
-                    {% endfor %}
+                    </div>
+                </div>
                     
-                {% else %}
+                <div id="followed-bills">
+                    {%for bill in bills%}
+                    {% include 'bills/bill_block.html' %}
+                    {% endfor %}
+                </div>
+            {%else%}
+                <p class="text-center fst-italic"><i>No bills saved yet!</i></p>
 
-                    <p class="fst-italic text-center mt-5"><i>Enter your state in your profile to see your legislators!</i></p>
-
-                {% endif %}
-            </div>
-
-            <div id="dash-saved-bills" class="d-none">
-
-                <h1 class="text-center mt-5">My Bills</h1>
-                {% if bills%}
-
-
-                    <div class="container">
-                        <div class="container d-flex align-items-end flex-column mb-none">
-                            <div class="form-check form-switch mt-3 d-flex justify-content-end">
-                                <p class="mb-0">
-                                    <input class="form-control form-check-input " type="checkbox" id="show-details">
-                                    <label class="form-check-label" for="show-details">Show Updates</label>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                        
-                    <div id="followed-bills">
-                        {%for bill in bills%}
-                        {% include 'bills/bill_block.html' %}
-                        {% endfor %}
-                    </div>
-                {%else%}
-                    <p class="text-center fst-italic"><i>No bills saved yet!</i></p>
-
-                {% endif %}
-            </div>
+            {% endif %}
+        </div>
         
     </div>
 
