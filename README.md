@@ -38,6 +38,9 @@ It can be difficult to keep on top of all national legislation, but BLZ makes it
 
 ## Installation
 
+_You will need python3 and pip3 installed for this project. You will also need to setup a Postgres Database for the app._
+
+
 Get a free API key from ProPublica
 ```sh
 https://www.propublica.org/datastore/api/propublica-congress-api
@@ -95,32 +98,18 @@ Open web browser go to local host 5000 or whatever.
 ### Landing Page
 ![Landing Page](readme_files/landing_page_full_size.png)
 
+---
+
 ### User Flow: View State Legislators and Sponsored Bills
 ![User Flow 3](readme_files/User_flow_3.png)
+
+---
 
 ### User Flow: Browse and Save Bills to Dashboard.
 ![User Flow 1](readme_files/User_flow_1.png)
 
-### User Flow: Edit or Delete Profile
-![User Flow 2](readme_files/User_flow_2.png)
-
-
-
-#### Browse Bills by Subject
-#### Use the legislator browse feature to discover new legislators and connect with them on social media.
-#### Create an Account and Access Your Dashboard. Here you can find your state's legislators and bills you have saved. 
-#### Save bills to your dashboard.
-
-
-
-
-
 ## API
-
+This project owes much to [ProPublica's Congress API](https://projects.propublica.org/api-docs/congress-api/). All ll congressional data was obtained through the ProPublica Congress API.
 ![ProPublica Logo](readme_files/propublica_logo.jpg)
-This project owes a lot to [ProPublica's Congress API](https://projects.propublica.org/api-docs/congress-api/). All ll congressional data was obtained through the ProPublica Congress API.
-
-## Contact
 
 
-## Contribute
