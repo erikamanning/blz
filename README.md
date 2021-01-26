@@ -43,7 +43,6 @@ It can be difficult to keep on top of all national legislation, but BLZ makes it
 ##### Before You Begin
 _You will need python3 and pip3 installed for this project. You will also need to setup a Postgres Database for the app._
 
-<br>
 
 ##### Installation Instructions
 
