@@ -69,6 +69,9 @@ Create a secrets.py file and add your API key.
 API_SECRET_KEY = 'YOUR_SECRET_KEY'
 ```
 
+_**You will need to set up a postgres database for this application. Once that is done you can move to the next step.**_
+
+
 Initialize the database.
 ```sh
 $ flask init_app
@@ -88,7 +91,18 @@ Open web browser go to local host 5000 or whatever.
 
 
 ## User Flows
-![](readme_files/user_flow_1png)
+
+### Landing Page
+![Landing Page](readme_files/landing_page_full_size.png)
+
+### User Flow: View State Legislators and Sponsored Bills
+![User Flow 3](readme_files/User_flow_3_Legislator_Sponsored Bill.png)
+
+### User Flow: Browse and Save Bills to Dashboard.
+![User Flow 1](readme_files/User_flow_1.png)
+
+### User Flow: Edit or Delete Profile
+![User Flow 2](readme_files/User_flow_2.png)
 
 
 
