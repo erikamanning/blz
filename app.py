@@ -7,7 +7,7 @@ from flask.cli import with_appcontext
 from initialize_app import initialize_database
 from update_app import update_db
 from sqlalchemy import and_
-from secrets import API_SECRET_KEY, FLASK_SECRET_KEY
+from secrets import API_SECRET_KEY, FLASK_SECRET_KEY, DATA_BASE_URI
 import os
 import requests
 import click
@@ -20,7 +20,7 @@ headers = {'X-API-Key': API_SECRET_KEY}
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = FLASK_SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresql:///blz')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATA_BASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
