@@ -41,61 +41,64 @@ It can be difficult to keep on top of all national legislation, but BLZ makes it
 ## Installation
 
 #### Before You Begin
-_You will need python3 and pip3 installed for this project. You will also need to setup a Postgres Database for the app._
+You will need python3 and pip3 installed for this project. You will also need to setup a Postgres Database for the app.
 
 
 #### Installation Instructions
 
 1. Get a free API key from ProPublica
-```sh
-https://www.propublica.org/datastore/api/propublica-congress-api
-```
+    ```sh
+    https://www.propublica.org/datastore/api/propublica-congress-api
+    ```
 
 2. Clone the repo.
-```sh
-https://github.com/erikamanning/capstone1.git
-```
+    ```sh
+    https://github.com/erikamanning/capstone1.git
+    ```
 
 3. Create a virtual environment in the project directory.
-```sh 
-$ python3 -m venv venv
-```
+    ```sh 
+    $ python3 -m venv venv
+    ```
 
 4. Start the virtualenvironment.
-```sh
-$ source venv/bin/activate
-```
+    ```sh
+    $ source venv/bin/activate
+    ```
 
 5. Install required packages.
-```sh
-$ pip3 install requirements.txt
-```
+    ```sh
+    $ pip3 install requirements.txt
+    ```
 
-6. Open the secrets.py file and add your API key and Flask Secret Key in the fields specified below. _**Make sure to add secretys.py tp your .gitignore so your personal API key doesn't get shared accidentally.**_
+6. Open the secrets.py file and add your API key and Flask Secret Key in the fields specified below. 
+   _**Make sure to add secretys.py tp your .gitignore so your personal API key doesn't get shared accidentally.**_
    
-<sub> In *secrets.py*</sub>
-```sh
-API_SECRET_KEY = os.environ.get('SECRET_API_KEY', '##NOT A KEY##')
-FLASK_SECRET_KEY = os.environ.get('SECRET_KEY', '##NOT A KEY##')
-```
+    <sub> In *secrets.py*</sub>
+    ```sh
+    API_SECRET_KEY = os.environ.get('SECRET_API_KEY', '##NOT A KEY##')
+    FLASK_SECRET_KEY = os.environ.get('SECRET_KEY', '##NOT A KEY##')
+    ```
 <br>  
+
 _**You will need to set up a postgres database for this application. Once that is done you can move to the next step.**_
+
 <br>  
 
 7. Initialize the database.
-```sh
-$ flask init_app
-```
+    ```sh
+    $ flask init_app
+    ```
 
 8. Set the environment to development mode.
-```sh
-$ export FLASK_ENV=development 
-```
+    ```sh
+    $ export FLASK_ENV=development 
+    ```
 
 9. Run the app (dev or production mode?)
-```sh 
-$ flask run
-```
+    ```sh 
+    $ flask run
+    ```
 
 10. Open web browser and run the app on the port for your server.
 
