@@ -1,15 +1,46 @@
 {% extends 'base.html' %}
 
-{% block title %} Lumine Home {% endblock %}
+{% block title %} BLZ Home {% endblock %}
 
 
 
 {% block content %}
 
-    <div id="home-container">
+
+
+    <div id="mt-5 pt-5"">
         
-        <h1 class="text-center mt-5">Welcome to Lumin </h1>
-        <p class="text-center mt-3"> We are a community commited to improving the transparency of the national legislation process.</p>
+        <div class="container">
+            <h1 class="text-center mt-5 pt-5">Welcome to BLZ </h1>
+            <p class="lead text-center mt-3"> A platform where you can easily find your legislators and keep track of track legislation that is important to you.</p>
+            <p class="lead text-center mt-3 mb-5">
+                <a href="/signup">Sign Up</a> or <a href="/login">Login</a> to access your dashboard and save bills you are interested in!
+            </p>
+        </div>
+
+        <div class="container mx-auto justify-content-center mt-3">
+
+            <div class="row justify-content-around">
+              <div class="col-lg-3 text-center card p-3 pt-4 mb-3 mx-1">
+                <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="140" height="140" src="static/bills.jpg" role="img" aria-label="Placeholder: 140x140" >
+                <h2 class="text-center">Bills</h2>
+                <p class="">Browse bills for the 117th congress. Refine your search by choosing a Policy area. If you need to narrow it down futher you can select a date range to search as well. </p>
+                <button class="btn btn-dark"><a href="/bills"></a>Browse Bills</a></button>
+              </div>    
+              <div class="col-lg-3 text-center card p-3 pt-4 mb-3 mx-1 align-content-end">
+                <img class="bd-placeholder-img rounded-circle mx-auto mb-2" width="140" height="140" src="static/congress.jpg" role="img" aria-label="Placeholder: 140x140" >
+                <h2 class="text-center">Legislators</h2>
+                <p class="">Browse legislators for the 117th congress. Refine your search by cState, Party, and Position. From there you can select a legislator, and view what bills they have recently sponsored. You can also view how to contact them, connect with them on social media.</p>
+                <button class="btn btn-dark"><a href="/legislators"></a>Browse Legislators</a></button>
+            </div>
+            <div class="col-lg-3 text-center card p-3 pt-4 mx-1 align-content-end">
+                <img class="bd-placeholder-img rounded-circle mx-auto mb-2" width="140" height="140" src="static/dashboard_legislators.jpg" role="img" aria-label="Placeholder: 140x140" >
+                <h2 class="text-center">Dashboard</h2>
+                <p class="">View your dashboard, where you can see all the legislators for your state, as well as all the bills you would like to save. Sign up to access your dashboard!</p>
+                <button class="btn btn-block btn-dark"><a href="/signup"></a>Sign Up</a></button>
+            </div>  
+        
+        </div>
 
     </div>
 

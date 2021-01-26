@@ -40,7 +40,6 @@ class DeleteUser(FlaskForm):
 
     delete_account = SubmitField(render_kw={'class':'btn btn-dark'})
 
-
 class TestForm(FlaskForm):
     
     policy_area = SelectField('Subject', validate_choice=False,render_kw={'class':'form-control'})

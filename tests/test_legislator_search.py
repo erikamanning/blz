@@ -1,11 +1,10 @@
 from unittest import TestCase
 from app import app, db
 from flask import session
-from models import User, PolicyArea, Party, State, Legislator
+from models import Party, State, Legislator
 from tests.dummy_data_generators import add_dummy_party, add_dummy_state, add_dummy_legislator, remove_dummy_legislators, remove_dummy_parties, remove_dummy_states
 
 app.config['TESTING'] = True
-
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 app.config['WTF_CSRF_ENABLED'] = False
 
@@ -33,7 +32,6 @@ class TestBillSearch(TestCase):
 
         print('Setup')
     
-
     @classmethod
     def tearDownClass(cls):
 
@@ -43,7 +41,6 @@ class TestBillSearch(TestCase):
         remove_dummy_states()
 
         print("Teardown")
-
 
     # test if expected legislators load with no data passed through form
     def test_legislators_search_no_specs(self):

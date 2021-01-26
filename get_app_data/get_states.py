@@ -14,9 +14,6 @@ def parse_state_data(state_str):
 
     return state_data
 
-
-
-
 # get state data
 states = FileRead("get_app_data/states.txt")
 

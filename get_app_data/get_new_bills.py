@@ -3,8 +3,6 @@ from models import Bill
 import requests
 from sqlalchemy import and_
 from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
-import pprint
-pp = pprint.PrettyPrinter(indent=4) 
 
 # checks slugs to see if not caught up yet, returns boolean status 
 def check_slugs(slugs, current_session):

@@ -1,9 +1,6 @@
 from app import db, headers
 from models import Position
 import requests
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
-
 
 senator = Position(code='Sen.', name='Senator')
 representative = Position(code='Rep.', name='Representative')

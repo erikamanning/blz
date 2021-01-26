@@ -4,15 +4,10 @@ from flask import session
 from models import User
 
 app.config['TESTING'] = True
-
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 app.config['WTF_CSRF_ENABLED'] = False
 
-
 class ViewsLoggedOutTests(TestCase):
-
-    app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
-    app.config['WTF_CSRF_ENABLED'] = False
 
     @classmethod
     def setUpClass(cls):
@@ -41,7 +36,6 @@ class ViewsLoggedOutTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h1 class="text-center mt-5">Welcome to Lumin </h1>', html)
-
 
     # test if bill browse page loads
     def test_bills_route(self):

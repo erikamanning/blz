@@ -1,11 +1,11 @@
 from unittest import TestCase
 from app import app, db, CURRENT_CONGRESS_SESSION
 from flask import session
-from models import User, PolicyArea, Bill
+from models import PolicyArea, Bill
 from datetime import date 
 from tests.dummy_data_generators import add_dummy_party, add_dummy_state, add_dummy_legislator, remove_dummy_legislators, remove_dummy_parties, remove_dummy_states, add_dummy_bill, remove_dummy_bills, remove_dummy_policy_areas
-app.config['TESTING'] = True
 
+app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 app.config['WTF_CSRF_ENABLED'] = False
 

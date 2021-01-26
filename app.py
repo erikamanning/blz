@@ -1,13 +1,14 @@
 from flask import Flask, request, render_template, redirect, session, flash, jsonify, g
 from flask_debugtoolbar import DebugToolbarExtension
-import secrets
-import requests
-from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Session, Party, State, Position
+from models import db, connect_db, Bill, PolicyArea, User, BillFollows, Legislator, Party, State, Position
 from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, DeleteUser, EditPassword, TestForm
 from sqlalchemy.exc import IntegrityError
-import click
 from flask.cli import with_appcontext
 from initialize_app import initialize_database
+from sqlalchemy import and_
+import os
+import requests
+import click
 
 try:
     from secrets import API_SECRET_KEY
@@ -17,16 +18,11 @@ except:
     print('*****************************************') 
     API_SECRET_KEY = 'NOT A KEY'
 
-from sqlalchemy import and_
-import os
-
 CURRENT_CONGRESS_SESSION = 117
 CURRENT_USER_ID = 'user_id'
 LEGISLATOR_DEFAULT_IMAGE_PATH = '/static/congressmen_default.png'
-
-headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
-
 ROWS_PER_PAGE = 10
+headers = {'X-API-Key': os.environ.get('SECRET-API-KEY', API_SECRET_KEY)}
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY','2@!4q18&5l!D32d%^!#4')
@@ -52,9 +48,11 @@ def add_user_to_g():
     g.legislator_default_image_path = LEGISLATOR_DEFAULT_IMAGE_PATH
 
     if CURRENT_USER_ID in session:
+
         g.user = User.query.get(session[CURRENT_USER_ID])
 
     else:
+
         g.user = None
 
 def do_login(user):
@@ -90,7 +88,6 @@ def view_bills():
     messages = show_mesages(results['messages'])
     return render_template('bills/bills.html', end_date = results['end_date'], start_date=results['start_date'], form=form, bills=bills)
 
-    
 @app.route('/bill/<bill_id>')
 def view_bill(bill_id):
 
@@ -141,7 +138,6 @@ def view_legislator(legislator_id):
     sponsored_bills = legislator.sponsored_bills
 
     return render_template('legislators/legislator_single.html', legislator = legislator, sponsored_bills=sponsored_bills)
-
 
 @app.route('/dashboard')
 def show_homepage():
@@ -230,7 +226,6 @@ def edit_profile():
         flash('You must be logged in to do that!')
         return redirect('/')
 
-
 @app.route('/password/edit', methods=['POST'])
 def edit_password():
     
@@ -306,13 +301,11 @@ def signup():
         form = SignupForm()
         states = db.session.query(State.acronym, State.name).all()    
         form.state.choices = states
-        
 
         if form.validate_on_submit():
 
             submitted_username = form.username.data
             submitted_email = form.email.data
-
             messages = check_user_info_messages( User.check_for_duplicate_username(submitted_username), User.check_for_duplicate_email(submitted_email) )
 
             if messages:
@@ -338,7 +331,6 @@ def signup():
             
             return render_template('user/signup.html', form=form)
 
-
 @app.route('/login', methods=['GET','POST'])
 def login():
 
@@ -351,18 +343,22 @@ def login():
         form = LoginForm()
 
         if form.validate_on_submit():
+
             user = User.authenticate(username = form.username.data, password = form.password.data)
 
             if user:
+
                 do_login(user)
                 flash(f'Welcome back {user.username}!')
                 return redirect('/dashboard')
             
             else:
+
                 flash('Login information not correct! Please try again.',"alert alert-light text-center")
                 return redirect('/login')
 
         else:
+
             return render_template('user/login.html', form=form)
 
 @app.route('/logout', methods=['POST'])
@@ -415,9 +411,7 @@ def convert_date(date_str):
     }
 
     date_data = date_str.split('-')
-
     month = months[int(date_data[1])]
-
     new_date_str = f'{month} {date_data[2]}, {date_data[0]}'
 
     return new_date_str

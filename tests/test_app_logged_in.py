@@ -4,11 +4,10 @@ from flask import session
 from models import User
 
 app.config['TESTING'] = True
-
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
+app.config['WTF_CSRF_ENABLED'] = False
 
 class ViewsLoggedInTests(TestCase):
-    app.config['WTF_CSRF_ENABLED'] = False
 
     @classmethod
     def setUpClass(cls):
@@ -19,6 +18,7 @@ class ViewsLoggedInTests(TestCase):
         db.session.add_all([cls.test_user, cls.test_user_b])
         db.session.commit()
 
+        print("Setup")
 
     @classmethod
     def tearDownClass(cls):

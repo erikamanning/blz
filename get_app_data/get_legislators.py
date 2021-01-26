@@ -1,8 +1,6 @@
 from app import db, headers, CURRENT_CONGRESS_SESSION
 from models import Legislator
 import requests
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
 
 print('****************************')
 print('* GETTING LEGISLATORS *')
@@ -18,11 +16,7 @@ def get_legislators_json(congress, chamber):
 
     return legislators_json
 
-# fix: Doesn't account for legislators who have changed their party- i.e. Justin Amash who would show as a duplicate
 def save_legislators(legislators):
-
-    # to commit all at once
-    saved_legislators = []
 
     for legislator in legislators:
 
@@ -63,7 +57,6 @@ def save_legislators(legislators):
             existing_legislator.first_name=entry['first_name'] 
             existing_legislator.last_name=entry['last_name'] 
             existing_legislator.party_id=entry['current_party'] 
-
 
             db.session.add(existing_legislator)
             db.session.commit()

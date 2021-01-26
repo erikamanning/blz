@@ -1,16 +1,12 @@
 from app import db, headers, CURRENT_CONGRESS_SESSION
-from models import Legislator, Bill, SponsoredBill
+from models import Bill
 import requests
 from sqlalchemy import and_, or_
 from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
 
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
-
 print('**********************************')
 print('STARTING UPDATE PROCESS')
 print('**********************************')
-
 
 def save_updates(updates_json, session):
 
@@ -64,8 +60,6 @@ def get_bill_updates(chamber, session):
         json = req.json()
 
         resp_data = json['results'][0]['bills']
-
-        # pp.pprint(resp_data)
 
         got_all_updates = save_updates(resp_data, session)
 

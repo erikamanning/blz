@@ -1,26 +1,6 @@
 from app import db, headers
 from models import Bill, SponsoredBill,PolicyArea
 import requests
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
-
-def prune_summary(summary):
-
-    bad_string = 'This bill '
-
-    if bad_string in summary:
-
-        find_index = summary.find('This bill')
-        
-        lst = summary[find_index+len(bad_string)::]
-        
-        new_summary = str(lst)
-
-        return new_summary
-    
-    else:
-
-        return summary
 
 def create_bill(bill_data):
 
@@ -40,28 +20,16 @@ def create_bill(bill_data):
             id = bill_data["bill_id"],
             bill_slug = bill_data["bill_slug"],
             congress = bill_data["congress"],
-            bill = bill_data["bill"],
-            bill_type = bill_data["bill_type"],
-            number = bill_data["number"],
+            # bill = bill_data["bill"],
             title = bill_data["title"],
             short_title = short_title,
             sponsor_id = bill_data["sponsor_id"],
             congressdotgov_url = bill_data["congressdotgov_url"],
             introduced_date = bill_data["introduced_date"],
-            active = bill_data["active"],
-            last_vote = bill_data["last_vote"],
-            house_passage = bill_data["house_passage"],
-            senate_passage = bill_data["senate_passage"],
-            enacted = bill_data["enacted"],
-            vetoed = bill_data["vetoed"],
             primary_subject = primary_subject,
-            committees = bill_data["committees"],
-            committee_codes = bill_data["committee_codes"],
             latest_major_action_date = bill_data["latest_major_action_date"],
             latest_major_action = bill_data["latest_major_action"],
-            house_passage_vote = bill_data["house_passage_vote"],
-            senate_passage_vote = bill_data["senate_passage_vote"],
-            summary = prune_summary(bill_data["summary"]),
+            summary = bill_data["summary"],
             summary_short = bill_data["summary_short"]
     )
 

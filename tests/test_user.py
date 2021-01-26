@@ -4,7 +4,6 @@ from flask import session
 from models import User, Bill, BillFollows
 
 app.config['TESTING'] = True
-
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 class UserTests(TestCase):
@@ -38,7 +37,6 @@ class UserTests(TestCase):
         db.session.delete(self.test_user_c)
         db.session.commit()
 
-
     def test_register_new_user(self):
 
         test_user_d = User.register(username='test_user_d', password='test123', email='testuser_d@email.com', state_id='NV')
@@ -59,7 +57,6 @@ class UserTests(TestCase):
         authenticated = User.authenticate(UserTests.test_user_a.username, password='abcdefg' )
         self.assertFalse(authenticated)
 
-    
     def test_user_follows(self):
 
         # create test bill follows

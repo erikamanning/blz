@@ -13,6 +13,7 @@ def connect_db(app):
     db.app = app
     db.init_app(app)
 
+
 class BillFollows(db.Model):
 
     __tablename__ = 'bill_follows'
@@ -36,7 +37,6 @@ class SponsoredBill(db.Model):
 
         return f'Sponsored Bill: sponsor_id: {self.sponsor_id}, bill_id: {self.bill_id}'
 
-
 class Bill(db.Model):
 
     __tablename__ = "bills"
@@ -44,27 +44,14 @@ class Bill(db.Model):
     id = db.Column(db.String, primary_key=True, nullable = False, unique=True)
     bill_slug = db.Column(db.String, nullable = False)
     congress = db.Column(db.Integer, nullable = False)
-    bill = db.Column(db.String, nullable = False)
-    bill_type = db.Column(db.String, nullable = False)
-    number = db.Column(db.String, nullable = False)
     title = db.Column(db.String, nullable = False)
     short_title = db.Column(db.String, nullable = True)
     sponsor_id = db.Column(db.String, db.ForeignKey('legislators.id', ondelete="CASCADE"), nullable = False)
     congressdotgov_url = db.Column(db.String, nullable = False)
     introduced_date = db.Column(db.String, nullable = False)
-    active = db.Column(db.Boolean, nullable = False)
-    last_vote = db.Column(db.String, nullable = True)
-    house_passage = db.Column(db.String, nullable = True)
-    senate_passage = db.Column(db.String, nullable = True)
-    enacted = db.Column(db.String, nullable = True)
-    vetoed = db.Column(db.String, nullable = True)
     primary_subject = db.Column(db.String, nullable = False)
-    committees = db.Column(db.String, nullable = True)
-    committee_codes = db.Column(db.String, nullable = True)
     latest_major_action_date = db.Column(db.String, nullable = True)
     latest_major_action = db.Column(db.String, nullable = True)
-    house_passage_vote = db.Column(db.String, nullable = True)
-    senate_passage_vote = db.Column(db.String, nullable = True)
     summary = db.Column(db.String, nullable = True)
     summary_short = db.Column(db.String, nullable = True)
 
@@ -73,7 +60,6 @@ class Bill(db.Model):
     def __repr__(self):
 
         return 'Bill: {self.title}'
-
 
 class Subject(db.Model):
 
@@ -108,7 +94,6 @@ class Legislator(db.Model):
     youtube_account = db.Column(db.String, default='Not Listed',nullable=True)
     office_address = db.Column(db.String, default='Not Listed',nullable=False)
     phone = db.Column(db.String,default='Not Listed',nullable=False)
-     
 
     state = db.relationship('State', backref='legislators')
     party = db.relationship('Party', backref='legislators')
@@ -126,6 +111,20 @@ class State(db.Model):
     def __repr__(self):
 
         return f'State: {self.name}, {self.acronym}'
+
+class Position(db.Model):
+
+    __tablename__ = "positions"
+
+    code = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+class Party(db.Model):
+
+    __tablename__ = "parties"
+
+    code = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
 
 class User(db.Model):
 
@@ -262,24 +261,3 @@ class User(db.Model):
     def __repr__(self):
 
         return f'User: {self.username}'
-
-
-class Position(db.Model):
-
-    __tablename__ = "positions"
-
-    code = db.Column(db.String, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-
-class Party(db.Model):
-
-    __tablename__ = "parties"
-
-    code = db.Column(db.String, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-
-
-class Session(db.Model):
-
-    __tablename__ = "sessions"
-    id = db.Column(db.Integer, primary_key=True)

@@ -1,4 +1,3 @@
-
 def initialize_database(database):
 
     database.drop_all()

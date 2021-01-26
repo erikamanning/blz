@@ -3,13 +3,9 @@ from models import Bill
 import requests
 from get_app_data.get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
 
-import pprint
-pp = pprint.PrettyPrinter(indent=4)
-
 print('****************************')
 print('* GETTING BILLS *')
 print('****************************')
-
 
 def get_all_slugs(congress, chamber):
 
@@ -68,9 +64,6 @@ def get_some_slugs(congress, chamber, status, max_offset):
 
     return all_slugs
 
-
-# some_slugs = get_some_slugs(CURRENT_CONGRESS_SESSION, "both", 'introduced',4)
-# get_bill_data(some_slugs, CURRENT_CONGRESS_SESSION)
 
 # get all bill data from the current congressional session.
 current_senate_slugs = get_all_slugs(CURRENT_CONGRESS_SESSION, "both")

@@ -1,10 +1,9 @@
 from unittest import TestCase
 from app import app, db, convert_date, check_user_info_messages, post_edit_submit_message
-from models import User, Bill, BillFollows, PolicyArea,SponsoredBill
-from get_app_data.get_bill_data_utility_functions import get_slugs, prune_summary,handle_policy_area, add_sponsored_bill
+from models import PolicyArea
+from get_app_data.get_bill_data_utility_functions import get_slugs, handle_policy_area, add_sponsored_bill
 
 app.config['TESTING'] = True
-
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 class TestUtilityFunctions(TestCase):
@@ -24,12 +23,10 @@ class TestUtilityFunctions(TestCase):
         username_2 = True
         email_2 = True
 
-
         messages_1 = check_user_info_messages(username_1,email_1)
         messages_2 = check_user_info_messages(username_2,email_2)
         messages_3 = check_user_info_messages(username_2,email_1)
         messages_4 = check_user_info_messages(username_1,email_2)
-
 
         # both username and email unique
         self.assertEqual(messages_2, [])
@@ -49,7 +46,6 @@ class TestUtilityFunctions(TestCase):
         self.assertEqual(len(messages_4), 1)
         self.assertIn('That username is already taken! Please choose another.',messages_4)
         self.assertNotIn('There is already an account with that email. Please use another email.',messages_4)
-
 
     def test_post_edit_submit_message(self):
 
@@ -87,21 +83,6 @@ class TestUtilityFunctions(TestCase):
         self.assertIn('b', slugs)
         self.assertIn('c', slugs)
         self.assertEqual(len(slugs), 3)
-        
-    def test_prune_summary(self): 
-
-        bill1 = 'This bill Creates a commission build a robot duck. A robot duck will be built and 10 billion will be allocated.'
-        bill2 = 'A commission will be created to judge the spelling skills of golden retrievers.' 
-
-        summary1 = prune_summary(bill1)
-        summary2 = prune_summary(bill2)
-
-        # bill pruned of duplicate data from API
-        self.assertEqual(summary1, 'Creates a commission build a robot duck. A robot duck will be built and 10 billion will be allocated.')
-        
-        # no pruning necessary
-        self.assertEqual(summary2, bill2)
-
         
     def test_handle_policy_area(self): 
 
