@@ -96,7 +96,7 @@ $ export FLASK_ENV=development
 $ flask run
 ```
 
-6. Open web browser and run the app on the port for your server.
+10. Open web browser and run the app on the port for your server.
 
 
 ## User Flows
