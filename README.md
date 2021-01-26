@@ -116,6 +116,7 @@ $ flask run
 
 ## API
 This project owes much to [ProPublica's Congress API](https://projects.propublica.org/api-docs/congress-api/). All ll congressional data was obtained through the ProPublica Congress API.
+
 ![ProPublica Logo](readme_files/propublica_logo.jpg)
 
 

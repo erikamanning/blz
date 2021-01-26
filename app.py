@@ -8,7 +8,6 @@ from initialize_app import initialize_database
 from update_app import update_db
 from sqlalchemy import and_
 from secrets import API_SECRET_KEY, FLASK_SECRET_KEY, DATA_BASE_URI
-import os
 import requests
 import click
 
