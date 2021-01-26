@@ -63,7 +63,7 @@ class ViewsLoggedInTests(TestCase):
             resp = client.get("/profile/edit")
             html = resp.get_data(as_text=True)
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1 class="text-center mt-3">Edit Profile</h1>', html)
+            self.assertIn('<h1 class="text-center mt-5">Edit Profile</h1>', html)
 
     # test if delete account screen loads when logged in
     def test_delete_account_view(self):

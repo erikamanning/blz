@@ -15,7 +15,7 @@
         {% include 'bills/bill_search_form.html' %}
     
         {% if bills%}
-
+        
             <div class="container">
                 <div class="container d-flex align-items-end flex-column mb-none">
                     <div class="form-check form-switch mt-3 d-flex justify-content-end">
@@ -26,7 +26,6 @@
                     </div>
                 </div>
             </div>
-            
 
             {%for bill in bills.items%}
                 {% include 'bills/bill_block.html' %}

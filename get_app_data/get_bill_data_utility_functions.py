@@ -64,7 +64,6 @@ def get_bill_data(bill_slugs, congress):
         req = requests.get(f'https://api.propublica.org/congress/v1/{congress}/bills/{slug}.json', headers=headers)
         json = req.json()
         i+=1
-        print('Creating bill: ', i)
         create_bill(json)
 
 

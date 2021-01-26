@@ -35,7 +35,7 @@ class ViewsLoggedOutTests(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1 class="text-center mt-5">Welcome to Lumin </h1>', html)
+            self.assertIn('<h1 class="display-1 text-center pt-5">Welcome to BLZ</h1>', html)
 
     # test if bill browse page loads
     def test_bills_route(self):
@@ -44,7 +44,7 @@ class ViewsLoggedOutTests(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<p class="text-center">A place to view and follow bills from the 117th (current) Session of Congress.</p>', html)
+            self.assertIn('<p class="lead text-center mb-5 mt-3">A place to view and follow bills from the 117th (current) Session of Congress.</p>', html)
 
     # test if legislator browse page loads
     def test_legislator_route(self):
@@ -53,7 +53,7 @@ class ViewsLoggedOutTests(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<p class="text-center">A place to view Legislators. </p>', html)
+            self.assertIn('<p class="lead text-center mt-3">A place to view Legislators and the bills they have sponsored lately. </p', html)
 
     # test if login page loads
     def test_login_route(self):
@@ -62,7 +62,7 @@ class ViewsLoggedOutTests(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1 class="text-center mt-3">Login</h1>', html)
+            self.assertIn('<h1 class="text-center mt-5">Login</h1>', html)
 
     # test if signup page loads
     def test_signup_route(self):
@@ -71,7 +71,7 @@ class ViewsLoggedOutTests(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('<h1 class="text-center mt-3">Sign Up</h1>', html)
+            self.assertIn('<h1 class="text-center mt-5">Sign Up</h1>', html)
 
     # test if view dashboard screen does not load when not logged in and user is rerouted
     def test_view_dashboard_route_lo(self):

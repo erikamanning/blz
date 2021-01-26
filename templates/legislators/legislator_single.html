@@ -70,36 +70,35 @@
                         </div>
                     </div>
         
-        
-        
                     <div id="sponsored-bills" class="d-none mt-3">
                         <h5 class="card-title mt-5 mb-3 text-center text-lg-start"><i class="fas fa-scroll"></i> Sponsored Bills </h5>
         
-                                {% if sponsored_bills: %}
+                            {% if sponsored_bills: %}
 
-                                    <div class="container d-flex align-items-end flex-column mb-none">
-                                        <div class="form-check form-switch mt-3 d-flex justify-content-end">
-                                            <p class="mb-2">
-                                                <input class="form-control form-check-input " type="checkbox" id="show-details">
-                                                <label class="form-check-label" for="show-details">Show Last Major Actions</label>
-                                            </p>
-                                        </div>
+                                <div class="container d-flex align-items-end flex-column mb-none">
+                                    <div class="form-check form-switch mt-3 d-flex justify-content-end">
+                                        <p class="mb-2">
+                                            <input class="form-control form-check-input " type="checkbox" id="show-details">
+                                            <label class="form-check-label" for="show-details">Show Last Major Actions</label>
+                                        </p>
                                     </div>
-                                    {% for bill in sponsored_bills:%}
-        
-                                        <div class="mb-3">
-                                            {% include 'bills/bill_block_sponsored.html' %}
-                                        </div>
-        
-                                    {% endfor %}
-        
-                                {% else %}
-                                <div class="container">
+                                </div>
 
+                                {% for bill in sponsored_bills:%}
+    
+                                    <div class="mb-3">
+                                        {% include 'bills/bill_block_sponsored.html' %}
+                                    </div>
+    
+                                {% endfor %}
+    
+                            {% else %}
+
+                                <div class="container">
                                     <p class="fst-italic" >No sponsored bills at this time. </p>
                                 </div>
-        
-                                {% endif %}
+    
+                            {% endif %}
                     </div>
                 </div>
             </div>

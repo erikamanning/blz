@@ -2,49 +2,41 @@
 
 {% block title %} BLZ Home {% endblock %}
 
-
-
 {% block content %}
 
+  <div class="p-4 mb-3 text-center">
+      <h1 class="display-1 text-center pt-5">Welcome to BLZ</h1>
+      <p class="lead text-center mt-4 pb-3"> A platform where you can easily keep track of track legislation that is important to you.</p>
+      <small class="text-center pb-5">
+          <a href="/signup">Sign Up</a> or <a href="/login">Login</a> to access your dashboard and save bills you are interested in!
+      </small>
+  </div>
 
-
-    <div>
-        
-        <div class="p-4 mb-3 text-center">
-            <h1 class="display-1 text-center pt-5">Welcome to BLZ</h1>
-            <p class="lead text-center mt-4 pb-3"> A platform where you can easily keep track of track legislation that is important to you.</p>
-            <small class="text-center pb-5">
-                <a href="/signup">Sign Up</a> or <a href="/login">Login</a> to access your dashboard and save bills you are interested in!
-            </small>
+  <div class="card-group landing-cards text-center">
+      <div class="card p-3 mb-3 landing-card">
+        <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/bills.jpg" role="img" aria-label="Placeholder: 140x140" >
+        <div class="card-body">
+          <h2 class="card-title text-center">Bills</h2>
+          <p class="card-text">Browse bills for the 117th congress. Refine your search by choosing a Policy area. If you need to narrow it down futher you can select a date range to search as well. </p>
         </div>
-
-        <div class="card-group landing-cards text-center">
-            <div class="card p-3 mb-3 landing-card">
-              <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/bills.jpg" role="img" aria-label="Placeholder: 140x140" >
-              <div class="card-body">
-                <h2 class="card-title text-center">Bills</h2>
-                <p class="card-text">Browse bills for the 117th congress. Refine your search by choosing a Policy area. If you need to narrow it down futher you can select a date range to search as well. </p>
-              </div>
-              <a class="btn btn-block btn-dark mx-sm-3" href="/bills">Browse Bills</a>
-            </div>
-            <div class="card p-3 mb-3 landing-card">
-              <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/congress.jpg" role="img" aria-label="Placeholder: 140x140" >
-              <div class="card-body">
-                <h2 class="card-title text-center">Legislators</h2>
-                <p class="card-text">Browse legislators for the 117th congress. Refine your search by State, Party, and Position. From there you can select a legislator, and view what bills they have recently sponsored. You can also view how to contact them, connect with them on social media.</p>
-              </div>
-              <a class="btn btn-dark mx-sm-3" href="/legislators">Browse Legislators</a>
-            </div>
-            <div class="card p-3 mb-3 landing-card">
-              <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/dashboard_legislators.jpg" role="img" aria-label="Placeholder: 140x140" >
-              <div class="card-body">
-                <h2 class="card-title text-center">Dashboard</h2>
-                <p class="card-text">View your dashboard, where you can see all the legislators for your state, as well as all the bills you would like to save.</p>
-                <span class="fw-bold"> Sign up now to access your dashboard!</span>
-              </div>
-              <a class="btn btn-block btn-dark mx-sm-3" href="/signup">Sign Up</a>
-          </div>
-
+        <a class="btn btn-block btn-dark mx-sm-3" href="/bills">Browse Bills</a>
+      </div>
+      <div class="card p-3 mb-3 landing-card">
+        <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/congress.jpg" role="img" aria-label="Placeholder: 140x140" >
+        <div class="card-body">
+          <h2 class="card-title text-center">Legislators</h2>
+          <p class="card-text">Browse legislators for the 117th congress. Refine your search by State, Party, and Position. From there you can select a legislator, and view what bills they have recently sponsored. You can also view how to contact them, connect with them on social media.</p>
+        </div>
+        <a class="btn btn-dark mx-sm-3" href="/legislators">Browse Legislators</a>
+      </div>
+      <div class="card p-3 mb-3 landing-card">
+        <img class="bd-placeholder-img rounded-circle mb-3 mx-auto mb-2" width="200" height="200" src="static/dashboard_legislators.jpg" role="img" aria-label="Placeholder: 140x140" >
+        <div class="card-body">
+          <h2 class="card-title text-center">Dashboard</h2>
+          <p class="card-text">View your dashboard, where you can see all the legislators for your state, as well as all the bills you would like to save.</p>
+          <span class="fw-bold"> Sign up now to access your dashboard!</span>
+        </div>
+        <a class="btn btn-block btn-dark mx-sm-3" href="/signup">Sign Up</a>
     </div>
 
 {% endblock %}

@@ -2,10 +2,6 @@ from app import db, headers, CURRENT_CONGRESS_SESSION
 from models import Legislator
 import requests
 
-print('****************************')
-print('* GETTING LEGISLATORS *')
-print('****************************')
-
 def get_legislators_json(congress, chamber):
 
     req = requests.get(f'https://api.propublica.org/congress/v1/{congress}/{chamber}/members.json', headers=headers)
@@ -40,9 +36,6 @@ def save_legislators(legislators):
                 phone = legislator['phone']
             )
 
-            print('****************************')
-            print('Legislator: ', leg_id)
-            print('****************************')
             db.session.add(new_legislator)
             db.session.commit()
 
@@ -68,21 +61,10 @@ def get_all_legislators(congress,chamber, legislator_status):
     save_legislators(legislators)
 
 
-# CURRENT SESSION
-print('****************************')
-print(f'* SESSION {CURRENT_CONGRESS_SESSION} *')
-print('****************************')
-
-print('****************************')
-print(f'* SESSION {CURRENT_CONGRESS_SESSION} - SENATORS*')
-print('****************************')
 # get senate legislators
 senate_legislators_json = get_legislators_json(CURRENT_CONGRESS_SESSION,'senate')
 save_legislators(senate_legislators_json)
 
-print('****************************')
-print(f'* SESSION {CURRENT_CONGRESS_SESSION} - REPRESENTATIVES*')
-print('****************************')
 # get house legislators
 house_legislators_json = get_legislators_json(CURRENT_CONGRESS_SESSION,'house')
 save_legislators(house_legislators_json)

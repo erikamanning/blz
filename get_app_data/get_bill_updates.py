@@ -2,11 +2,8 @@ from app import db, headers, CURRENT_CONGRESS_SESSION
 from models import Bill
 import requests
 from sqlalchemy import and_, or_
-from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
+from get_app_data.get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
 
-print('**********************************')
-print('STARTING UPDATE PROCESS')
-print('**********************************')
 
 def save_updates(updates_json, session):
 
@@ -23,24 +20,13 @@ def save_updates(updates_json, session):
                 bill.primary_subject = bill_json['primary_subject']
                 db.session.add(bill)
                 db.session.commit()
-                print('**********************************')
-                print(f'BILL {bill.bill_slug} UPDATED')
-                print('**********************************')
 
             else:
 
                 # reached the end of updates
-
-                print('**********************************')
-                print('NO MORE UPDATES')
-                print('**********************************')
-
                 return True
     
     # 20 updates were made, moving on to next section
-    print('**********************************')
-    print('ROUND OF UPDATES COMPLETE, MOVING TO NEXT ROUND')
-    print('**********************************')
     return False
 
 def get_bill_updates(chamber, session):
@@ -65,3 +51,5 @@ def get_bill_updates(chamber, session):
 
         count+=1
 
+
+get_bill_updates('both',CURRENT_CONGRESS_SESSION)

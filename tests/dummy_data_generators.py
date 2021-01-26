@@ -1,4 +1,4 @@
-from app import app, db, CURRENT_CONGRESS_SESSION
+from app import app, db
 from models import Bill, Legislator, PolicyArea, Party, State
 from get_app_data.get_bill_data_utility_functions import handle_policy_area, add_sponsored_bill
 
@@ -57,12 +57,12 @@ def remove_dummy_states():
         db.session.delete(dummy_state)
         db.session.commit()
 
-def add_dummy_bill( bill_id, sponsor_id, policy_area,introduced_date, latest_major_action_date ):
+def add_dummy_bill( bill_id, session, sponsor_id, policy_area,introduced_date, latest_major_action_date ):
 
     new_bill = Bill(
             id = f'dummy_bill_{bill_id}',
             bill_slug = 'dummy_slug',
-            congress = CURRENT_CONGRESS_SESSION,        
+            congress = session,        
             title = 'dummy_title',
             short_title = 'dummy_short_title',
             sponsor_id = sponsor_id,

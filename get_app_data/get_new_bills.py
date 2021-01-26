@@ -2,7 +2,7 @@ from app import db, headers, CURRENT_CONGRESS_SESSION
 from models import Bill
 import requests
 from sqlalchemy import and_
-from get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
+from get_app_data.get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
 
 # checks slugs to see if not caught up yet, returns boolean status 
 def check_slugs(slugs, current_session):
@@ -40,11 +40,7 @@ def get_new_bill_slugs(current_session, chamber, status):
 
         slugs = get_slugs(resp_data)
 
-        print('Slugs: ', slugs)
-
         checked_slugs = check_slugs(slugs, current_session)
-
-        print('Checked Slugs: ', checked_slugs)
 
         for slug in checked_slugs:
 

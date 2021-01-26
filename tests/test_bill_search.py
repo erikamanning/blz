@@ -25,9 +25,9 @@ class TestBillSearch(TestCase):
         cls.policy_area_str_1 = 'dummy Cartoon Dog Regulations'
         cls.policy_area_str_2 = 'dummy Anti Rainwater Laws'
 
-        add_dummy_bill('a','dummy_00000001',cls.policy_area_str_1,TODAY, TODAY)
-        add_dummy_bill('b','dummy_00000001',cls.policy_area_str_2 ,'2021-01-04', '2021-01-04')
-        add_dummy_bill('c','dummy_00000001',cls.policy_area_str_2 ,'2021-01-05', '2021-01-05')
+        add_dummy_bill('a',CURRENT_CONGRESS_SESSION,'dummy_00000001',cls.policy_area_str_1,TODAY, TODAY)
+        add_dummy_bill('b',CURRENT_CONGRESS_SESSION,'dummy_00000001',cls.policy_area_str_2 ,'2021-01-04', '2021-01-04')
+        add_dummy_bill('c',CURRENT_CONGRESS_SESSION,'dummy_00000001',cls.policy_area_str_2 ,'2021-01-05', '2021-01-05')
 
         cls.policy_area_1 = PolicyArea.query.filter(PolicyArea.name==cls.policy_area_str_1).one_or_none()
         cls.policy_area_2 = PolicyArea.query.filter(PolicyArea.name==cls.policy_area_str_2).one_or_none()

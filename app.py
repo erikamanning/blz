@@ -5,6 +5,7 @@ from forms import BillForm, SignupForm, LoginForm, LegislatorForm, EditProfile, 
 from sqlalchemy.exc import IntegrityError
 from flask.cli import with_appcontext
 from initialize_app import initialize_database
+from update_app import update_db
 from sqlalchemy import and_
 import os
 import requests
@@ -13,9 +14,6 @@ import click
 try:
     from secrets import API_SECRET_KEY
 except:
-    print('*****************************************') 
-    print('No secrets file found!') 
-    print('*****************************************') 
     API_SECRET_KEY = 'NOT A KEY'
 
 CURRENT_CONGRESS_SESSION = 117
@@ -41,6 +39,14 @@ def init_app():
     initialize_database(db)
 
 app.cli.add_command(init_app)
+
+@click.command(name='update_app')
+@with_appcontext
+def update_app():
+
+    update_db(CURRENT_CONGRESS_SESSION)
+
+app.cli.add_command(update_app)
 
 @app.before_request
 def add_user_to_g():

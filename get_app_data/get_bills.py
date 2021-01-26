@@ -3,10 +3,6 @@ from models import Bill
 import requests
 from get_app_data.get_bill_data_utility_functions import create_bill, get_slugs, get_bill_data
 
-print('****************************')
-print('* GETTING BILLS *')
-print('****************************')
-
 def get_all_slugs(congress, chamber):
 
     all_slugs = []
@@ -31,8 +27,6 @@ def get_all_slugs(congress, chamber):
             all_slugs.append(slug)
 
         i+=1
-
-        print(f'Session {congress} bill: ', i)
     
     return all_slugs
 
@@ -59,8 +53,6 @@ def get_some_slugs(congress, chamber, status, max_offset):
             all_slugs.append(slug)
 
         i+=1
-
-        print(f'Session {congress} bill: ', i)
 
     return all_slugs
 
