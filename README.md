@@ -71,10 +71,11 @@ $ source venv/bin/activate
 $ pip3 install requirements.txt
 ```
 
-6. Create a secrets.py file and add your API key.
+6. Open the secrets.py file and add your API key and Flask Secret Key in the fields specified below. _**Make sure to add secretys.py tp your .gitignore so your personal API key doesn't get shared accidentally.**_
 <sub> In *secrets.py*</sub>
 ```sh
-API_SECRET_KEY = 'YOUR_SECRET_KEY'
+API_SECRET_KEY = os.environ.get('SECRET_API_KEY', '##NOT A KEY##')
+FLASK_SECRET_KEY = os.environ.get('SECRET_KEY', '##NOT A KEY##')
 ```
 
 _**You will need to set up a postgres database for this application. Once that is done you can move to the next step.**_
