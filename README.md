@@ -5,13 +5,13 @@
 
 ## Table of Contents
 
-* [About](##about)
-* [Installation](##Installation)
-* [Features](##Features)
-* [User Flow](##UserFlow)
+* [About](https://github.com/erikamanning/capstone1#about)
+* [Installation](https://github.com/erikamanning/capstone1#installation)
+* [Features](https://github.com/erikamanning/capstone1#features)
+* [User Flow](https://github.com/erikamanning/capstone1#user-flow)
 * [API](https://github.com/erikamanning/capstone1#api)
-* [Contact](##Contact)
-* [Contribute](###Contribute)
+* [Contact](https://github.com/erikamanning/capstone1#contact)
+* [Contribute](https://github.com/erikamanning/capstone1#contribute)
 
 
 
@@ -32,7 +32,7 @@
 
 <br>  
 
-It can be difficult to keep on top of all national legislation, but BLZ makes it easier. With the BLZ app, you can access a dashboard which shows you all your state's senators and representatives, so you can see what legislation they have sponsored recently. You can also browse legislation by policy area and specify a date range that you would like to search by. You can easily save bills to your dashboard, so you can keep tabs on them, and easily access information about their most recent updates. You can also quickly move from any bill on the app, to the bill's page on the official congress website so you can learn more.
+It can be difficult to keep on top of all national legislation, but BLZ makes it easier. With the BLZ app, you can access a dashboard which shows you all your state's senators and representatives, so you can see what legislation they have sponsored recently. You can also browse legislation by policy area and specify a date range that you would like to search by. You can easily save bills to your dashboard so you can keep tabs on them, and quickly access information about their most recent updates. You can also move from any bill on the app, to the bill's page on the official congress website so you can learn more.
 
 
 #### <div align='center'>[Try the App Here](www.blz.herokuapp.com)</div>  
