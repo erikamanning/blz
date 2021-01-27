@@ -59,7 +59,7 @@ You will need python3 and pip3 installed for this project. You will also need to
     $ python3 -m venv venv
     ```
 
-4. Start the virtualenvironment.
+4. Start the virtual environment.
     ```sh
     $ source venv/bin/activate
     ```
@@ -70,7 +70,7 @@ You will need python3 and pip3 installed for this project. You will also need to
     ```
 
 6. Open the secrets.py file and add your API key and Flask Secret Key in the fields specified below. 
-   _**Make sure to add secretys.py tp your .gitignore so your personal API key doesn't get shared accidentally.**_
+   _**Make sure to add secrets.py tp your .gitignore so your personal API key doesn't get shared accidentally.**_
    
     <sub> In *secrets.py*</sub>
     ```sh
