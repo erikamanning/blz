@@ -43,6 +43,7 @@ class Bill(db.Model):
 
     id = db.Column(db.String, primary_key=True, nullable = False, unique=True)
     bill_slug = db.Column(db.String, nullable = False)
+    bill = db.Column(db.String, nullable = False)
     congress = db.Column(db.Integer, nullable = False)
     title = db.Column(db.String, nullable = False)
     short_title = db.Column(db.String, nullable = True)

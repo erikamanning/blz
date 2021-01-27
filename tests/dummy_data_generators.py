@@ -62,6 +62,7 @@ def add_dummy_bill( bill_id, session, sponsor_id, policy_area,introduced_date, l
     new_bill = Bill(
             id = f'dummy_bill_{bill_id}',
             bill_slug = 'dummy_slug',
+            bill = 'dummy_bill'
             congress = session,        
             title = 'dummy_title',
             short_title = 'dummy_short_title',

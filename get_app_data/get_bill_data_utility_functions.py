@@ -20,7 +20,7 @@ def create_bill(bill_data):
             id = bill_data["bill_id"],
             bill_slug = bill_data["bill_slug"],
             congress = bill_data["congress"],
-            # bill = bill_data["bill"],
+            bill = bill_data["bill"],
             title = bill_data["title"],
             short_title = short_title,
             sponsor_id = bill_data["sponsor_id"],
