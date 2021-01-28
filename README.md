@@ -93,7 +93,7 @@ _**You will need to set up a postgres database for this application. Once that i
     $ export FLASK_ENV=development 
     ```
 
-9. Run the app (dev or production mode?)
+9. Run the app.
     ```sh 
     $ flask run
     ```
